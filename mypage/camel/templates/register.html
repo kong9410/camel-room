@@ -1,0 +1,244 @@
+<!--회원가입 페이지-->
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>REGISTER</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+
+    <!-- Bootstrap core CSS     -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="/static/css/animate.min.css" rel="stylesheet"/>
+
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="/static/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
+
+
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="/static/css/demo.css" rel="stylesheet" />
+
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="/static/css/pe-icon-7-stroke.css" rel="stylesheet" />
+
+</head>
+<body>
+
+<!--modal popup-->
+<script>
+$(document).ready(function(){
+	$("#login").click(function(){
+		$("#loginModal").modal();
+	});
+	$("submit").click(function(){
+	    $("#signup_form").submit();
+});
+</script>
+<div class="modal" id="loginModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="card">
+                    <div class="header">
+                        <h4 class="title">LOGIN</h4>
+                    </div>
+                    <div class="content">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" placeholder="Camel@Camels.com" value="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                            <input type="password" class="form-control" placeholder="PASSWORD" value="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-info btn-fill pull-right">Login</button>
+                            <div class="clearfix"></div>
+                         </form>
+                      </div>
+                   </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Modal End-->
+
+<div class="wrapper">
+<div class="sidebar" data-color="green" data-image="assets/img/sidebar-1.jpg">
+
+    <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
+
+
+    	<div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="view" class="simple-text">
+                    CAMEL'S WORKSPACE
+                </a>
+            </div>
+
+            <ul class="nav">
+                <li>
+                    <a href="register">
+                        <i class="pe-7s-map-marker"></i>
+                        <p>회원가입</p>
+                    </a>
+                </li>
+            </ul>
+    	</div>
+    </div>
+    <div class="main-panel">
+		<nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">회원가입</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                </div>
+            </div>
+        </nav>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">REGISTER</h4>
+
+                    </div>
+                    <div class="content">
+                        <form method="POST" id="signup_form" name="signup_form" action="signup">
+                            {% csrf_token %}
+                            <div class="row">
+								<div class="col-md-8">
+								<div class="form-group">
+                                        <label>개인정보 수집 이용 동의</label><br>
+											<textarea class="form-control" readonly="readonly">① 개인정보의 수집·이용목적 : 예시) 포인트 적립, 입시상담, 급여관리, ...
+② 수집하려는 개인정보의 항목 : 예시) 성명, 번화번호, 주소, 이메일, 학년, ...
+③ 개인정보의 보유 및 이용기간(근거법률) : 예시)1년, 수강기간, 퇴사후 3년, ...
+거래기록 : 5년(전자상거래 등에서의 소비자 보호에 관한 법률)
+④ 동의를 거부할 수 있으며, 동의 거부시 낙타의 공방 서비스가 일부 제공되지 않습니다</textarea>
+											※위 개인정보 수집이용에 동의하십니까? <input type="radio" name="user_info" value="agree" required/>동의 <input type="radio" name="user_info" value="disagree"/>거부
+                                    </div>
+								</div>
+                            </div>
+							<div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                       <label>개인정보 제3자 제공에 대한 별도 동의</label><br>
+											<textarea class="form-control" readonly="readonly">① 개인정보를 제공받는 자 : 예시) ○○본사
+② 개인정보를 제공받는 자의 개인정보 이용 목적 : 예시)고객 관리 및 포인트 관리
+③ 제공하는 개인정보의 항목 : 성명, 전화번호, 생년월일
+④ 개인정보를 제공받는 자의 개인정보 보유 및 이용 기간 : 제공 후 1년
+⑤ 동의를 거부할 수 있으며, 동의 거부시 낙타의 공방 서비스가 일부 제공되지 않습니다.</textarea>
+※위 개인정보의 제3자 제공에 동의하십니까? <input type="radio" name="third_user_info" value="agree" required/>동의 <input type="radio" name="third_user_info" value="disagree"/>거부
+                                    </div>
+                                </div>
+                            </div>
+							<div class="row">
+								<div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>이메일</label><br>
+											<div>
+											<input type="email" name="email" class="form-control" placeholder="Camel@Camels.com" required>
+										</div>
+                                    </div>
+                                </div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>비밀번호</label><br>
+											<div>
+											<input type="password" name="password" class="form-control" placeholder="Password" required>
+										</div>
+                                    </div>
+                                </div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>비밀번호 확인</label><br>
+											<div>
+											<input type="password" class="form-control" placeholder="Password" required>
+										</div>
+                                    </div>
+                                </div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>이름</label><br>
+											<div>
+											<input type="text" name="username" class="form-control" placeholder="김알파카" required>
+										</div>
+                                    </div>
+                                </div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>전화번호</label><br>
+											<div>
+											<input type="telephone" name="tel" class="form-control" placeholder="01012345678" required>
+										</div>
+                                    </div>
+                                </div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>생년월일</label><br>
+											<div>
+											<input type="date" name="dob" class="form-control" placeholder="2019.03.12." required>
+										</div>
+                                    </div>
+                                </div>
+							</div>
+							<div class="row">
+								<div class="col-md-10">
+                                    <div class="form-group">
+                                        <label>주소</label><br>
+											<div>
+											<input type="text" name="address" class="form-control" placeholder="Address" required>
+										</div>
+                                    </div>
+                                </div>
+							</div>
+                            <button type="submit" id="submit" name="submit" class="btn btn-info btn-fill pull-right">signup</button>
+                            <div class="clearfix"></div>
+                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
