@@ -36,7 +36,6 @@ def signin(request):
 	request.session['email']=email
 	request.session['password']=password
 	print(request.session['email'])
-	thepath = request.path
 	return HttpResponseRedirect('view')
 
 def logout(request):

@@ -23,7 +23,7 @@ class connMongo:
         self.col = self.db.get_collection('user')
         #mydict = {email, password, username, dob, tel, address}
         print(password)
-        password = bcrypt.hashpw(password.encode('utf-8'), self.salt)
+        #password = bcrypt.hashpw(password.encode('utf-8'), self.salt)
         self.col.insert({"email":email, "password":password,
                          "username":username, "dob":dob,
                          "tel":tel, "address":address})
@@ -33,14 +33,17 @@ class connMongo:
     def findUser(self, id, password):
         self.col = self.db.get_collection('user')
         print(password)
-        accountInfo = self.col.findOne({"email":id})
+        accountInfo = self.col.find_one({"email":id})
         if(accountInfo == None):
             return False
-        dbPassword = accountInfo['password']
-        hash = bcrypt.hashpw(dbPassword.encode('utf-8'), self.salt)
-        hashedPassword = bcrypt.checkpw(password.encode('utf-8'), hash)
-        print(hashedPassword)
-        if(hashedPassword):
-            return True
+        #dbPassword = accountInfo['password']
+        
+        #print(dbPassword)
+        #hash = bcrypt.hashpw(dbPassword, self.salt)
+        print(hash)
+        #if(bcrypt.checkpw(password.encode('utf-8'), hash)):
+        #    return True
+        if(self.col.find_one({"email":id, "password":password})):
+            return true
         return False
 
