@@ -16,7 +16,6 @@ Including another URLconf
 
 from django.urls import path
 from . import views
-
 urlpatterns = [
 	path('', views.index),
 	path('user', views.user),
@@ -29,6 +28,6 @@ urlpatterns = [
 
 	path('signup', views.signup, name='signup'),
 	path('signin', views.signin, name='signin'),
-	path('logout', views.logout, name='logout'),
+	path('signout', views.signout, name='signout'),
 	path('add_real_estate', views.add_real_estate, name='add_real_estate')
 ]

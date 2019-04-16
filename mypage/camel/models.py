@@ -3,15 +3,19 @@ from djongo import models
 
 
 # Create your models here.
+
+
 class User(models.Model):
+    username = models.CharField(max_length=20, default="")
     email = models.CharField(max_length=30, default="")
     password = models.CharField(max_length=20, default="")
-    username = models.CharField(max_length=20, default="")
+    realname = models.CharField(max_length=20, default="")
     tel = models.CharField(max_length=11, default="")
     dob = models.DateField(default=None)
     address = models.CharField(max_length=100, default="")
     tag = models.CharField(max_length = 20, default="normal")
     objects = models.DjongoManager()
+
     def generate(self):
         self.save()
     def __str__(self):

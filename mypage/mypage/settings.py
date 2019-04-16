@@ -26,10 +26,7 @@ SECRET_KEY = '%36-3pfu+^%550l-%goja%#*=#*nm*iy#1g&5#%xm9#63$6^b8'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '.compute.amazonaws.com',
-    '.elasticbeanstalk.com',
+    '*'
 ]
 
 
@@ -93,13 +90,14 @@ WSGI_APPLICATION = 'mypage.wsgi.application'
 DATABASES = {
     'default':{
         'ENGINE' : 'djongo',
+        'ENFORCE_SCHEMA' : True,
         'NAME' : 'estate_db',
-        #'HOST' : '127.0.0.1',
-        #'PORT' : 27017,
-        #'USER' : 'gnits',
-        #'PASSWORD' : '1234',
-        #'AUTH_SOURCE' : 'auth_user',
-        #'AUTH_MECHANISM': 'SCRAM-SHA-1',
+        'HOST' : '127.0.0.1',
+        'PORT' : 27017,
+        'USER' : 'gnits',
+        'PASSWORD' : '1234',
+        'AUTH_SOURCE' : 'estate_db',
+        'AUTH_MECHANISM': 'SCRAM-SHA-1',
     }
     #'default': {
     #    'ENGINE': 'django.db.backends.sqlite3',
