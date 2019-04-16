@@ -198,12 +198,13 @@ $(document).ready(function(){
                        
                     </div>
                     <div class="content">
-                        <form>
+                        <form method="POST" action="add_real_estate">
+                            {%csrf_token%}
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
                                         <label>제목</label>
-                                        <input type="text" class="form-control" placeholder="TITLE" value="충북대 1시간 거리">
+                                        <input type="text" class="form-control" placeholder="TITLE" value="충북대 1시간 거리" name="title">
                                     </div>
                                 </div>
                             </div>
@@ -214,7 +215,7 @@ $(document).ready(function(){
                                         <label>사진</label>
 										<div class="input-group input-file">
 											<span class="input-group-btn">
-												<input class="btn btn-default btn-choose" type="file" value="Choose">
+												<input class="btn btn-default btn-choose" type="file" value="Choose" name="imageURL">
 											</span>
 										</div>
                    
@@ -227,7 +228,7 @@ $(document).ready(function(){
                                     <div class="form-group">
                                         <label>주거 구분</label><br>
 											<div>
-											<select class="form-control">
+											<select class="form-control" name="houseType">
 											<option>주택</option>
 											<option>아파트</option>
 											<option>오피스텔</option>
@@ -239,7 +240,7 @@ $(document).ready(function(){
                                     <div class="form-group">
                                         <label>구분</label><br>
 											<div>
-											<select class="form-control">
+											<select class="form-control" name="contractTag">
 											<option>전세</option>
 											<option>월세</option>
 											<option>매매</option>
@@ -250,13 +251,13 @@ $(document).ready(function(){
 								<div class="col-md-5">
                                     <div class="form-group">
                                         <label>가격 (만원)</label>
-                                        <input type="number" class="form-control" placeholder="price" value="10000">
+                                        <input type="number" class="form-control" placeholder="price" value="10000" name="price">
                                     </div>
                                 </div>
 								<div class="col-md-3">
                                     <div class="form-group">
                                         <label>보증금 (만원)</label>
-                                        <input type="number" class="form-control" placeholder="price" value="100">
+                                        <input type="number" class="form-control" placeholder="price" value="100" name="endorsementFee">
                                     </div>
                                 </div>
                             </div>
@@ -264,7 +265,7 @@ $(document).ready(function(){
                                 <div class="col-md-11">
                                     <div class="form-group">
                                         <label>주소</label>
-                                            <input type="text" class="form-control" placeholder="Address" value="서울시 사방구 사방로XX길 XX 123동 123호(사방아파트)">
+                                            <input type="text" class="form-control" placeholder="Address" value="서울시 사방구 사방로XX길 XX 123동 123호(사방아파트)" name="homeAddress">
                                     </div>
                                 </div>
                             </div>
@@ -272,14 +273,14 @@ $(document).ready(function(){
 								<div class="col-md-1">
 									<div class="form-group">
 										<label>평수</label>
-											<input type="number" class="form-control" placeholder="Size">
+											<input type="number" class="form-control" placeholder="Size" name="roomSize">
 									</div>
 								</div>
 								<div class="col-md-2">
                                     <div class="form-group">
                                         <label>방 개수</label><br>
 											<div>
-											<select class="form-control">
+											<select class="form-control" name="rooms">
 											<option>원룸</option>
 											<option>2</option>
 											<option>3</option>
@@ -300,7 +301,7 @@ $(document).ready(function(){
 								<div class="form-group">
                                         <label>화장실</label><br>
 											<div>
-											<select class="form-control">
+											<select class="form-control" name="toilet">
 											<option>1</option>
 											<option>2</option>
 											<option>3</option>
@@ -313,7 +314,7 @@ $(document).ready(function(){
 								<div class="form-group">
                                         <label>층수</label><br>
 											<div>
-											<select class="form-control">
+											<select class="form-control" name="floors">
 											<option>1</option>
 											<option>2</option>
 											<option>3</option>
@@ -332,8 +333,7 @@ $(document).ready(function(){
 							<div class="col-md-11">
 								<div class="form-group">
                                         <label>내용</label><br>
-											<textarea class="form-control" placeholder="내용">
-											</textarea>
+											<textarea class="form-control" placeholder="내용" name="text"></textarea>
                                     </div>
 								</div>
 							</div>

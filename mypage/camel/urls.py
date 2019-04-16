@@ -30,4 +30,5 @@ urlpatterns = [
 	path('signup', views.signup, name='signup'),
 	path('signin', views.signin, name='signin'),
 	path('logout', views.logout, name='logout'),
+	path('add_real_estate', views.add_real_estate, name='add_real_estate')
 ]

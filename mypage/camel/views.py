@@ -2,28 +2,38 @@ from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponse
 
+from djongo import models
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from .src.connectMongo import connMongo
 from django.http import HttpResponseRedirect
+from .forms import SignupForm
 # Create your views here.
+
+def post(request):
+	if request.method == "POST":
+		form = SignupForm(request.POST)
+		if form.is_valid():
+			signed = form.save(commit=False)
+			
+
 def index(request):
 	return render(request, 'view_estate.html')
 
 def signup(request):
-	print('sign up')
 	if request.method == "POST":
-		email = request.POST.get("email")
-		password = request.POST.get("password")
-		username = request.POST.get("username")
-		dob = request.POST.get("dob")
-		tel = request.POST.get("tel")
-		address = request.POST.get("address")
-
-		mon = connMongo()
-		mon.user_insert(email, password, username, dob, tel, address)
-		return HttpResponseRedirect('view')
+		form = SignupForm(request.POST)
+		print(form.fields)
+		if form.is_valid():
+			user = form.save()
+			raw_password = form.cleaned_data.get('password')
+			user = authenticate(email=user.email, password=raw_password)
+			user.save()
+			return redirect('home')
+		else:
+			form = SignupForm()
+		return render(request, 'register', {'form':form})
 
 def signin(request):
 	mon = connMongo()
@@ -36,6 +46,23 @@ def signin(request):
 	request.session['email']=email
 	request.session['password']=password
 	print(request.session['email'])
+	return HttpResponseRedirect('view')
+
+def add_real_estate(request):
+	mon = connMongo()
+	title = request.POST.get("title")
+	imageURL = request.POST.get("imageURL")
+	houseType = request.POST.get("houseType")
+	contractTag = request.POST.get("contractTag")
+	price = request.POST.get("price")
+	endorsementFee = request.POST.get("endorsementFee")
+	homeAddress = request.POST.get("homeAddress")
+	roomSize = request.POST.get("roomSize")
+	rooms = request.POST.get("rooms")
+	toilet = request.POST.get("toilet")
+	floors = request.POST.get("floors")
+	text = request.POST.get("text")
+	mon.estate_insert(title, imageURL, houseType, contractTag, price, endorsementFee, homeAddress, roomSize, rooms, toilet, floors, text)
 	return HttpResponseRedirect('view')
 
 def logout(request):

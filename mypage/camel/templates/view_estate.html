@@ -153,12 +153,14 @@
                             <p>매물 보기</p>
                         </a>
                     </li>
+                    {%if request.session.email%}
                     <li>
                         <a href="user">
                             <i class="pe-7s-user"></i>
                             <p>유저 프로필</p>
                         </a>
                     </li>
+                    {% endif %}
                     <li>
                         <a href="compare">
                             <i class="pe-7s-science"></i>
@@ -171,12 +173,14 @@
                             <p>테마 추천</p>
                         </a>
                     </li>
+                    {%if request.session.email%}
                     <li>
                         <a href="enroll">
                             <i class="pe-7s-bell"></i>
                             <p>매물 등록</p>
                         </a>
                     </li>
+                    {% endif %}
                     <li class="active-pro">
                         <a href="upgrade.html">
                             <i class="pe-7s-rocket"></i>
