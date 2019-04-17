@@ -14,3 +14,10 @@ pip install django --upgrade
 pip install djongo
 pip install pymongo
 pip install bcrypt
+
+
+
+학습자료
+djongo
+https://djongo.readthedocs.io/docs/get-started/
+========================================================
