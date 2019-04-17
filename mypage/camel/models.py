@@ -35,7 +35,6 @@ class User(AbstractBaseUser):
     #메일,비밀번호,실명,전화번호,생일,주소,어드민,관리자,활성화,중개인#
     ##############################################################
     head = models.AutoField(primary_key = True)
-    username = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, unique=True)
     password = models.CharField(max_length=50)
     realname = models.CharField(max_length=50)
@@ -68,7 +67,7 @@ class User(AbstractBaseUser):
 #매물 정보 모델
 class RealEstate(models.Model):
     title = models.CharField(max_length=30, default="")
-    image_url = models.CharField(max_length=120, default="")
+    image_url = models.ImageField(blank=True)
     houseType = models.CharField(max_length=40, default="")
     contractTag = models.CharField(max_length=20, default="")
     price = models.IntegerField()

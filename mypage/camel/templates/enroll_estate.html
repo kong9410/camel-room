@@ -198,7 +198,7 @@ $(document).ready(function(){
                        
                     </div>
                     <div class="content">
-                        <form method="POST" action="add_real_estate">
+                        <form method="POST" enctype="multipart/form-data" action="add_real_estate" nonvalidate>
                             {%csrf_token%}
                             <div class="row">
                                 <div class="col-md-11">

@@ -8,7 +8,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .src.connectMongo import connMongo
 from django.http import HttpResponseRedirect
-from .forms import SignupForm, LoginForm
+from .forms import SignupForm, LoginForm, RealEstateForm
 from .models import User
 # Create your views here.
 
@@ -23,6 +23,7 @@ def signup(request):
 		form = SignupForm(request.POST)
 		if form.is_valid():
 			User.objects.create_user(email=request.POST['email'], password=request.POST['password'])
+			print("FORM IS CORRECT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 			form.save()
 			return HttpResponseRedirect('view')
 		else:
@@ -35,7 +36,7 @@ def signup(request):
 def signin(request):
 	if request.method == "POST":
 		form = LoginForm(request.POST)
-		username = request.POST['username']
+		username = request.POST['email']
 		password = request.POST['password']
 		user = authenticate(username = username, password = password)
 		if user is not None:
@@ -54,21 +55,27 @@ def signout(request):
 	return render(request, 'view_estate.html')
 
 def add_real_estate(request):
-	mon = connMongo()
-	title = request.POST.get("title")
-	imageURL = request.POST.get("imageURL")
-	houseType = request.POST.get("houseType")
-	contractTag = request.POST.get("contractTag")
-	price = request.POST.get("price")
-	endorsementFee = request.POST.get("endorsementFee")
-	homeAddress = request.POST.get("homeAddress")
-	roomSize = request.POST.get("roomSize")
-	rooms = request.POST.get("rooms")
-	toilet = request.POST.get("toilet")
-	floors = request.POST.get("floors")
-	text = request.POST.get("text")
-	mon.estate_insert(title, imageURL, houseType, contractTag, price, endorsementFee, homeAddress, roomSize, rooms, toilet, floors, text)
-	return HttpResponseRedirect('view')
+	if request.method == "POST":
+		form = RealEstateForm(request.POST, request.FILES)
+		if form.is_valid():
+			form.save()
+			return HttpResponse('파일업로드 완료')
+		else:
+			form = RealEstateForm()
+		return HttpResponse('fail')
+		title = request.POST.get("title")
+		imageURL = request.POST.get("imageURL")
+		houseType = request.POST.get("houseType")
+		contractTag = request.POST.get("contractTag")
+		price = request.POST.get("price")
+		endorsementFee = request.POST.get("endorsementFee")
+		homeAddress = request.POST.get("homeAddress")
+		roomSize = request.POST.get("roomSize")
+		rooms = request.POST.get("rooms")
+		toilet = request.POST.get("toilet")
+		floors = request.POST.get("floors")
+		text = request.POST.get("text")
+		#return HttpResponseRedirect('view')
 
 
 def user(request):

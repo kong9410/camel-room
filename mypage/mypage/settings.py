@@ -149,6 +149,10 @@ USE_TZ = True
 
 # CUSTOM FIELDS
 
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 AUTH_USER_MODEL = 'camel.User'
 
 AUTHENTICATION_BACKENDS = (
