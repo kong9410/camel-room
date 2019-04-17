@@ -14,7 +14,7 @@ pip install django --upgrade
 pip install djongo
 pip install pymongo
 pip install bcrypt
-
+pip install Pillow
 
 
 학습자료
