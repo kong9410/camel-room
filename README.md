@@ -9,7 +9,6 @@ setting.py : mypage\mypage
 
 
 설치
-pip install django-session-timeout
 pip install django --upgrade
 pip install djongo
 pip install pymongo
@@ -17,7 +16,9 @@ pip install bcrypt
 pip install Pillow
 
 
-학습자료
-djongo
-https://djongo.readthedocs.io/docs/get-started/
-========================================================
+선택사항
+1) 종고는 일단 죽이기
+2) pymongo 노가다
+3) nodejs
+4) 다른거
+5) 졸업유예
