@@ -100,7 +100,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="text" name="username" class="form-control"
+                                            <input type="text" name="email" class="form-control"
                                                 placeholder="Camel@Camels.com" value="" required>
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@
                             <p>테마 추천</p>
                         </a>
                     </li>
-                    {%if user.is_authenticated %}
+                    {%if user.is_authenticated and user.is_broker == True %}
                     <li>
                         <a href="enroll">
                             <i class="pe-7s-bell"></i>

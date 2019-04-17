@@ -22,5 +22,6 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
 	path('', include('camel.urls')),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     #path('accounts/', include('django.contrib.auth.urls')),
 ]

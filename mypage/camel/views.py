@@ -3,12 +3,13 @@ from django.conf import settings
 from django.http import HttpResponse
 
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .src.connectMongo import connMongo
 from django.http import HttpResponseRedirect
 from .forms import SignupForm, LoginForm
+from .models import User
 # Create your views here.
 
 			
@@ -21,7 +22,7 @@ def signup(request):
 	if request.method == "POST":
 		form = SignupForm(request.POST)
 		if form.is_valid():
-			User.objects.create_user(username=request.POST['username'], email=request.POST['email'],  password=request.POST['password'])
+			User.objects.create_user(email=request.POST['email'], password=request.POST['password'])
 			form.save()
 			return HttpResponseRedirect('view')
 		else:
