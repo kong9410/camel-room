@@ -153,7 +153,7 @@
                             <p>매물 보기</p>
                         </a>
                     </li>
-                    {%if request.session.email%}
+                    {%if user.is_authenticated %}
                     <li>
                         <a href="user">
                             <i class="pe-7s-user"></i>
@@ -173,10 +173,11 @@
                             <p>테마 추천</p>
                         </a>
                     </li>
-                    {%if request.session.email%}
+                    {%if user.is_authenticated %}
                     <li>
                         <a href="enroll">
                             <i class="pe-7s-bell"></i>
+                            
                             <p>매물 등록</p>
                         </a>
                     </li>
