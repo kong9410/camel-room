@@ -20,9 +20,9 @@ module.exports = function(app, User)
                 console.error(err);
                 res.json({result: 0});
                 return;
-            }
-            res.json({result: 1});
-        });
+			}
+            //res.json({result: 1});
+		});
 		res.redirect('/');
     });
 	

@@ -12,7 +12,7 @@ db.once('open', function(){
     console.log("Connected to mongod server");
 });
 
-mongoose.connect('mongodb://localhost/mongodb_tutorial',{useNewUrlParser : true});
+mongoose.connect('mongodb://localhost/estate_db',{useNewUrlParser : true});
 
 // DEFINE MODEL
 var User = require('./models/user');
