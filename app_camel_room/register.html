@@ -35,18 +35,6 @@
 </head>
 
 <body>
-
-    <!--modal popup-->
-    <script>
-        $(document).ready(function () {
-            $("#login").click(function () {
-                $("#loginModal").modal();
-            });
-            $("submit").click(function () {
-                $("#signup_form").submit();
-            });
-        });
-    </script>
     <div class="modal" id="loginModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -136,7 +124,7 @@
 
                         </div>
                         <div class="content">
-                            <form method="POST" id="signup_form" name="signup_form" action="signup">
+                            <form method="POST" id="signup_form" name="signup_form" action="api/User">
                                 {% csrf_token %}
                                 <div class="row">
                                     <div class="col-md-8">

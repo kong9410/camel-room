@@ -1,34 +1,36 @@
-var express = require('express');   //web server
-var fs = require('fs');  //file load
+// [LOAD PACKAGES]
+var express     = require('express');
+var app         = express();
+var bodyParser  = require('body-parser');
+var mongoose    = require('mongoose');
 
-var app = express();
-var port = 3000;
-
-app.listen(port, function(){
-    console.log('Server Start, Port : ' + port);
-});
+var db = mongoose.connection;
 app.use(express.static('public'));
-app.get('/', function(req, res){
-    fs.readFile('view_estate.html', function(error, data){
-        res.writeHead(200, {'Content-Type':'text/html'});
-        res.end(data);
-    });
+db.on('error', console.error);
+db.once('open', function(){
+    // CONNECTED TO MONGODB SERVER
+    console.log("Connected to mongod server");
 });
-app.get('/theme', function(req, res){
-    fs.readFile('theme.html', function(error, data){
-        res.writeHead(200, {'Content-Type':'text/html'});
-        res.end(data);
-    });
+
+mongoose.connect('mongodb://localhost/mongodb_tutorial',{useNewUrlParser : true});
+
+// DEFINE MODEL
+var User = require('./models/user');
+
+// [CONFIGURE APP TO USE bodyParser]
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+// [CONFIGURE SERVER PORT]
+
+var port = process.env.PORT || 8080;
+
+// [CONFIGURE ROUTER]
+var router = require('./routes')(app, User);
+
+// [RUN SERVER]
+var server = app.listen(port, function(){
+ console.log("Express server has started on port " + port)
 });
-app.get('/estate', function(req, res){
-    fs.readFile('enroll_estate.html', function(error, data){
-        res.writeHead(200, {'Content-Type':'text/html'});
-        res.end(data);
-    });
-});
-app.get('/register', function(req, res){
-    fs.readFile('register.html', function(error, data){
-        res.writeHead(200, {'Content-Type':'text/html'});
-        res.end(data);
-    })
-})
+
+
