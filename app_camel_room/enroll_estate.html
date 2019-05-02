@@ -160,11 +160,6 @@ $(document).ready(function(){
                                 <p>Register</p>
                             </a>
                         </li>
-						<li>
-                            <a href="regist_estate">
-                                <p>Regist Estate</p>
-                            </a>
-                        </li>
 						<li class="separator hidden-lg hidden-md"></li>
                     </ul>
                 </div>
@@ -180,7 +175,7 @@ $(document).ready(function(){
                        
                     </div>
                     <div class="content">
-                        <form method="POST" enctype="multipart/form-data" action="add_real_estate" nonvalidate>
+                        <form method="POST" enctype="multipart/form-data" action="api/estate" nonvalidate>
                             {%csrf_token%}
                             <div class="row">
                                 <div class="col-md-11">
@@ -239,7 +234,7 @@ $(document).ready(function(){
 								<div class="col-md-3">
                                     <div class="form-group">
                                         <label>보증금 (만원)</label>
-                                        <input type="number" class="form-control" placeholder="price" value="100" name="endorsementFee">
+                                        <input type="number" class="form-control" placeholder="price" value="100" name="deposit">
                                     </div>
                                 </div>
                             </div>
@@ -277,7 +272,6 @@ $(document).ready(function(){
 											</select>
 										</div>
                                     </div>
-									
                                 </div>
 								<div class="col-md-1">
 								<div class="form-group">
@@ -309,16 +303,17 @@ $(document).ready(function(){
 											</select>
 										</div>
                                     </div>
-								</div>
+                                </div>
+                                <div class="col-md-1">
+                                <div class="form-group">
+                                    <label>건물연식</label><br>
+                                    <div>
+                                        <input class="form-control" type="text" placeholder="1994" name="years">
+                                    </div>
+                                </div>
+                                </div>
 							</div>
 							<div class="row">
-							<div class="col-md-11">
-								<div class="form-group">
-                                        <label>내용</label><br>
-											<textarea class="form-control" placeholder="내용" name="text"></textarea>
-                                    </div>
-								</div>
-							</div>
                             <button type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button>
                             <div class="clearfix"></div>
                          </form>
