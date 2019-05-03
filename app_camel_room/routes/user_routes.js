@@ -3,6 +3,7 @@ module.exports = function(app, User){
     // CREATE user
     app.post('/api/User', function(req, res){
         console.error("Post to User");
+        console.log(req.body);
         var user = new User();
         user.email = req.body.email;
         user.password = req.body.password;

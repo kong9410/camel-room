@@ -10,7 +10,7 @@ var estateSchema = new Schema({
     deposit:Number,
     homeAddress:String,
     roomSize:Number,
-    rooms:Number,
+    rooms:String,
     toilet:Number,
     floors:Number,
     years:String

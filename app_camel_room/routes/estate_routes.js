@@ -2,6 +2,7 @@ module.exports = function(app, Estate){
     // CREATE estate
     app.post('/api/Estate', function(req, res){
         console.error("Post to Estate");
+        console.log(req.body);
         var estate = new Estate();
         estate.title = req.body.title,
         estate.imageURL = req.body.imageURL;
