@@ -17,16 +17,21 @@ mongoose.connect('mongodb://localhost/estate_db',{useNewUrlParser : true});
 // DEFINE MODEL
 var User = require('./models/user');
 
+// [APP SET]
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
+
 // [CONFIGURE APP TO USE bodyParser]
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // [CONFIGURE SERVER PORT]
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 3000;
 
 // [CONFIGURE ROUTER]
-var router = require('./routes')(app, User);
+var router = require('./routes/index')(app, User);
 
 // [RUN SERVER]
 var server = app.listen(port, function(){
