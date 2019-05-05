@@ -3,34 +3,24 @@ var express = require('express');
 var router = express.Router();
 
 
-router.get('/', function (req, res) {
-	fs.readFile('view_estate.ejs', function (error, data) {
-		console.error("connected to view_estate.html <Error> : " + error);
-		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end(data);
-	});
+router.get('/', function(req, res){
+		if(req.session.email){
+			res.render('view_estate.ejs',{check_ses: req.session.email} );
+		}
+		else
+			res.render('view_estate.ejs', {check_ses: 0});
 });
+	
+	
 router.get('/theme', function (req, res) {
-	fs.readFile('theme.ejs', function (error, data) {
-		console.error("connected to theme.html <Error> : " + error);
-		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end(data);
-	});
+	res.render('theme.ejs');
 });
 router.get('/estate', function (req, res) {
-	fs.readFile('enroll_estate.ejs', function (error, data) {
-		console.error("connected to enroll_estate.html <Error> : " + error);
-		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end(data);
-	});
+	res.render('enroll_estate.ejs');
 });
 
 router.get('/register', function (req, res) {
-	fs.readFile('register.ejs', function (error, data) {
-		console.error("connected to register.html <Error> : " + error);
-		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end(data);
-	})
+	res.render('register.ejs');
 })
 router.use(express.static('public'));
 

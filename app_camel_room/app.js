@@ -4,6 +4,7 @@ var router      = express.Router();
 var app         = express();
 var bodyParser  = require('body-parser');
 var mongoose    = require('mongoose');
+var session     = require('express-session');
 
 // [MONGODB CONNECTION]
 var db = mongoose.connection;
@@ -27,6 +28,15 @@ app.engine('html', require('ejs').renderFile);
 // [CONFIGURE APP TO USE bodyParser]
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+
+app.use(session({
+		key : 'sid',
+		secret: 'ambc@!vsmkv#!&*!#EDNAnsv#!$()_*#@',
+		resave: false,
+		saveUninitialized: true
+}));
+
 
 // [CONFIGURE SERVER PORT]
 
