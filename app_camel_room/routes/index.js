@@ -22,6 +22,6 @@ router.get('/estate', function (req, res) {
 router.get('/register', function (req, res) {
 	res.render('register.ejs');
 })
-router.use(express.static('public'));
+
 
 module.exports = router;
