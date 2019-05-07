@@ -4,15 +4,17 @@ var app         = express();
 var bodyParser  = require('body-parser');
 var session     = require('express-session');
 var db = mongoose.connection;
+var router		= express.Router();
+var User		= require('../models/user'); 
 mongoose.connect('mongodb://localhost/estate_db',{useNewUrlParser : true});
 
 
-module.exports = function(app, User){
+
     // CREATE user
 	
-    app.post('/api/User', function(req, res){
+    router.post('/User', function(req, res){
         console.error("Post to User");
-        console.log(req.body);
+		console.log(req.body);
         var user = new User();
         user.email = req.body.email;
         user.password = req.body.password;
@@ -33,14 +35,14 @@ module.exports = function(app, User){
 	
 	
 	// LOGIN USER
-	app.post('/api/signin', function(req, res){
+	router.post('/signin', function(req, res){
 		var get_email = req.body.email;
 		var get_password = req.body.password;
 		var cursor = db.collection("users").find({email : get_email, password: get_password}).toArray(function(err,result){
 			if(err)throw err;
 			
 			if(result == false){
-				res.redirect('/error_alert');
+				res.redirect('/api/error_alert');
 			}
 			else{
 				req.session.email = result[0].email;
@@ -52,10 +54,15 @@ module.exports = function(app, User){
     });
 	
 	//LOGOUT USER
-	app.get('/logout', function(req, res){
+	router.get('/logout', function(req, res){
 		req.session.destroy();
 		res.clearCookie('sid');
 		res.redirect('/');
 	});
-}
 
+	//LOGIN FAIL
+	router.get('/error_alert', function(req, res){
+		res.render('error_alert.ejs');
+	 });
+
+module.exports = router;

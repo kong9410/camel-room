@@ -121,7 +121,7 @@ $(document).ready(function(){
                     </a>
                 </li>
                 <li class="active">
-                    <a href="enroll">
+                    <a href="estate">
                         <i class="pe-7s-bell"></i>
                         <p>부동산 등록</p>
                     </a>
@@ -175,8 +175,7 @@ $(document).ready(function(){
                        
                     </div>
                     <div class="content">
-                        <form method="POST" enctype="multipart/form-data" action="api/estate" nonvalidate>
-                            {%csrf_token%}
+                        <form method="POST" enctype="multipart/form-data" action="/api/estate">
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
@@ -192,7 +191,7 @@ $(document).ready(function(){
                                         <label>사진</label>
 										<div class="input-group input-file">
 											<span class="input-group-btn">
-												<input class="btn btn-default btn-choose" type="file" value="Choose" name="imageURL">
+												<input class="btn btn-default btn-choose" type="file" value="Choose" name="estateFile">
 											</span>
 										</div>
                    

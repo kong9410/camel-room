@@ -3,7 +3,8 @@ var Schema = mongoose.Schema;
 
 var estateSchema = new Schema({
     title:String,
-    imageURL:String,
+    orgFileName : String,
+    saveFileName : String,
     houseType:String,
     contractTag:String,
     price:Number,
