@@ -16,8 +16,9 @@ var estateSchema = new Schema({
     toilet:Number,
     floors:Number,
     years:String,
-    writer:String
-    //coordinates:{x:Number, y:Number},
+    writer:String,
+    latitude : Number,
+	longitude : Number
 }, { versionKey: false });
 
 module.exports = mongoose.model('estate', estateSchema);

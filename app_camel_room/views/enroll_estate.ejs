@@ -333,7 +333,10 @@ $(document).ready(function(){
                                 </div>
                                 <div>
                                     <input type="hidden" value = "<%=check_ses %>" name="writer">
+									<input type="hidden" id= "latitude" name="latitude" >
+									<input type="hidden" id= "longitude" name="longitude" >
                                 </div>
+								
 							</div>
 							<div class="row">
                             <button type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button>
@@ -394,7 +397,7 @@ $(document).ready(function(){
     <script src="/assets/js/bootstrap-notify.js"></script>
 
     <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+    
 
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="/assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
@@ -404,16 +407,32 @@ $(document).ready(function(){
 
     <!-- 주소 검색창 -->
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c749c8a6c8049131a0f238101adf5004&libraries=services"></script>
     <script>
     function fn_setAddr(){
         //팝업 창 크기
         var width = 500;
         var height = 600;
-
+		
         daum.postcode.load(function(){
             new daum.Postcode({
                 oncomplete: function(data){
+					
                     document.getElementById('roadAddress').value = data.address;
+					var geocoder = new daum.maps.services.Geocoder();
+					geocoder.addressSearch(data.address, function(result, status) {
+
+						// 정상적으로 검색이 완료됐으면 
+						 if (status === daum.maps.services.Status.OK) {
+
+							
+							document.getElementById('latitude').value = result[0].y;
+							document.getElementById('longitude').value = result[0].x;
+							
+						} 
+					});
+					
+					
                 }
             }).open({
                 left: (window.screen.width / 2) - (width/2),
