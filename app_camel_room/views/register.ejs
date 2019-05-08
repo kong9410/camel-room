@@ -33,7 +33,19 @@
     <link href="/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
 </head>
+<script>
+function check_id(){
+    var userID = document.email;
+    if(!userID) alert("아이디를 입력해주세요")
+    else if(true){
+        return false;
+    }
+    else{
 
+    }
+}
+
+</script>
 <body>
     <div class="modal" id="loginModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
@@ -125,7 +137,6 @@
                         </div>
                         <div class="content">
                             <form method="POST" id="signup_form" name="signup_form" action="api/User">
-                                {% csrf_token %}
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="form-group">
@@ -156,13 +167,19 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="form-group">
+                                    
+                                    <div class="form-group">
+                                        <div class="col-md-7">
                                             <label>이메일</label><br>
-                                            <div>
-                                                <input type="email" name="email" class="form-control"
-                                                    placeholder="Camel@Camels.com" required>
-                                            </div>
+                                                <div class="col-md-5">
+                                                    <input type="email" name="email" class="form-control"
+                                                            placeholder="Camel@Camels.com" required>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input type="button" class="form-control" id="checkID" value="중복체크" onclick="check_id()">
+                                                    <input type="hidden" name="tfid" value=false>
+                                                </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -222,13 +239,24 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-10">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label>주소</label><br>
-                                            <div>
-                                                <input type="text" name="address" class="form-control"
-                                                    placeholder="Address" required>
+                                            <div class="col-md-11">
+                                                <input type="text" id="address" name="road_address" class="form-control"
+                                                    placeholder="Address" required readonly>
                                             </div>
+                                            <div class="col-md-1">
+                                                <input class = "form-control" type="button" name="findAddress" onclick="fn_setAddr()" value="찾기">
+                                                </div>
+                                            </div>
+                                   
+                                        </div>
+                                    </div>
+                                    <div class = "col-md-12">
+                                        <div class = "form-group">
+                                            <label>상세주소</label><br>
+                                            <input type="text" name="detail_address" class="form-control" placeholder="Detail Address" required>
                                         </div>
                                     </div>
                                 </div>
@@ -244,5 +272,24 @@
     </div>
 
 </body>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+function fn_setAddr(){
+    //팝업 창 크기
+    var width = 500;
+    var height = 600;
 
+    daum.postcode.load(function(){
+        new daum.Postcode({
+            oncomplete: function(data){
+                document.getElementById('address').value = data.address;
+            }
+        }).open({
+            left: (window.screen.width / 2) - (width/2),
+            top: (window.screen.height / 2) - (height / 2)
+        });
+    });
+}
+
+</script>
 </html>

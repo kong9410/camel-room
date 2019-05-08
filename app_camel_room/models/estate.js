@@ -9,12 +9,14 @@ var estateSchema = new Schema({
     contractTag:String,
     price:Number,
     deposit:Number,
-    homeAddress:String,
+    roadAddress:String,
+    detailAddress:String,
     roomSize:Number,
     rooms:String,
     toilet:Number,
     floors:Number,
-    years:String
+    years:String,
+    writer:String
     //coordinates:{x:Number, y:Number},
 }, { versionKey: false });
 

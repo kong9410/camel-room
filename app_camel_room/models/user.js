@@ -7,7 +7,8 @@ var userSchema = new Schema({
 	realname: String,
 	tel: String,
 	dob: String,
-	address : String
+	road_address : String,
+	detail_address : String
 }, { versionKey: false });
 
 module.exports = mongoose.model('user', userSchema);

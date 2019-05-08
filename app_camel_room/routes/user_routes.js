@@ -21,7 +21,8 @@ mongoose.connect('mongodb://localhost/estate_db',{useNewUrlParser : true});
         user.realname = req.body.realname;
         user.tel = req.body.tel;
         user.dob = req.body.dob;
-        user.address = req.body.address;
+		user.road_address = req.body.road_address;
+		user.detail_address = req.body.detail_address;
         
         user.save(function(err){
             if(err){
@@ -56,8 +57,9 @@ mongoose.connect('mongodb://localhost/estate_db',{useNewUrlParser : true});
 	//LOGOUT USER
 	router.get('/logout', function(req, res){
 		req.session.destroy();
+		var _url = req.url;
 		res.clearCookie('sid');
-		res.redirect('/');
+		res.redirect(_url);
 	});
 
 	//LOGIN FAIL

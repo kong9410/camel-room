@@ -28,13 +28,16 @@ router.post('/', upload.single('estateFile'), function(req, res){
     estate.contractTag = req.body.contractTag;
     estate.price = req.body.price;
     estate.deposit = req.body.deposit;
-    estate.homeAddress = req.body.homeAddress;
+    estate.roadAddress = req.body.roadAddress;
+    estate.detailAddress = req.body.detailAddress;
     estate.roomSize = req.body.roomSize;
     estate.rooms = req.body.rooms;
     estate.toilet = req.body.toilet;
     estate.floors = req.body.floors;
     estate.years = req.body.years;
+    estate.writer = req.body.writer;
     console.log(estate);
+    console.log(req.body.writer);
     estate.save(function(err){
         if(err){
             console.error(err);

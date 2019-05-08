@@ -150,10 +150,12 @@
                         </a>
                     </li>
                     <li>
+                    <% if(check_ses){%>
                         <a href="estate">
                             <i class="pe-7s-bell"></i>
                             <p>부동산 등록</p>
                         </a>
+                    <%}%>
                     </li>
                     <li class="active-pro">
                         <a href="upgrade.html">
@@ -207,13 +209,13 @@
                         </form>
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                    <% if(!check_ses){%>
+                                <% if(!check_ses){%>
                                 <a href="#" data-toggle="modal" data-target="#loginModal" id="login">
-                                        <p>Login</p>
-                                    </a>
-                                    <%} else {%>
+                                    <p>Login</p>
+                                </a>
+                                <%} else {%>
                                     <a href="api/logout">Logout</a>
-                                    <%}%>
+                                <%}%>
                             </li>
                             <li>
                                 <a href="register">

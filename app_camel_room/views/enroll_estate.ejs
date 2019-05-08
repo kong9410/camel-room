@@ -121,10 +121,12 @@ $(document).ready(function(){
                     </a>
                 </li>
                 <li class="active">
-                    <a href="estate">
-                        <i class="pe-7s-bell"></i>
-                        <p>부동산 등록</p>
-                    </a>
+                    <% if(check_ses){%>
+                        <a href="estate">
+                            <i class="pe-7s-bell"></i>
+                            <p>부동산 등록</p>
+                        </a>
+                    <%}%>
                 </li>
 				<li class="active-pro">
                     <a href="upgrade.html">
@@ -150,10 +152,14 @@ $(document).ready(function(){
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                         <li>
+                        <li>
+                            <% if(!check_ses){%>
                             <a href="#" data-toggle="modal" data-target="#loginModal" id="login">
                                 <p>Login</p>
                             </a>
+                            <%} else {%>
+                            <a href="api/logout">Logout</a>
+                            <%}%>
                         </li>
 						<li>
                             <a href="register">
@@ -240,8 +246,22 @@ $(document).ready(function(){
 							<div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
-                                        <label>주소</label>
-                                            <input type="text" class="form-control" placeholder="Address" value="서울시 사방구 사방로XX길 XX 123동 123호(사방아파트)" name="homeAddress">
+                                        <label>주소</label><br>
+                                        <div class = "col-md-10">
+                                            <input type="text" id="roadAddress" class="form-control" placeholder="Road Address" name="roadAddress" readonly>
+                                        </div>
+                                        <div class = "col-md-1">
+                                            <input class = "form-control" type="button" name="findAddress" onclick="fn_setAddr()" value="찾기">
+                                        </div>
+                                            
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class = "col-md-10">
+                                    <div class = "form-group">
+                                        <label>상세주소</label><br>
+                                        <input type="text" name="detailAddress" class="form-control" placeholder="Detail Address" required>
                                     </div>
                                 </div>
                             </div>
@@ -304,12 +324,15 @@ $(document).ready(function(){
                                     </div>
                                 </div>
                                 <div class="col-md-1">
-                                <div class="form-group">
-                                    <label>건물연식</label><br>
-                                    <div>
-                                        <input class="form-control" type="text" placeholder="1994" name="years">
+                                    <div class="form-group">
+                                        <label>건물연식</label><br>
+                                        <div>
+                                            <input class="form-control" type="text" placeholder="1994" name="years">
+                                        </div>
                                     </div>
                                 </div>
+                                <div>
+                                    <input type="hidden" value = "<%=check_ses %>" name="writer">
                                 </div>
 							</div>
 							<div class="row">
@@ -379,4 +402,24 @@ $(document).ready(function(){
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="/assets/js/demo.js"></script>
 
+    <!-- 주소 검색창 -->
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+    <script>
+    function fn_setAddr(){
+        //팝업 창 크기
+        var width = 500;
+        var height = 600;
+
+        daum.postcode.load(function(){
+            new daum.Postcode({
+                oncomplete: function(data){
+                    document.getElementById('roadAddress').value = data.address;
+                }
+            }).open({
+                left: (window.screen.width / 2) - (width/2),
+                top: (window.screen.height / 2) - (height / 2)
+            });
+        });
+    }
+    </script>
 </html>
