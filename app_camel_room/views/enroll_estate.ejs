@@ -58,7 +58,7 @@ $(document).ready(function(){
                         <h4 class="title">LOGIN</h4>
                     </div>
                     <div class="content">
-                        <form method="POST" action="signin">{%csrf_token%}
+                        <form method="POST" action="signin">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -175,8 +175,7 @@ $(document).ready(function(){
                        
                     </div>
                     <div class="content">
-                        <form method="POST" enctype="multipart/form-data" action="api/estate" nonvalidate>
-                            {%csrf_token%}
+                        <form method="POST" action="api/estate" nonvalidate>
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
