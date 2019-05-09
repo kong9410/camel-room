@@ -413,15 +413,20 @@ function placesSearchCB(data, status, pagination) {
 		removeAllChildNods(listEl);
 
 		// 지도에 표시되고 있는 마커를 제거합니다
-		removeMarker();
-		
+        removeMarker();
+        console.log('====================================================================');
+        console.log('<%=estate_list.length%>');
+        alert(pagination.current);
+        alert('<%=estate_list.length%>');
+
+        
 		<% for ( var i=0; i<estate_list.length; i++ ) { %>
 
 			// 마커를 생성하고 지도에 표시합니다
 			var placePosition = new daum.maps.LatLng(<%=estate_list[i].latitude%>, <%=estate_list[i].longitude%>),
-			marker = addMarker(placePosition, <%=i%>);
+			marker = addMarker(placePosition, <%=i%>),
 			itemEl = getListItem(<%=i%>, '<%=estate_list[i].title%>', '<%=estate_list[i].homeAddress%>', '<%=estate_list[i].houseType%>'); // 검색 결과 항목 Element를 생성합니다
-		
+            //alert('<%=estate_list[i].title%>');
 			// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
 			// LatLngBounds 객체에 좌표를 추가합니다
 			bounds.extend(placePosition);
@@ -482,11 +487,10 @@ function getListItem(index, place_title, place_address, place_type) {
 
     
     itemStr += '    <span>' +  place_address  + '</span>'; 
-    
-                 
+     
     itemStr += '  <span class="tel">' + place_type  + '</span>' +
-                '</div>';           
-
+                '</div>';  
+             
     el.innerHTML = itemStr;
     el.className = 'item';
 
@@ -518,33 +522,38 @@ function addMarker(position, idx, title) {
 function removeMarker() {
     for ( var i = 0; i < markers.length; i++ ) {
         markers[i].setMap(null);
+        
     }   
     markers = [];
 }
 
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
 function displayPagination(pagination) {
-	pagination.last = <%=estate_list.length%>/ 15 +1;
+    
+    pagination.last = <%=page_cnt%>;
+	
+    
     var paginationEl = document.getElementById('pagination'),
-        fragment = document.createDocumentFragment(),
-        i; 
-
+        fragment = document.createDocumentFragment();
+    
     // 기존에 추가된 페이지번호를 삭제합니다
     while (paginationEl.hasChildNodes()) {
         paginationEl.removeChild (paginationEl.lastChild);
     }
 
     for (i=1; i<=pagination.last; i++) {
-        var el = document.createElement('a');
-        el.href = "#";
-        el.innerHTML = i;
 
+        var el = document.createElement('a');
+        el.href = "/?curpage="+i;
+        el.innerHTML = i;
         if (i===pagination.current) {
             el.className = 'on';
+           
         } else {
             el.onclick = (function(i) {
                 return function() {
                     pagination.gotoPage(i);
+                    
                 }
             })(i);
         }
@@ -571,9 +580,7 @@ function removeAllChildNods(el) {
 }
 
 </script>
-<script>
-    document.getElementById("locate").value = x;
-</script>
+
 <!--   Core JS Files   -->
 <script src="/assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
 <script src="/assets/js/bootstrap.min.js" type="text/javascript"></script>

@@ -423,16 +423,13 @@ $(document).ready(function(){
 					geocoder.addressSearch(data.address, function(result, status) {
 
 						// 정상적으로 검색이 완료됐으면 
-						 if (status === daum.maps.services.Status.OK) {
-
-							
+						if (status === daum.maps.services.Status.OK) {
 							document.getElementById('latitude').value = result[0].y;
 							document.getElementById('longitude').value = result[0].x;
-							
 						} 
 					});
 					
-					
+			
                 }
             }).open({
                 left: (window.screen.width / 2) - (width/2),
