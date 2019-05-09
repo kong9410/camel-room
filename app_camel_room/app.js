@@ -57,6 +57,7 @@ app.use(express.static('public'));
 app.use('/', indexRouter);
 app.use('/api', userRouter);
 app.use('/api/estate', estateRouter);
+
 // [RUN SERVER]
 var server = app.listen(port, function(){
     console.log("Express server has started on port " + port)

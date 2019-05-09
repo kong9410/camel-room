@@ -59,7 +59,7 @@ mongoose.connect('mongodb://localhost/estate_db',{useNewUrlParser : true});
 		req.session.destroy();
 		var _url = req.url;
 		res.clearCookie('sid');
-		res.redirect(_url);
+		res.redirect('/');
 	});
 
 	//LOGIN FAIL

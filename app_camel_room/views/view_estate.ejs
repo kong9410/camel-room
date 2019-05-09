@@ -5,77 +5,60 @@
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="/assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
     <title>낙타의 공방</title>
-
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
-
-
     <!-- Bootstrap core CSS     -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-
     <!-- Animation library for notifications   -->
     <link href="/assets/css/animate.min.css" rel="stylesheet" />
-
     <!--  Light Bootstrap Table core CSS    -->
     <link href="/assets/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet" />
-
-
-    <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="/assets/css/demo.css" rel="stylesheet" />
-
-
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
     <style>
     .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
-.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-.map_wrap {position:relative;width:100%;height:500px;}
-#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
-.bg_white {background:#fff;}
-#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
-#menu_wrap .option{text-align: center;}
-#menu_wrap .option p {margin:10px 0;}  
-#menu_wrap .option button {margin-left:5px;}
-#placesList li {list-style: none;}
-#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
-#placesList .item span {display: block;margin-top:4px;}
-#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-#placesList .item .info{padding:10px 0 10px 55px;}
-#placesList .info .gray {color:#8a8a8a;}
-#placesList .info .jibun {padding-left:26px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
-#placesList .info .tel {color:#009900;}
-#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
-#placesList .item .marker_1 {background-position: 0 -10px;}
-#placesList .item .marker_2 {background-position: 0 -56px;}
-#placesList .item .marker_3 {background-position: 0 -102px}
-#placesList .item .marker_4 {background-position: 0 -148px;}
-#placesList .item .marker_5 {background-position: 0 -194px;}
-#placesList .item .marker_6 {background-position: 0 -240px;}
-#placesList .item .marker_7 {background-position: 0 -286px;}
-#placesList .item .marker_8 {background-position: 0 -332px;}
-#placesList .item .marker_9 {background-position: 0 -378px;}
-#placesList .item .marker_10 {background-position: 0 -423px;}
-#placesList .item .marker_11 {background-position: 0 -470px;}
-#placesList .item .marker_12 {background-position: 0 -516px;}
-#placesList .item .marker_13 {background-position: 0 -562px;}
-#placesList .item .marker_14 {background-position: 0 -608px;}
-#placesList .item .marker_15 {background-position: 0 -654px;}
-#pagination {margin:10px auto;text-align: center;}
-#pagination a {display:inline-block;margin-right:10px;}
-#pagination .on {font-weight: bold; cursor: default;color:#777;}
+    .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+    .map_wrap {position:relative;width:100%;height:500px;}
+    #menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+    .bg_white {background:#fff;}
+    #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+    #menu_wrap .option{text-align: center;}
+    #menu_wrap .option p {margin:10px 0;}  
+    #menu_wrap .option button {margin-left:5px;}
+    #placesList li {list-style: none;}
+    #placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+    #placesList .item span {display: block;margin-top:4px;}
+    #placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+    #placesList .item .info{padding:10px 0 10px 55px;}
+    #placesList .info .gray {color:#8a8a8a;}
+    #placesList .info .jibun {padding-left:26px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+    #placesList .info .tel {color:#009900;}
+    #placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+    #placesList .item .marker_1 {background-position: 0 -10px;}
+    #placesList .item .marker_2 {background-position: 0 -56px;}
+    #placesList .item .marker_3 {background-position: 0 -102px}
+    #placesList .item .marker_4 {background-position: 0 -148px;}
+    #placesList .item .marker_5 {background-position: 0 -194px;}
+    #placesList .item .marker_6 {background-position: 0 -240px;}
+    #placesList .item .marker_7 {background-position: 0 -286px;}
+    #placesList .item .marker_8 {background-position: 0 -332px;}
+    #placesList .item .marker_9 {background-position: 0 -378px;}
+    #placesList .item .marker_10 {background-position: 0 -423px;}
+    #placesList .item .marker_11 {background-position: 0 -470px;}
+    #placesList .item .marker_12 {background-position: 0 -516px;}
+    #placesList .item .marker_13 {background-position: 0 -562px;}
+    #placesList .item .marker_14 {background-position: 0 -608px;}
+    #placesList .item .marker_15 {background-position: 0 -654px;}
+    #pagination {margin:10px auto;text-align: center;}
+    #pagination a {display:inline-block;margin-right:10px;}
+    #pagination .on {font-weight: bold; cursor: default;color:#777;}
     </style>
 </head>
 <body>
-	
-    <!--daum api-->
-   
-    <!--modal popup-->
-	
-	
+    <!--LOGIN MODAL-->
     <div class="modal" id="loginModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -95,7 +78,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -105,8 +87,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <button type="submit" class="btn btn-info btn-fill pull-right">Login</button>
                                 <div class="clearfix"></div>
                             </form>
@@ -116,16 +96,21 @@
             </div>
         </div>
     </div>
+    <!--LOGIN MODAL END-->
+    <!--VIEW ESTATE MODAL-->
+    <div id="viewEstateModal" class="modal">
+        <span class="close">&times;</span>
+        <p>Some text in the Modal</p>
+    </div>
+    <!--END ESTATE MODAL-->
 
-    <!--Modal End-->
 
     <div class="wrapper">
         <div class="sidebar" data-color="orange" data-image="assets/img/sidebar-2.jpg">
-
             <!--
-        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
-        Tip 2: you can also add an image using data-image tag
-    -->
+            Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+            Tip 2: you can also add an image using data-image tag
+            -->
 
             <div class="sidebar-wrapper">
                 <div class="logo">
@@ -133,7 +118,6 @@
                         CAMEL'S WORKSPACE
                     </a>
                 </div>
-
                 <ul class="nav">
                     <li class="active">
                         <a href="/">
@@ -148,18 +132,12 @@
                         </a>
                     </li>
                     <li>
-                    <% if(check_ses){%>
+                    <% if(check_ses){%> 
                         <a href="estate">
                             <i class="pe-7s-bell"></i>
                             <p>부동산 등록</p>
                         </a>
                     <%}%>
-                    </li>
-                    <li class="active-pro">
-                        <a href="upgrade.html">
-                            <i class="pe-7s-rocket"></i>
-                            <p>Upgrade to PRO</p>
-                        </a>
                     </li>
                 </ul>
             </div>
@@ -174,12 +152,8 @@
                     <div class="collapse navbar-collapse">
                         <form>
                             <ul class="nav navbar-nav navbar-left">
-
                                 <li>
-
                                     <input type="text" class="form-control" placeholder="도로명 주소" value="road_address">
-
-
                                 </li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -420,7 +394,7 @@ function placesSearchCB(data, status, pagination) {
 			// 마커를 생성하고 지도에 표시합니다
 			var placePosition = new daum.maps.LatLng(<%=estate_list[i].latitude%>, <%=estate_list[i].longitude%>),
 			marker = addMarker(placePosition, <%=i%>);
-			itemEl = getListItem(<%=i%>, '<%=estate_list[i].title%>', '<%=estate_list[i].homeAddress%>', '<%=estate_list[i].houseType%>'); // 검색 결과 항목 Element를 생성합니다
+			itemEl = getListItem(<%=i%>, '<%=estate_list[i].title%>', '<%=estate_list[i].homeAddress%>', '<%=estate_list[i].houseType%>', '<%=estate_list[i].estate_id%>'); // 검색 결과 항목 Element를 생성합니다
 		
 			// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
 			// LatLngBounds 객체에 좌표를 추가합니다
@@ -453,7 +427,7 @@ function placesSearchCB(data, status, pagination) {
 			})(marker, '<%=estate_list[i].title%>');
 
 			fragment.appendChild(itemEl);
-		<%}%>
+		<% } %>
 
 		// 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
 		listEl.appendChild(fragment);
@@ -473,20 +447,16 @@ function placesSearchCB(data, status, pagination) {
 
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
-function getListItem(index, place_title, place_address, place_type) {
+function getListItem(index, place_title, place_address, place_type, place_id) {
 
     var el = document.createElement('li'),
     itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
                 '<div class="info">' +
-                '   <h5>' + place_title + '</h5>';
-
-    
+                '   <a id="viewEstateModal" href="lookaround/'+place_id+'"><h5>' + place_title + '</h5>';
     itemStr += '    <span>' +  place_address  + '</span>'; 
-    
-                 
+    itemStr += "<button class='btn' >MARK</button>";        
     itemStr += '  <span class="tel">' + place_type  + '</span>' +
-                '</div>';           
-
+                '</div>';
     el.innerHTML = itemStr;
     el.className = 'item';
 
@@ -524,7 +494,7 @@ function removeMarker() {
 
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
 function displayPagination(pagination) {
-	pagination.last = <%=estate_list.length%>/ 15 +1;
+	pagination.last = <%= estate_list.length %> / 15 +1;
     var paginationEl = document.getElementById('pagination'),
         fragment = document.createDocumentFragment(),
         i; 
@@ -588,9 +558,6 @@ function removeAllChildNods(el) {
 
 <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 <script src="/assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
-
-<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-<script src="/assets/js/demo.js"></script>
 
 <script type="text/javascript">
 </script>

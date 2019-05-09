@@ -37,9 +37,9 @@ router.post('/', upload.single('estateFile'), function(req, res){
     estate.years = req.body.years;
     estate.writer = req.body.writer;
 	estate.latitude = req.body.latitude;
-	estate.longitude = req.body.longitude;
+    estate.longitude = req.body.longitude;
+    estate.estate_id = new Date().valueOf()+estate.writer[0]+estate.writer[1]+estate.writer[2];
     console.log(estate);
-    console.log(req.body.writer);
     estate.save(function(err){
         if(err){
             console.error(err);

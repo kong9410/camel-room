@@ -18,7 +18,8 @@ var estateSchema = new Schema({
     years:String,
     writer:String,
     latitude : Number,
-	longitude : Number
+    longitude : Number,
+    estate_id : String,
 }, { versionKey: false });
 
 module.exports = mongoose.model('estate', estateSchema);
