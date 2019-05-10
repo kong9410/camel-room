@@ -9,7 +9,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>South - Real Estate Agency Template | Contact</title>
+    <title>낙타의 공방 - 매물 등록</title>
 
     <!-- Favicon  -->
     <link rel="icon" href="assets/img/core-img/favicon.ico">
@@ -99,62 +99,159 @@
                 <!-- Contact Form Area -->
                 <div class="col-12 col-lg-12">
                     <div class="contact-form">
-                        <form action="api/User" name="signup_form" method="post">
-                            <div class="form-group">
-                                <label>개인정보 수집 이용 동의</label><br>
-                                <textarea rows="5" class="form-control" readonly="readonly">① 개인정보의 수집·이용목적 : 예시) 포인트 적립, 입시상담, 급여관리, ...
-② 수집하려는 개인정보의 항목 : 예시) 성명, 번화번호, 주소, 이메일, 학년, ...
-③ 개인정보의 보유 및 이용기간(근거법률) : 예시)1년, 수강기간, 퇴사후 3년, ...
-거래기록 : 5년(전자상거래 등에서의 소비자 보호에 관한 법률)
-④ 동의를 거부할 수 있으며, 동의 거부시 낙타의 공방 서비스가 일부 제공되지 않습니다</textarea>
-                                            ※위 개인정보 수집이용에 동의하십니까? 
-                                <input type="radio" name="user_info" value="agree"
-                                    required />동의 <input type="radio" name="user_info" value="disagree" />거부
-                            </div>
-                            <div class="form-group">
-                                <label>개인정보 제3자 제공에 대한 별도 동의</label><br>
-                                <textarea rows="5" class="form-control" readonly="readonly">① 개인정보를 제공받는 자 : 예시) ○○본사
-② 개인정보를 제공받는 자의 개인정보 이용 목적 : 예시)고객 관리 및 포인트 관리
-③ 제공하는 개인정보의 항목 : 성명, 전화번호, 생년월일
-④ 개인정보를 제공받는 자의 개인정보 보유 및 이용 기간 : 제공 후 1년
-⑤ 동의를 거부할 수 있으며, 동의 거부시 낙타의 공방 서비스가 일부 제공되지 않습니다.</textarea>
-                                    ※위 개인정보의 제3자 제공에 동의하십니까? 
-                            <input type="radio" name="third_user_info"
-                                value="agree" required />동의 <input type="radio" name="third_user_info"
-                                value="disagree" />거부
-                            </div>
-                            <br><br><br>
-                            <div class="form-group col-6">
-                                <label>이메일</label>
-                                <input type="email" class="form-control" name="email" id="contact-email" placeholder="이메일 주소">
-                            </div>
-                            <div class="form-group col-6">
-                                <label>비밀번호</label>
-                                <input type="password" class="form-control" name="password" id="contact-email" placeholder="비밀번호">
-                            </div>
-                            <div class="form-group col-6">
-                                <label>이름</label>
-                                <input type="username" class="form-control" name="realname" id="contact-email" placeholder="이름">
-                            </div>
-                            <div class="form-group col-8">
-                                <label>전화번호</label>
-                                <input type="telephone" class="form-control" name="tel" id="contact-email" placeholder="전화번호">
-                            </div>
-                            <div class="form-group col-8">
-                                <label>생년월일</label>
-                                <input type="date" class="form-control" name="dob" id="contact-email" placeholder="생일">
-                            </div>
-                            <div class="form-group col-12">
-                                <div class="input-group">
-                                    <label>도로명 주소</label>
-                                    <input type="text" class="form-control" id="address" name="road_address" id="contact-email" placeholder="도로명 주소" onclick="fn_setAddr()" readonly>
+                        <form action="api/estate" enctype="multipart/form-data" name="signup_form" method="post">
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <div class="form-group">
+                                        <label>제목</label>
+                                        <input type="text" class="form-control" placeholder="TITLE" value="충북대 1시간 거리" name="title">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group col-12">
-                                <label>상세 주소</label>
-                                    <input type="text" class="form-control" name="detail_address" id="contact-email" placeholder="상세 주소">
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <div class="form-group">
+                                        <label>사진</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                                            </div>
+                                            <div class="custom-file">
+                                                <input type="file" name="estateFile" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            <button type="submit" class="btn south-btn">회원가입하기</button>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>주거 구분</label><br>
+                                        <div>
+                                            <select class="form-control" name="houseType">
+                                                <option>주택</option>
+                                                <option>아파트</option>
+                                                <option>오피스텔</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                            <label>구분</label><br>
+                                            <select class="form-control" name="contractTag">
+                                                <option>전세</option>
+                                                <option>월세</option>
+                                                <option>매매</option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>가격 (만원)</label>
+                                        <input type="number" class="form-control" placeholder="price" value="10000" name="price">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>보증금 (만원)</label>
+                                        <input type="number" class="form-control" placeholder="price" value="100" name="deposit">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <div class="form-group">
+                                        <label>주소</label><br>
+                                            <input type="text" id="roadAddress" class="form-control" placeholder="Road Address" name="roadAddress"
+                                                readonly onclick="fn_setAddr()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label>상세주소</label><br>
+                                        <input type="text" name="detailAddress" class="form-control" placeholder="Detail Address" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <label>평수</label>
+                                        <input type="number" class="form-control" placeholder="Size" name="roomSize">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>방 개수</label><br>
+                                        <div>
+                                            <select class="form-control" name="rooms">
+                                                <option>원룸</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                                <option>10이상</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <label>화장실</label><br>
+                                        <div>
+                                            <select class="form-control" name="toilet">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>3이상</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <label>층수</label><br>
+                                        <div>
+                                            <select class="form-control" name="floors">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7 이상</option>
+                                                <option>반지하</option>
+                                                <option>옥탑방</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <label>건물연식</label><br>
+                                        <div>
+                                            <input class="form-control" type="text" placeholder="1994" name="years">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <input type="hidden" value="<%=check_ses %>" name="writer">
+                                    <input type="hidden" id="latitude" name="latitude">
+                                    <input type="hidden" id="longitude" name="longitude">
+                                </div>
+                            
+                            </div>
+                            <button type="submit" class="btn south-btn">등록 완료</button>
                         </form>
                     </div>
                 </div>
@@ -286,6 +383,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <!-- Active js -->
     <script src="assets/js/active.js"></script>
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c749c8a6c8049131a0f238101adf5004&libraries=services"></script>
     <script>
     function fn_setAddr(){
         //팝업 창 크기
@@ -295,7 +393,21 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         daum.postcode.load(function(){
             new daum.Postcode({
                 oncomplete: function(data){
-                    document.getElementById('address').value = data.address;
+                    document.getElementById('roadAddress').value = data.address;
+					var geocoder = new daum.maps.services.Geocoder();
+					geocoder.addressSearch(data.address, function(result, status) {
+
+						// 정상적으로 검색이 완료됐으면 
+						if (status === daum.maps.services.Status.OK) {
+							document.getElementById('latitude').value = result[0].y;
+							document.getElementById('longitude').value = result[0].x;
+                        }
+                        else{
+                            document.getElementById('latitude').value = 0;
+							document.getElementById('longitude').value = 0;
+                        } 
+					});
+					
                 }
             }).open({
                 left: (window.screen.width / 2) - (width/2),

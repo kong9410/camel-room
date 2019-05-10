@@ -43,10 +43,10 @@ router.post('/', upload.single('estateFile'), function(req, res){
     estate.save(function(err){
         if(err){
             console.error(err);
-            res.redirect('/estate');
+            res.redirect('/property');
             return;
         }
-        res.redirect('/');
+        res.redirect('/property');
     });
 });
 
