@@ -245,9 +245,20 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <input type="hidden" value="<%=check_ses %>" name="writer">
-                                    <input type="hidden" id="latitude" name="latitude">
-                                    <input type="hidden" id="longitude" name="longitude">
+                                    <input type="hidden" value="<%=check_ses %>" name="writer"/>
+                                    <input type="hidden" id="latitude" name="latitude"/>
+                                    <input type="hidden" id="longitude" name="longitude"/>
+                                    <input type="hidden" id="school" name="school"/>
+                                    <input type="hidden" id="kindergarten" name="kindergarten"/>
+                                    <input type="hidden" id="academy" name="academy"/>
+                                    <input type="hidden" id="subway" name="subway"/>
+                                    <input type="hidden" id="hospital" name="hospital"/>
+                                    <input type="hidden" id="pharmacy" name="pharmacy"/>
+                                    <input type="hidden" id="mart" name="mart"/>
+                                    <input type="hidden" id="convenience" name="convenience"/>
+                                    <input type="hidden" id="culture" name="culture"/>
+                                    <input type="hidden" id="cafe" name="cafe"/>
+                                    <input type="hidden" id="food" name="food"/>
                                 </div>
                             
                             </div>
@@ -259,6 +270,7 @@
         </div>
     </section>
 
+    <div id="map" style="width:280px;height:280px; visibility: hidden"></div>
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(img/bg-img/cta.jpg);">
         <!-- Main Footer Area -->
@@ -385,12 +397,19 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c749c8a6c8049131a0f238101adf5004&libraries=services"></script>
     <script>
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new daum.maps.LatLng(37.6163101099831, 127.030400470686), // 지도의 중심좌표
+        level: 4 // 지도의 확대 레벨
+    };    
+    var map = new daum.maps.Map(mapContainer, mapOption);
+
     function fn_setAddr(){
         //팝업 창 크기
         var width = 500;
         var height = 600;
-
         daum.postcode.load(function(){
+        
             new daum.Postcode({
                 oncomplete: function(data){
                     document.getElementById('roadAddress').value = data.address;
@@ -400,20 +419,104 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 						// 정상적으로 검색이 완료됐으면 
 						if (status === daum.maps.services.Status.OK) {
 							document.getElementById('latitude').value = result[0].y;
-							document.getElementById('longitude').value = result[0].x;
+                            document.getElementById('longitude').value = result[0].x;
+                            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                            mapOption = {
+                                center: new daum.maps.LatLng(result[0].y, result[0].x), // 지도의 중심좌표
+                                level: 4 // 지도의 확대 레벨
+                            };    
+                            var map = new daum.maps.Map(mapContainer, mapOption);
+                            var ps = new daum.maps.services.Places(map); 
+
+                            // 교육테마
+                            // 학교 검색
+                            ps.categorySearch('SC4', placesSearchCB1, {useMapBounds:true}); 
+                            function placesSearchCB1 (data, status, pagination) {
+                                
+                                //alert(data.length);
+                                document.getElementById('school').value = data.length;
+                            }
+                            // 어린이집,유치원 검색
+                            ps.categorySearch('PS3', placesSearchCB2, {useMapBounds:true}); 
+                            function placesSearchCB2 (data, status, pagination) {
+                                document.getElementById('kindergarten').value = data.length;
+                                //alert(data.length);        
+                            }
+                            // 학원검색
+                            ps.categorySearch('AC5', placesSearchCB3, {useMapBounds:true}); 
+                            function placesSearchCB3 (data, status, pagination) {
+                                document.getElementById('academy').value = data.length;
+                                //alert(data.length);        
+                            }
+
+                            // 교통테마
+                            // 지하철 검색
+                            ps.categorySearch('SW8', placesSearchCB4, {useMapBounds:true}); 
+                            function placesSearchCB4 (data, status, pagination) {
+                                document.getElementById('subway').value = data.length;
+                               //alert(data.length);        
+                            }
+                            // 지하철 검색
+
+                            // 건강테마
+                            // 병원 검색
+                            ps.categorySearch('HP8', placesSearchCB6, {useMapBounds:true}); 
+                            function placesSearchCB6 (data, status, pagination) {
+                                document.getElementById('hospital').value = data.length;
+                                //alert(data.length);        
+                            }
+                            // 약국 검색
+                            ps.categorySearch('PM9', placesSearchCB7, {useMapBounds:true}); 
+                            function placesSearchCB7 (data, status, pagination) {
+                                document.getElementById('pharmacy').value = data.length;
+                                //alert(data.length);        
+                            }
+
+                            // 편의 테마
+                            // 대형마트 검색
+                            ps.categorySearch('MT1', placesSearchCB8, {useMapBounds:true}); 
+                            function placesSearchCB8 (data, status, pagination) {
+                                document.getElementById('mart').value = data.length;
+                                //alert(data.length);        
+                            }
+                            // 편의점 검색
+                            ps.categorySearch('CS2', placesSearchCB9, {useMapBounds:true}); 
+                            function placesSearchCB9 (data, status, pagination) {
+                                
+                                document.getElementById('convenience').value = data.length;
+                               // alert(data.length);        
+                            }
+                            // 문화시설 검색
+                            ps.categorySearch('CT1', placesSearchCB10, {useMapBounds:true}); 
+                            function placesSearchCB10 (data, status, pagination) {
+                                document.getElementById('culture').value = data.length;
+                                //alert(data.length);        
+                            }
+                            // 카페 검색
+                            ps.categorySearch('CE7', placesSearchCB11, {useMapBounds:true}); 
+                            function placesSearchCB11 (data, status, pagination) {
+                                document.getElementById('cafe').value = data.length;
+                                //alert(data.length);        
+                            }
+                            // 음식점 검색
+                            ps.categorySearch('FD6', placesSearchCB12, {useMapBounds:true}); 
+                            function placesSearchCB12 (data, status, pagination) {
+                                document.getElementById('food').value = data.length;
+                                //alert(data.length);        
+                            }
                         }
                         else{
-                            document.getElementById('latitude').value = 0;
-							document.getElementById('longitude').value = 0;
+                                document.getElementById('latitude').value = 0;
+                                document.getElementById('longitude').value = 0;
                         } 
-					});
-					
+                    });
+                        
                 }
-            }).open({
-                left: (window.screen.width / 2) - (width/2),
-                top: (window.screen.height / 2) - (height / 2)
+                }).open({
+                    left: (window.screen.width / 2) - (width/2),
+                    top: (window.screen.height / 2) - (height / 2)
+                });
             });
-        });
     }
     </script>
 </body>
