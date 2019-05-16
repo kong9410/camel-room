@@ -348,7 +348,7 @@
                 <!-- Single Featured Property -->
                 <% for ( var i=0; i < estate_list.length%6; i++ ) { %>
                 <div class="col-12 col-md-6 col-xl-4">
-                    <div class="single-featured-property mb-50" data-toggle="modal" data-target="#propertyModal" id="single-property<%=i%>" onclick="propertyInfo('<%=i%>')">
+                    <div class="single-featured-property mb-50" id="single-property<%=i%>" onclick="propertyInfo('<%=estate_list[i].estate_id%>')">
                         <!-- Property Thumbnail -->
                         <div class="property-thumb">
                             <img src="uploads/<%=estate_list[i].saveFileName%>" alt="">
@@ -440,24 +440,6 @@
     </div>
     <!--LOGIN MODAL END-->
 
-    <!--SINGLE PROPERTY MODAL-->
-    <div class="modal" id="propertyModal" tabindex=10 role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title w-100" id="propertyModalLabel">property</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--SINGLE PROPERTY MODAL END-->
-
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="assets/js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
@@ -492,6 +474,7 @@
     var autocomplete = new google.maps.places.Autocomplete(search, options);
     // 매물 목록 클릭 함수
     function propertyInfo(num) {
+        location.href = "/single-property/id="+num;
     }
 
     // 마커를 담을 배열입니다

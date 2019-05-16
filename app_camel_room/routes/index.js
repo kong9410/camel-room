@@ -65,9 +65,10 @@ router.get('/property', function (req, res) {
 		}		
 	});
 });
-router.use('/lookaround/:id', express.static('uploads'));
-router.get('/lookaround/:id', function(req, res){
+router.use('/single-property/:id', express.static('public'))
+router.get('/single-property/:id', function(req, res){
 	var estate_id = req.params.id;
+	/*
 	var cursor = db.collection("estates").findOne({estate_id:estate_id}).then(function(result){
 		estate_info = {
 			title:result.title,
@@ -101,6 +102,8 @@ router.get('/lookaround/:id', function(req, res){
 			res.render('lookaround.ejs', {estate : estate_info, check_ses: 0});
 		}
 	});
+	*/
+	res.render('single-property.ejs', {check_ses: req.session.email})
 });
 
 // [THEME]
