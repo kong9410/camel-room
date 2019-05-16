@@ -864,7 +864,17 @@ img {
   overflow: hidden; }
   .single-featured-property .property-thumb {
     position: relative;
-    z-index: 1; }
+    z-index: 1; 
+    }
+    .single-featured-property .property-thumb img{
+      position: relative;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      width: 100%;
+      max-height: 235px;
+    }
     .single-featured-property .property-thumb .tag span {
       height: 35px;
       padding: 0 20px;
@@ -1862,6 +1872,7 @@ img {
 
 .custom-map-writer{
   position:relative;
+  padding-top:200px;
   margin:5% auto;
 }
 .custom-btn{

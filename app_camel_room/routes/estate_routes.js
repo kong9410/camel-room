@@ -8,7 +8,7 @@ var PATH            = require('path');
 var upload          = multer({
     storage: multer.diskStorage({
         destination: function(req, file, cb){
-            cb(null, './uploads/');
+            cb(null, './public/uploads');
         },
         filename: function(req, file, cb){
             cb(null, new Date().valueOf() + file.originalname);

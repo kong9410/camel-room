@@ -19,6 +19,7 @@ var estateSchema = new Schema({
     writer:String,
     latitude : Number,
     longitude : Number,
+    views : Number,
     estate_id : String,
 }, { versionKey: false });
 

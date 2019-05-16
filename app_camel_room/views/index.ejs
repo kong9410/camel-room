@@ -126,76 +126,69 @@
                             <p>Search for your home</p>
                         </div>
                         <!-- Search Form -->
-                        <form action="#" method="post" id="advanceSearch">
+                        <form action="/search" method="post" id="advanceSearch">
                             <div class="row">
 
-                                <div class="col-12 col-md-4 col-lg-3">
+                                <div class="col-12 col-md-4 col-lg-12">
                                     <div class="form-group">
-                                        <input type="input" class="form-control" name="input" placeholder="Keyword">
+                                        <input type="input" class="form-control" name="title" placeholder="제목">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-12">
+                                    <div class="form-group">
+                                        <input id="search" type="input" class="form-control" name="address" placeholder="주소" autocomplete=off required>
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-md-4 col-lg-3">
                                     <div class="form-group">
-                                        <select class="form-control" id="cities">
-                                            <option>모든 지역</option>
-                                            <option>서울</option>
-                                            <option>경기도</option>
-                                            <option>강원도</option>
-                                            <option>충청북도</option>
-                                            <option>충청남도</option>
-                                            <option>경상북도</option>
-                                            <option>경상남도</option>
-                                            <option>전라북도</option>
-                                            <option>전라남도</option>
-                                            <option>제주도</option>
-                                            <option>울릉도</option>
+                                        <select class="form-control" id="cities" name="contract">
+                                            <option>계약 유형</option>
+                                            <option>전세</option>
+                                            <option>월세</option>
+                                            <option>매매</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-md-4 col-lg-3">
                                     <div class="form-group">
-                                        <select class="form-control" id="catagories">
-                                            <option>All Catagories</option>
-                                            <option>Apartment</option>
-                                            <option>Bar</option>
-                                            <option>Farm</option>
-                                            <option>House</option>
-                                            <option>Store</option>
+                                        <select class="form-control" id="catagories" name="catagories">
+                                            <option>주거 형태</option>
+                                            <option>아파트</option>
+                                            <option>주택</option>
+                                            <option>오피스텔</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-md-4 col-lg-3">
                                     <div class="form-group">
-                                        <select class="form-control" id="offers">
-                                            <option>All Offers</option>
-                                            <option>100% OFF</option>
-                                            <option>75% OFF</option>
-                                            <option>50% OFF</option>
-                                            <option>25% OFF</option>
-                                            <option>10% OFF</option>
+                                        <select class="form-control" id="floors" name="floors">
+                                            <option>모든 층</option>
+                                            <option>1층</option>
+                                            <option>2층</option>
+                                            <option>3층</option>
+                                            <option>4층</option>
+                                            <option>5층</option>
+                                            <option>6층</option>
+                                            <option>7층 이상</option>
+                                            <option>반지하</option>
+                                            <option>옥탑방</option>
                                         </select>
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-4 col-xl-3">
+                                <div class="col-12 col-md-4 col-lg-3">
                                     <div class="form-group">
-                                        <select class="form-control" id="listings">
-                                            <option>All Listings</option>
-                                            <option>Listings 1</option>
-                                            <option>Listings 2</option>
-                                            <option>Listings 3</option>
-                                            <option>Listings 4</option>
-                                            <option>Listings 5</option>
-                                        </select>
+                                        <input type="number" class="form-control" name="years" placeholder="건물 연식">
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-md-4 col-xl-2">
                                     <div class="form-group">
-                                        <select class="form-control" id="bedrooms">
+                                        <select class="form-control" id="bedrooms" name="bedrooms">
                                             <option>Bedrooms</option>
                                             <option>1</option>
                                             <option>2</option>
@@ -208,7 +201,7 @@
 
                                 <div class="col-12 col-md-4 col-xl-2">
                                     <div class="form-group">
-                                        <select class="form-control" id="bathrooms">
+                                        <select class="form-control" id="bathrooms" name="bathrooms">
                                             <option>Bathrooms</option>
                                             <option>1</option>
                                             <option>2</option>
@@ -219,27 +212,17 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-8 col-lg-12 col-xl-5 d-flex">
-                                    <!-- Space Range -->
-                                    <div class="slider-range">
-                                        <div data-min="120" data-max="820" data-unit=" sq. ft" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="120" data-value-max="820">
-                                            <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                        </div>
-                                        <div class="range">120 sq. ft - 820 sq. ft</div>
-                                    </div>
-
-                                    <!-- Distance Range -->
-                                    <div class="slider-range">
-                                        <div data-min="10" data-max="1300" data-unit=" mil" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="10" data-value-max="1300">
-                                            <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                        </div>
-                                        <div class="range">10 mil - 1300 mil</div>
+                                <div class="col-12 col-md-4 col-xl-2">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" name="min_size" placeholder="최소 평수">
                                     </div>
                                 </div>
+                                -
+                                <div class="col-12 col-md-4 col-xl-2">
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" name="max_size" placeholder="최대 평수">
+                                        </div>
+                                    </div>
 
                                 <div class="col-12 search-form-second-steps">
                                     <div class="row">
@@ -717,6 +700,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <!-- Active js -->
     <script src="assets/js/active.js"></script>
     <script src="assets/js/modal.js"></script>
+    <!--구글 주소 api -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDo5kj9hCe7psH0BHSVK62kT3h9TcGS9qM&region=KR"></script>
 </body>
-
+<script>
+    //주소 검색 자동완성
+    var search = $("#search").get(0);
+    var options = {
+        componentRestrictions: { country: 'kor' },
+        type: ['(cities)'],
+        language: "ko"
+    };
+    var autocomplete = new google.maps.places.Autocomplete(search, options);
+</script>
 </html>

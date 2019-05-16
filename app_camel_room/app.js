@@ -50,6 +50,7 @@ var port = process.env.PORT || 3000;
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user_routes')
 var estateRouter = require('./routes/estate_routes');
+var searchRouter = require('./routes/search_routes');
 
 
 // [APP USE]
@@ -57,6 +58,7 @@ app.use(express.static('public'));
 app.use('/', indexRouter);
 app.use('/api', userRouter);
 app.use('/api/estate', estateRouter);
+app.use('/search', searchRouter);
 
 // [RUN SERVER]
 var server = app.listen(port, function(){
