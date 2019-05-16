@@ -989,9 +989,9 @@ function placesSearchCB(data, status, pagination) {
 function getListItem(index, place_title, place_address, place_type, place_id) {
 
     var el = document.createElement('li'),
-    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
+    itemStr = '<a href= "/property_view?property_id=' +place_id+ '"><span class="markerbg marker_' + (index+1) + '"></span></a>' +
                 '<div class="info">' +
-                '   <a id="viewEstate" data-toggle="modal" data-target=".viewEstateModal" href="'+'"><h5>' + place_title + '</h5>';
+                '   <a id="viewEstate" data-toggle="modal" data-target=".viewEstateModal" href="/'+ '"><h5>' + place_title + '</h5>';
     itemStr += '    <span>' +  place_address  + '</span>'; 
     itemStr += "<button class='btn' >MARK</button>";        
     itemStr += '  <span class="tel">' + place_type  + '</span>' +

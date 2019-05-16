@@ -75,7 +75,13 @@ router.get('/lookaround/:id', function(req, res){
 			writer: result.writer,
 			latitude : result.latitude,
 			longitude : result.longitude,
-			estate_id : result.estate_id
+			estate_id : result.estate_id,
+			safe_value : result.safe_value,
+			popular_value : result.popular_value,
+			traffic_value : result.traffic_value,
+			education_value : result.education_value,
+			healthy_value : result.healthy_value,
+			convenience_value : result.convenience_value
 		};
 		if(req.session.email){
 			res.render('lookaround.ejs', {estate : estate_info, check_ses: req.session.email});
@@ -84,8 +90,8 @@ router.get('/lookaround/:id', function(req, res){
 		}
 	});
 });
-	
-	
+
+
 router.get('/theme', function (req, res) {
 	if(req.session.email){
 		res.render('theme.ejs',{check_ses: req.session.email} );

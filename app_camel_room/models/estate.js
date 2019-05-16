@@ -20,6 +20,12 @@ var estateSchema = new Schema({
     latitude : Number,
     longitude : Number,
     estate_id : String,
+    safe_value : Number,
+    popular_value : Number,
+    education_value : Number,
+    traffic_value : Number,
+    healthy_value : Number,
+    convenience_value : Number
 }, { versionKey: false });
 
 module.exports = mongoose.model('estate', estateSchema);
