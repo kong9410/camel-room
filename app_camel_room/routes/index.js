@@ -68,7 +68,7 @@ router.get('/property', function (req, res) {
 router.use('/single-property/:id', express.static('public'))
 router.get('/single-property/:id', function(req, res){
 	var estate_id = req.params.id;
-	/*
+	console.log(estate_id)
 	var cursor = db.collection("estates").findOne({estate_id:estate_id}).then(function(result){
 		estate_info = {
 			title:result.title,
@@ -81,7 +81,7 @@ router.get('/single-property/:id', function(req, res){
 			roadAddress: result.roadAddress,
 			detailAddress: result.detailAddress,
 			roomSize: result.roomSize,
-			rooms: result.romms,
+			rooms: result.rooms,
 			toilet: result.toilet,
 			floors: result.floors,
 			years: result.years,
@@ -97,13 +97,11 @@ router.get('/single-property/:id', function(req, res){
 			convenience_value : result.convenience_value
 		};
 		if(req.session.email){
-			res.render('lookaround.ejs', {estate : estate_info, check_ses: req.session.email});
+			res.render('single-property.ejs', {estate : estate_info, check_ses: req.session.email});
 		}else{
-			res.render('lookaround.ejs', {estate : estate_info, check_ses: 0});
+			res.render('single-property.ejs', {estate : estate_info, check_ses: 0});
 		}
 	});
-	*/
-	res.render('single-property.ejs', {check_ses: req.session.email})
 });
 
 // [THEME]

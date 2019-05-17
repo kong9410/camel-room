@@ -3,8 +3,7 @@ var Schema = mongoose.Schema;
 
 var estateSchema = new Schema({
     title:String,
-    orgFileName : String,
-    saveFileName : String,
+    saveFileName : [String],
     houseType:String,
     contractTag:String,
     price:Number,
@@ -14,7 +13,7 @@ var estateSchema = new Schema({
     roomSize:Number,
     rooms:String,
     toilet:Number,
-    floors:Number,
+    floors:String,
     years:String,
     writer:String,
     latitude : Number,

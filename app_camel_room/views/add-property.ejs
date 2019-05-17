@@ -112,15 +112,7 @@
                                 <div class="col-md-11">
                                     <div class="form-group">
                                         <label>사진</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                            </div>
-                                            <div class="custom-file">
-                                                <input type="file" name="estateFile" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                            </div>
-                                        </div>
+                                        <input type="file" name="estateFile" class="btn" id="inputGroupFile01" accept="image/*" multiple required>
                                     </div>
                                 </div>
                             </div>
@@ -262,7 +254,7 @@
                                 </div>
                             
                             </div>
-                            <button type="submit" class="btn south-btn">등록 완료</button>
+                            <button id="sumbit_estate" type="submit" class="btn south-btn">등록 완료</button>
                         </form>
                     </div>
                 </div>
@@ -403,7 +395,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         level: 4 // 지도의 확대 레벨
     };    
     var map = new daum.maps.Map(mapContainer, mapOption);
-
+    function submitEstate(){
+        
+    }
     function fn_setAddr(){
         //팝업 창 크기
         var width = 500;
