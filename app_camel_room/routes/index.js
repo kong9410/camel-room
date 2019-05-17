@@ -17,12 +17,14 @@ router.get('/', function (req, res) {
 		res.render('index.ejs', {check_ses: 0});
 });
 
-// [PROPERTY]
+// [PROPERTY] +[Recommend]
 router.get('/property', function (req, res) {
 	var cursor = db.collection("estates").find({}).toArray(function (err, result) {
+		
 		//에러처리
 		if (err) throw err;
-
+		var list = new Array();
+		var page_length;
 		//현재 페이지
 		var cur_page;
 		if (req.query.curpage == null) {
@@ -31,10 +33,6 @@ router.get('/property', function (req, res) {
 		else {
 			cur_page = req.query.curpage;
 		}
-
-
-		var list = new Array();
-		var page_length;
 		if (result.length % 15 == 0)
 			page_length = parseInt(result.length / 15);
 		else
@@ -57,14 +55,44 @@ router.get('/property', function (req, res) {
 				list.push(result[i]);
 			}
 		}
-		if (req.session.email) {
-			res.render('property.ejs', { check_ses: req.session.email, estate_list: list, page_cnt: page_length });
-		}
-		else{
-			res.render('property.ejs', {check_ses: 0, estate_list: list, page_cnt : page_length});		
-		}		
+
+		var cursor2 = db.collection("users").find({},{projection:{"_id":0,"star":1,"email":1}}).toArray(function (err, result) {
+			const {sample, CF, evaluation} = require('nodeml');
+			let train = [], test =[];
+			for(var i=0;i<50;i++){
+				console.log(result[i].email);
+				for(var k=0; k<10;k++){
+					var score_data = {"email" : result[i].email,"estate_id": result[0].star[k][0].estate_id, "score": result[0].star[k][0].score };
+					var score_datajson = JSON.stringify(score_data);
+					if(Math.random()>0.8)
+						test.push(score_datajson);
+					else
+						train.push(score_datajson);
+					console.log(score_datajson);
+				}
+			}
+			/*
+			const cf = new nodeml.CF();
+			cf.maxRelatedItem = 10;
+			cf.maxRelatedUser = 10;
+			cf.train(train, 'email', 'estate_id','score');
+			let gt = cf.gt(test, 'email', 'estate_id','score');
+			let recommend_result = cf.recommendGT(gt,40);
+			let ndcg = evaluation.ndcg(gtr,recommend_result);
+			console.log()
+			console.log(ndcg);
+			*/
+			if (req.session.email) {
+				res.render('property.ejs', { check_ses: req.session.email, estate_list: list, page_cnt: page_length });
+			}
+			else{
+				res.render('property.ejs', {check_ses: 0, estate_list: list, page_cnt : page_length});		
+			}	
+		});	
 	});
 });
+
+
 router.use('/single-property/:id', express.static('public'))
 router.get('/single-property/:id', function(req, res){
 	var estate_id = req.params.id;

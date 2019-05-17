@@ -16,6 +16,7 @@
 
     <!-- Style CSS -->
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/css/star.css">
 
 </head>
 
@@ -86,6 +87,53 @@
     </section>
     <!-- ##### Breadcumb Area End ##### -->
 
+    <div class="container">
+            <!-- Button to Open the Modal -->
+            <button type="button" class="btn btn-primary" id = "star" data-toggle="modal" data-target="#myModal" style="visibility: hidden">
+            </button>
+            <!-- The Modal -->
+            <div class="modal" id="myModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title">이 매물은 어떠셨나요?</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                        <span class="star-input">
+                                <span class="input">
+                                  <input type="radio" name="star-input" id="p1" value="1"><label for="p1">1</label>
+                                  <input type="radio" name="star-input" id="p2" value="2"><label for="p2">2</label>
+                                  <input type="radio" name="star-input" id="p3" value="3"><label for="p3">3</label>
+                                  <input type="radio" name="star-input" id="p4" value="4"><label for="p4">4</label>
+                                  <input type="radio" name="star-input" id="p5" value="5"><label for="p5">5</label>
+                                  <input type="radio" name="star-input" id="p6" value="6"><label for="p6">6</label>
+                                  <input type="radio" name="star-input" id="p7" value="7"><label for="p7">7</label>
+                                  <input type="radio" name="star-input" id="p8" value="8"><label for="p8">8</label>
+                                  <input type="radio" name="star-input" id="p9" value="9"><label for="p9">9</label>
+                                  <input type="radio" name="star-input" id="p10" value="10"><label for="p10">10</label>
+                                </span>
+                                <output for="star-input"><b>0</b>점</output>
+                        </span>
+                  </div>
+                  <!-- Modal footer -->
+                
+                
+                <div class="modal-footer">
+                        <div style="float:left;">
+                                <h6>이 의견은 추천정보에 반영됩니다.</h6>
+                        </div>
+                        <p></p><button type="button" class="btn btn-danger" data-dismiss="modal">제출</button>
+                </div>
+                  
+                </div>
+              </div>
+            </div>
+            
+          </div>
     <!-- ##### Blog Area Start ##### -->
     <section class="blog-area section-padding-100">
         <div class="container">
@@ -444,7 +492,22 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
      <!-- Active js -->
      <script src="assets/js/active.js"></script>
      <script src="assets/js/modal.js"></script>
-
+     
+     <script src="assets/js/star.js" type="text/javascript"></script>
+     <script type="text/javascript">
+     $('.starRev span').click(function(){
+       $(this).parent().children('span').removeClass('on');
+       $(this).addClass('on').prevAll('span').addClass('on');
+       return false;
+     });
+     </script>
+     <script>
+        setTimeout(function(){ 
+            
+            document.getElementById('star').click();
+            
+        },3000);
+     </script>
 </body>
 
 </html>
