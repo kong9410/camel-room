@@ -9,7 +9,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>낙타의 공방 - 매물</title>
+    <title>South - Real Estate Agency Template | Listings Details</title>
 
     <!-- Favicon  -->
     <link rel="icon" href="assets/img/core-img/favicon.ico">
@@ -17,6 +17,7 @@
     <!-- Style CSS -->
     <link rel="stylesheet" href="assets/style.css">
     <link rel="stylesheet" href="assets/css/jqbar.css">
+
 </head>
 
 <body>
@@ -24,7 +25,7 @@
     <div id="preloader">
         <div class="south-load"></div>
     </div>
-
+    
     <!-- ##### Header Area Start ##### -->
     <header class="header-area">
         <!-- Main Header Area -->
@@ -32,23 +33,23 @@
             <div class="classy-nav-container breakpoint-off">
                 <!-- Classy Menu -->
                 <nav class="classy-navbar justify-content-between" id="southNav">
-
+    
                     <!-- Logo -->
                     <a class="nav-brand" href="/">VACANT ROOM OF CAMEL</a>
-
+    
                     <!-- Navbar Toggler -->
                     <div class="classy-navbar-toggler">
                         <span class="navbarToggler"><span></span><span></span><span></span></span>
                     </div>
-
+    
                     <!-- Menu -->
                     <div class="classy-menu">
-
+    
                         <!-- close btn -->
                         <div class="classycloseIcon">
                             <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
                         </div>
-
+    
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
@@ -58,18 +59,19 @@
                                 <li><a href="/theme">테마</a></li>
                                 <li><a href="/register">회원가입</a></li>
                                 <% if(!check_ses) {%>
-                                <li><a href="" style=color:#505050 data-toggle="modal" data-target="#loginModal" id="login">로그인</a></li>
+                                <li><a href="" style=color:#505050 data-toggle="modal" data-target="#loginModal"
+                                        id="login">로그인</a></li>
                                 <%} else{ %>
                                 <li><a href="api/logout" style="color:#505050">로그아웃</a></li>
                                 <%}%>
-                            </ul>
-                        </div>
-                        <!-- Nav End -->
+                                    </ul>
+                                </div>
+                                <!-- Nav End -->
+                            </div>
+                        </nav>
                     </div>
-                </nav>
-            </div>
-        </div>
-    </header>
+                </div>
+            </header>
     <!-- ##### Header Area End ##### -->
 
     <!-- ##### Breadcumb Area Start ##### -->
@@ -78,7 +80,7 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="breadcumb-content">
-                        <h3 class="breadcumb-title">Blog Details</h3>
+                        <h3 class="breadcumb-title">Property</h3>
                     </div>
                 </div>
             </div>
@@ -86,116 +88,69 @@
     </section>
     <!-- ##### Breadcumb Area End ##### -->
 
-    <div class="container">
-        <!-- Button to Open the Modal -->
-        <button type="button" class="btn btn-primary" id="star" data-toggle="modal" data-target="#myModal"
-            style="visibility: hidden">
-        </button>
-        <!-- The Modal -->
-        <div class="modal" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-        
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">이 매물은 어떠셨나요?</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <!-- Modal body -->
-                    <form id="star-score-form" name="star-score-form" action="/score/<%=estate.estate_id%>" method="POST">
-                    <div class="modal-body">
-                        
-                            <span class="star-input">
-                                <span class="input">
-                                    <input type="radio" name="star" id="p1" value="1"><label for="p1">1</label>
-                                    <input type="radio" name="star" id="p2" value="2"><label for="p2">2</label>
-                                    <input type="radio" name="star" id="p3" value="3"><label for="p3">3</label>
-                                    <input type="radio" name="star" id="p4" value="4"><label for="p4">4</label>
-                                    <input type="radio" name="star" id="p5" value="5"><label for="p5">5</label>
-                                    <input type="radio" name="star" id="p6" value="6"><label for="p6">6</label>
-                                    <input type="radio" name="star" id="p7" value="7"><label for="p7">7</label>
-                                    <input type="radio" name="star" id="p8" value="8"><label for="p8">8</label>
-                                    <input type="radio" name="star" id="p9" value="9"><label for="p9">9</label>
-                                    <input type="radio" name="star" id="p10" value="10"><label for="p10">10</label>
-                                </span>
-                                <output for="star-input"><b>0</b>점</output>
-                            </span>
-                        
-                    </div>
-                    <!-- Modal footer -->
-        
-        
-                    <div class="modal-footer">
-                        <div style="float:left;">
-                            <h6>이 의견은 추천정보에 반영됩니다.</h6>
-                        </div>
-                        <p></p><button id="star-score" type="button" class="btn btn-danger" data-dismiss="modal">제출</button>
-                    </div>
-                </form>
-                </div>
-            </div>
-        </div>
-        
-        </div>
-    <!-- ##### Blog Area Start ##### -->
-    <section class="blog-area section-padding-100">
+    <!-- ##### Listings Content Area Start ##### -->
+    <section class="listings-content-wrapper section-padding-100">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-lg-8">
-                
-                    <div class="single-blog-area">
-                        <!-- Post Thumbnail -->
-                        <div class="featured-properties-slides owl-carousel">
-                            <!-- Single Slide -->
-                            <%for(var i = 0; i < estate.saveFileName.length; i++){%>
-                            <div class="single-featured-properties-slide" style="height:400px;">
-                                <a href="./uploads/<%=estate.saveFileName[i]%>"><img src="./uploads/<%=estate.saveFileName[i]%>" alt=""></a>
-                            </div>
-                            <% } %>
-                        </div>
-                        <!-- Post Content -->
-                        <div class="post-content">
-                            <!-- Date -->
-                            <div class="post-date">
-                                <a href="#">March 09, 2018</a>
-                            </div>
-                            <!-- Headline -->
-                            <a href="#" class="headline"><%=estate.title%></a>
-                            <!-- Post Meta -->
-                            <div class="post-meta">
-                                <p>글쓴이 <%=estate.writer%></p>
-                            </div>
-                            <p><%=estate.roadAddress%><br><%=estate.detailAddress%></p>
-                            <p>지도</p>
-                            <p>정보</p>
-                        </div>
+                <div class="col-12">
+                    <!-- Single Listings Slides -->
+                    <div class="single-listings-sliders owl-carousel">
+                        <!-- Single Slide -->
+                        <%for(var i = 0; i < estate.saveFileName.length; i++){%>
+                        <img src="uploads/<%=estate.saveFileName[i]%>" alt="">
+                        <% } %>
                     </div>
                 </div>
-                
+            </div>
 
-                <div class="col-12 col-lg-4">
-                    <div class="blog-sidebar-area">
-
-                        <!-- Catagories Widget -->
-                        <div class="south-catagories-card mb-70">
-                            <h5>Information</h5>
-                            <ul class="catagories-menu">
-                                <li><a>주거 형태 : <%=estate.houseType%></a></li>
-                                <li><a>계약 : <%=estate.contractTag%></a></li>
-                                <li>
-                                    <a><img src="assets/img/icons/space.png" alt=""> : <%=estate.roomSize%></a>
-                                </li>
-                                <li><a>방수 : <%=estate.rooms%></a></li>
-                                <li>
-                                    <a>연식 : <%=estate.years%></a>
-                                </li>
-                                <li>
-                                    <a><img src="assets/img/icons/bathtub.png" alt=""> : <%=estate.toilet%></a>
-                                </li>
-                            </ul>
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <div class="listings-content">
+                        <!-- Price -->
+                        <div class="list-price">
+                            <p><%=estate.price%> 만원</p>
                         </div>
-                        <div class="south-catagories-card mb-70">
-                            <h5>가치지수</h5>
+                        <h5><%=estate.title%></h5>
+                        <p class="location"><img src="assets/img/icons/location.png" alt=""><%=estate.roadAddress%></p>
+                        <p>Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odiomattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul. Etiam nec odio vestibulum est mat tis effic iturut magna. Curabitur rhoncus auctor eleifend. Fusce venenatis diam urna, eu pharetra arcu varius ac. Etiam cursus turpis lectus, id iaculis risus tempor id. Phasellus fringilla nisl sed sem scelerisque, eget aliquam magna vehicula.</p>
+                        <!-- Meta -->
+                        <div class="property-meta-data d-flex align-items-end">
+                            <div class="new-tag">
+                                <img src="assets/img/icons/new.png" alt="">
+                            </div>
+                            <div class="bathroom">
+                                <img src="assets/img/icons/bathtub.png" alt="">
+                                <span><%=estate.toilet%></span>
+                            </div>
+                            <div class="garage">
+                                <img src="assets/img/icons/garage.png" alt="">
+                                <span><%=estate.years%></span>
+                            </div>
+                            <div class="space">
+                                <img src="assets/img/icons/space.png" alt="">
+                                <span><%=estate.roomSize%></span>
+                            </div>
+                        </div>
+                        <!-- Core Features -->
+                        <ul class="listings-core-features d-flex align-items-center">
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Gated Community</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Automatic Sprinklers</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Fireplace</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Window Shutters</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Ocean Views</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Heated Floors</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Heated Floors</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Private Patio</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Window Shutters</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Fireplace</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Beach Access</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Rooftop Terrace</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="contact-realtor-wrapper">
+                        <div class="realtor-info">
                             <div>
                                 <div id="bar-1"></div>
                                 <div id="bar-2"></div>
@@ -204,14 +159,29 @@
                                 <div id="bar-5"></div>
                                 <div id="bar-6"></div>
                             </div>
-                            
+                            <div class="realtor---info">
+                                <h2>가치지수</h2>
+                                <p>가치지수란?</p>
+                                <h6> , , , , , 정보를 시각화하여 보여주는 정보</h6>
+                            </div>
+                            <div class="realtor--contact-form">
+                            </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Listing Maps -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="listings-maps mt-100">
+                        <div id="googleMap"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- ##### Blog Area End ##### -->
+    <!-- ##### Listings Content Area End ##### -->
+
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(assets/img/bg-img/cta.jpg);">
         <!-- Main Footer Area -->
@@ -266,9 +236,52 @@
     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
         </div>
     </footer>
-
-     <!-- jQuery (Necessary for All JavaScript Plugins) -->
-     <script src="assets/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- ##### Footer Area End ##### -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+    
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">이 매물은 어떠셨나요?</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <form id="star-score-form" name="star-score-form" action="/score/<%=estate.estate_id%>" method="POST">
+                    <div class="modal-body">
+    
+                        <span class="star-input">
+                            <span class="input">
+                                <input type="radio" name="star" id="p1" value="1"><label for="p1">1</label>
+                                <input type="radio" name="star" id="p2" value="2"><label for="p2">2</label>
+                                <input type="radio" name="star" id="p3" value="3"><label for="p3">3</label>
+                                <input type="radio" name="star" id="p4" value="4"><label for="p4">4</label>
+                                <input type="radio" name="star" id="p5" value="5"><label for="p5">5</label>
+                                <input type="radio" name="star" id="p6" value="6"><label for="p6">6</label>
+                                <input type="radio" name="star" id="p7" value="7"><label for="p7">7</label>
+                                <input type="radio" name="star" id="p8" value="8"><label for="p8">8</label>
+                                <input type="radio" name="star" id="p9" value="9"><label for="p9">9</label>
+                                <input type="radio" name="star" id="p10" value="10"><label for="p10">10</label>
+                            </span>
+                            <output for="star-input"><b>0</b>점</output>
+                        </span>
+    
+                    </div>
+                    <!-- Modal footer -->
+    
+    
+                    <div class="modal-footer">
+                        <div style="float:left;">
+                            <h6>이 의견은 추천정보에 반영됩니다.</h6>
+                        </div>
+                        <p></p><button id="star-score" type="button" class="btn btn-danger" data-dismiss="modal">제출</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <script src="assets/js/jquery/jquery-2.2.4.min.js"></script>
      <!-- Popper js -->
      <script src="assets/js/popper.min.js"></script>
      <!-- Bootstrap js -->
@@ -284,6 +297,8 @@
      <script src="assets/js/jqbar.js"></script>
      
      <script src="assets/js/star.js" type="text/javascript"></script>
+     <!-- 다음 지도 api -->
+     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c749c8a6c8049131a0f238101adf5004&libraries=services&libraries=services"></script>
      <script type="text/javascript">
      $('.starRev span').click(function(){
        $(this).parent().children('span').removeClass('on');
@@ -293,13 +308,7 @@
      </script>
      <script>
         setTimeout(function(){ 
-<<<<<<< HEAD
-            if(<%=check_ses%> != 0)
-                document.getElementById('star').click();
-            
-=======
             document.getElementById('star').click();
->>>>>>> f7f76f203fc43c35ab6448420975df6be9fc7fd8
         },3000);
      </script>
 </body>

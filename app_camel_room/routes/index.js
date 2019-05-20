@@ -2,7 +2,6 @@
 var express = require('express');
 var router = express.Router();
 var mongoose    = require('mongoose');
-var nodeml = require('nodeml')
 
 // [MONGO CONNECT]
 var db = mongoose.connection;
@@ -147,12 +146,14 @@ router.get('/property', function (req, res) {
 			if((req.session.email != null)){
 				var user_dic = new Object();
 				
-				for (var i=0; i< result.length; i++ ){
-					var user_email = result[i].email;
-					var score_dic = new Object();
-					for(var k=0; k<result[i].star.length;k++){
-						score_dic[result[i].star[k].estate_id]= result[i].star[k].score;
-						user_dic[user_email] = score_dic;
+				for (var i = 0; i < result.length; i++) {
+					if (result[i].star != null) {
+						var user_email = result[i].email;
+						var score_dic = new Object();
+						for (var k = 0; k < result[i].star.length; k++) {
+							score_dic[result[i].star[k].estate_id] = result[i].star[k].score;
+							user_dic[user_email] = score_dic;
+						}
 					}
 				}
 				var rec_list = new Array();
