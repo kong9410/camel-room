@@ -160,7 +160,7 @@ router.get('/property', function (req, res) {
 				var Inlist = new Array();
 				
 				rec_list = Recommendation(user_dic,req.session.email);
-				console.log(rec_list);
+				
 				for(var k=0; k<rec_list.length;k++){
 					Inlist.push(rec_list[k][1]);
 				}
@@ -168,24 +168,15 @@ router.get('/property', function (req, res) {
 				var myquery = {'estate_id':{$in:Inlist}};
 				var cursor = db.collection("estates").find(myquery).toArray(function(err,result){
 					if(err){console.log(err); throw err;}
-					console.log(result);
+					
 					
 					if (req.session.email) {
 						res.render('property.ejs', { check_ses: req.session.email, estate_list: list, page_cnt: page_length, recommend_list:result });
 					}
-					else{
-						res.render('property.ejs', {check_ses: 0, estate_list: list, page_cnt : page_length});		
-					}
-					
 				});
 			}
 			else{
-				if (req.session.email) {
-					res.render('property.ejs', { check_ses: req.session.email, estate_list: list, page_cnt: page_length});
-				}
-				else{
-					res.render('property.ejs', {check_ses: 0, estate_list: list, page_cnt : page_length});		
-				}
+				res.render('property.ejs', {check_ses: 0, estate_list: list, page_cnt : page_length});		
 			}
 		});	
 	});

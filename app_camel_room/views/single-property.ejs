@@ -308,7 +308,9 @@
      </script>
      <script>
         setTimeout(function(){ 
-            document.getElementById('star').click();
+            if(<%=check_ses%> != 0)
+                document.getElementById('star').click();
+            
         },3000);
      </script>
 </body>
