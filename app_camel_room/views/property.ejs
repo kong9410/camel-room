@@ -52,15 +52,15 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="/">Home</a></li>
-                                <li><a href="/about-us">About Us</a></li>
-                                <li><a href="/property">Property</a></li>
-                                <li><a href="/theme">Theme</a></li>
-                                <li><a href="/register">Contact</a></li>
+                                <li><a href="/">홈</a></li>
+                                <li><a href="/about-us">팀-공집합</a></li>
+                                <li><a href="/property" style="color:brown">부동산</a></li>
+                                <li><a href="/theme">테마</a></li>
+                                <li><a href="/register">회원가입</a></li>
                                 <% if(!check_ses) {%>
-                                <li><a href="" style=color:#000000 data-toggle="modal" data-target="#loginModal" id="login">Login</a></li>
+                                <li><a href="" style=color:#505050 data-toggle="modal" data-target="#loginModal" id="login">로그인</a></li>
                                 <%} else{ %>
-                                <li><a href="api/logout" style="color:black">Logout</a></li>
+                                <li><a href="api/logout" style="color:#505050">로그아웃</a></li>
                                 <%}%>
                             </ul>
                         </div>
@@ -78,7 +78,7 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="breadcumb-content">
-                        <h3 class="breadcumb-title">Properties</h3>
+                        <h3 class="breadcumb-title">매물</h3>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                     <div class="advanced-search-form">
                         <!-- Search Title -->
                         <div class="search-title">
-                            <p>Search for your home</p>
+                            <p>당신의 집을 찾으세요</p>
                         </div>
                         <!-- Search Form -->
                         <form action="/search" method="post" id="advanceSearch">
@@ -160,7 +160,7 @@
                                 <div class="col-12 col-md-4 col-xl-2">
                                     <div class="form-group">
                                         <select class="form-control" id="bedrooms" name="bedrooms">
-                                            <option>Bedrooms</option>
+                                            <option>화장실</option>
                                             <option>1</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -173,7 +173,7 @@
                                 <div class="col-12 col-md-4 col-xl-2">
                                     <div class="form-group">
                                         <select class="form-control" id="bathrooms" name="bathrooms">
-                                            <option>Bathrooms</option>
+                                            <option>방</option>
                                             <option>1</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -284,7 +284,7 @@
                                     </div>
                                     <!-- Submit -->
                                     <div class="form-group mb-0">
-                                        <button type="submit" class="btn south-btn">Search</button>
+                                        <button type="submit" class="btn south-btn">검색</button>
                                     </div>
                                 </div>
                             </div>

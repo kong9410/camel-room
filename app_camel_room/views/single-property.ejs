@@ -17,7 +17,6 @@
     <!-- Style CSS -->
     <link rel="stylesheet" href="assets/style.css">
     <link rel="stylesheet" href="assets/css/jqbar.css">
-    <link rel="stylesheet" href="assets/css/slider-custom.css">
 </head>
 
 <body>
@@ -53,15 +52,15 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="/">Home</a></li>
-                                <li><a href="/about-us">About Us</a></li>
-                                <li><a href="/property">Property</a></li>
-                                <li><a href="/theme">Theme</a></li>
-                                <li><a href="/register">Contact</a></li>
+                                <li><a href="/">홈</a></li>
+                                <li><a href="/about-us">팀-공집합</a></li>
+                                <li><a href="/property">부동산</a></li>
+                                <li><a href="/theme">테마</a></li>
+                                <li><a href="/register">회원가입</a></li>
                                 <% if(!check_ses) {%>
-                                <li><a href="" style=color:#000000 data-toggle="modal" data-target="#loginModal" id="login">Login</a></li>
+                                <li><a href="" style=color:#505050 data-toggle="modal" data-target="#loginModal" id="login">로그인</a></li>
                                 <%} else{ %>
-                                <li><a href="api/logout" style="color:black">Logout</a></li>
+                                <li><a href="api/logout" style="color:#505050">로그아웃</a></li>
                                 <%}%>
                             </ul>
                         </div>
@@ -87,6 +86,57 @@
     </section>
     <!-- ##### Breadcumb Area End ##### -->
 
+    <div class="container">
+        <!-- Button to Open the Modal -->
+        <button type="button" class="btn btn-primary" id="star" data-toggle="modal" data-target="#myModal"
+            style="visibility: hidden">
+        </button>
+        <!-- The Modal -->
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+        
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">이 매물은 어떠셨나요?</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <form id="star-score-form" name="star-score-form" action="/score/<%=estate.estate_id%>" method="POST">
+                    <div class="modal-body">
+                        
+                            <span class="star-input">
+                                <span class="input">
+                                    <input type="radio" name="star" id="p1" value="1"><label for="p1">1</label>
+                                    <input type="radio" name="star" id="p2" value="2"><label for="p2">2</label>
+                                    <input type="radio" name="star" id="p3" value="3"><label for="p3">3</label>
+                                    <input type="radio" name="star" id="p4" value="4"><label for="p4">4</label>
+                                    <input type="radio" name="star" id="p5" value="5"><label for="p5">5</label>
+                                    <input type="radio" name="star" id="p6" value="6"><label for="p6">6</label>
+                                    <input type="radio" name="star" id="p7" value="7"><label for="p7">7</label>
+                                    <input type="radio" name="star" id="p8" value="8"><label for="p8">8</label>
+                                    <input type="radio" name="star" id="p9" value="9"><label for="p9">9</label>
+                                    <input type="radio" name="star" id="p10" value="10"><label for="p10">10</label>
+                                </span>
+                                <output for="star-input"><b>0</b>점</output>
+                            </span>
+                        
+                    </div>
+                    <!-- Modal footer -->
+        
+        
+                    <div class="modal-footer">
+                        <div style="float:left;">
+                            <h6>이 의견은 추천정보에 반영됩니다.</h6>
+                        </div>
+                        <p></p><button id="star-score" type="button" class="btn btn-danger" data-dismiss="modal">제출</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+        
+        </div>
     <!-- ##### Blog Area Start ##### -->
     <section class="blog-area section-padding-100">
         <div class="container">
@@ -99,7 +149,7 @@
                             <!-- Single Slide -->
                             <%for(var i = 0; i < estate.saveFileName.length; i++){%>
                             <div class="single-featured-properties-slide" style="height:400px;">
-                                <a href="#"><img src="./uploads/<%=estate.saveFileName[i]%>" alt=""></a>
+                                <a href="./uploads/<%=estate.saveFileName[i]%>"><img src="./uploads/<%=estate.saveFileName[i]%>" alt=""></a>
                             </div>
                             <% } %>
                         </div>
@@ -118,9 +168,6 @@
                             <p><%=estate.roadAddress%><br><%=estate.detailAddress%></p>
                             <p>지도</p>
                             <p>정보</p>
-                            <p>
-                                
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -149,15 +196,15 @@
                         </div>
                         <div class="south-catagories-card mb-70">
                             <h5>가치지수</h5>
-                            <div class="bars" >
+                            <div>
                                 <div id="bar-1"></div>
                                 <div id="bar-2"></div>
                                 <div id="bar-3"></div>
                                 <div id="bar-4"></div>
                                 <div id="bar-5"></div>
                                 <div id="bar-6"></div>
-                                <div id="bar-7"></div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -235,6 +282,20 @@
      <script src="assets/js/modal.js"></script>
      <!-- jbar js -->
      <script src="assets/js/jqbar.js"></script>
+     
+     <script src="assets/js/star.js" type="text/javascript"></script>
+     <script type="text/javascript">
+     $('.starRev span').click(function(){
+       $(this).parent().children('span').removeClass('on');
+       $(this).addClass('on').prevAll('span').addClass('on');
+       return false;
+     });
+     </script>
+     <script>
+        setTimeout(function(){ 
+            document.getElementById('star').click();
+        },3000);
+     </script>
 </body>
 <script>
     $(document).ready(function () {
@@ -243,6 +304,21 @@
         $('#bar-3').jqbar({ label: '교통', value: <%=estate.traffic_value%>, barColor: '#ea805c', orientation: 'v' });
         $('#bar-4').jqbar({ label: '교육', value: <%=estate.education_value%>, barColor: '#88bbc8', orientation: 'v' });
         $('#bar-5').jqbar({ label: '건강', value: <%=estate.healthy_value%>, barColor: '#939393', orientation: 'v' });
+        $('#star-score').click(function(){
+        var form = $('#star-score-form')
+
+        $.ajax({
+            type:'post',
+            url:'/score/<%=estate.estate_id%>',
+            data: form.serialize(),
+            success:function(data){
+                console.log("data : ",data, "form : ", form);
+                alert('감사합니다')
+            }
+        });
+        $('#myModal').modal('hide')
+        return false;
+    })
     });
     
 </script>

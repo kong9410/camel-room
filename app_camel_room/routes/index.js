@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose    = require('mongoose');
+var nodeml = require('nodeml')
 
 // [MONGO CONNECT]
 var db = mongoose.connection;
@@ -17,12 +18,14 @@ router.get('/', function (req, res) {
 		res.render('index.ejs', {check_ses: 0});
 });
 
-// [PROPERTY]
+// [PROPERTY] +[Recommend]
 router.get('/property', function (req, res) {
 	var cursor = db.collection("estates").find({}).toArray(function (err, result) {
+		
 		//에러처리
 		if (err) throw err;
-
+		var list = new Array();
+		var page_length;
 		//현재 페이지
 		var cur_page;
 		if (req.query.curpage == null) {
@@ -31,10 +34,6 @@ router.get('/property', function (req, res) {
 		else {
 			cur_page = req.query.curpage;
 		}
-
-
-		var list = new Array();
-		var page_length;
 		if (result.length % 15 == 0)
 			page_length = parseInt(result.length / 15);
 		else
@@ -57,14 +56,29 @@ router.get('/property', function (req, res) {
 				list.push(result[i]);
 			}
 		}
+		
 		if (req.session.email) {
 			res.render('property.ejs', { check_ses: req.session.email, estate_list: list, page_cnt: page_length });
 		}
 		else{
 			res.render('property.ejs', {check_ses: 0, estate_list: list, page_cnt : page_length});		
-		}		
+		}	
 	});
 });
+
+router.post('/score/:id', function(req, res){
+	console.log("post value is ",req.body.star);
+	var cursor = db.collection("users").updateOne({email:req.session.email}, {
+		$push:{
+			"star":{
+				estate_id:req.params.id,
+				score:req.body.star
+			}
+		}
+	});
+})
+
+// [SINGLE PROPERTY]
 router.use('/single-property/:id', express.static('public'))
 router.get('/single-property/:id', function(req, res){
 	var estate_id = req.params.id;
@@ -136,9 +150,5 @@ router.get('/register', function (req, res) {
 	res.render('register.ejs');
 })
 
-// [SINGLE-PROPERTY]
-router.get('/single-property:id', function(req, res){
-	res.render('single-property')
-})
 
 module.exports = router;

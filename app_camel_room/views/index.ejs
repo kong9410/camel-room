@@ -52,15 +52,15 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="/">Home</a></li>
-                                <li><a href="/about-us">About Us</a></li>
-                                <li><a href="/property">Property</a></li>
-                                <li><a href="/theme">Theme</a></li>
-                                <li><a href="/register">Contact</a></li>
+                                <li><a href="/" style="color:brown">홈</a></li>
+                                <li><a href="/about-us">팀-공집합</a></li>
+                                <li><a href="/property">부동산</a></li>
+                                <li><a href="/theme">테마</a></li>
+                                <li><a href="/register">회원가입</a></li>
                                 <% if(!check_ses) {%>
-                                <li><a href="" style=color:#000000 data-toggle="modal" data-target="#loginModal" id="login">Login</a></li>
+                                <li><a href="" style=color:#505050 data-toggle="modal" data-target="#loginModal" id="login">로그인</a></li>
                                 <%} else{ %>
-                                <li><a href="api/logout" style="color:black">Logout</a></li>
+                                <li><a href="api/logout" style="color:#505050">로그아웃</a></li>
                                 <%}%>
                             </ul>
                         </div>
