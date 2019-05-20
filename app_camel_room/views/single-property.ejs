@@ -89,8 +89,9 @@
 
     <div class="container">
             <!-- Button to Open the Modal -->
-            <button type="button" class="btn btn-primary" id = "star" data-toggle="modal" data-target="#myModal" style="visibility: hidden">
-            </button>
+            <form action="/property" method="post">
+
+                
             <!-- The Modal -->
             <div class="modal" id="myModal">
               <div class="modal-dialog">
@@ -103,20 +104,20 @@
                   </div>
                   <!-- Modal body -->
                   <div class="modal-body">
-                        <span class="star-input">
+                        <span class="star">
                                 <span class="input">
-                                  <input type="radio" name="star-input" id="p1" value="1"><label for="p1">1</label>
-                                  <input type="radio" name="star-input" id="p2" value="2"><label for="p2">2</label>
-                                  <input type="radio" name="star-input" id="p3" value="3"><label for="p3">3</label>
-                                  <input type="radio" name="star-input" id="p4" value="4"><label for="p4">4</label>
-                                  <input type="radio" name="star-input" id="p5" value="5"><label for="p5">5</label>
-                                  <input type="radio" name="star-input" id="p6" value="6"><label for="p6">6</label>
-                                  <input type="radio" name="star-input" id="p7" value="7"><label for="p7">7</label>
-                                  <input type="radio" name="star-input" id="p8" value="8"><label for="p8">8</label>
-                                  <input type="radio" name="star-input" id="p9" value="9"><label for="p9">9</label>
-                                  <input type="radio" name="star-input" id="p10" value="10"><label for="p10">10</label>
+                                  <input type="radio" name="star" id="p1" value="1"><label for="p1">1</label>
+                                  <input type="radio" name="star" id="p2" value="2"><label for="p2">2</label>
+                                  <input type="radio" name="star" id="p3" value="3"><label for="p3">3</label>
+                                  <input type="radio" name="star" id="p4" value="4"><label for="p4">4</label>
+                                  <input type="radio" name="star" id="p5" value="5"><label for="p5">5</label>
+                                  <input type="radio" name="star" id="p6" value="6"><label for="p6">6</label>
+                                  <input type="radio" name="star" id="p7" value="7"><label for="p7">7</label>
+                                  <input type="radio" name="star" id="p8" value="8"><label for="p8">8</label>
+                                  <input type="radio" name="star" id="p9" value="9"><label for="p9">9</label>
+                                  <input type="radio" name="star" id="p10" value="10"><label for="p10">10</label>
                                 </span>
-                                <output for="star-input"><b>0</b>점</output>
+                                <output for="star"><b>0</b>점</output>
                         </span>
                   </div>
                   <!-- Modal footer -->
@@ -126,9 +127,12 @@
                         <div style="float:left;">
                                 <h6>이 의견은 추천정보에 반영됩니다.</h6>
                         </div>
-                        <p></p><button type="button" class="btn btn-danger" data-dismiss="modal">제출</button>
+                        
+                        <p></p><button type="submit" class="btn btn-danger" data-dismiss="modal">확인</button>
                 </div>
-                  
+                <button type="button" class="btn btn-primary" id = "star" data-toggle="modal" data-target="#myModal" style="visibility: hidden"></button>
+
+            </form>     
                 </div>
               </div>
             </div>
@@ -503,8 +507,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
      </script>
      <script>
         setTimeout(function(){ 
-            
-            document.getElementById('star').click();
+            if(<%=check_ses%> != 0)
+                document.getElementById('star').click();
             
         },3000);
      </script>
