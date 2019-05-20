@@ -16,8 +16,7 @@
 
     <!-- Style CSS -->
     <link rel="stylesheet" href="assets/style.css">
-    <link rel="stylesheet" href="assets/css/star.css">
-
+    <link rel="stylesheet" href="assets/css/jqbar.css">
 </head>
 
 <body>
@@ -53,15 +52,15 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="/">Home</a></li>
-                                <li><a href="/about-us">About Us</a></li>
-                                <li><a href="/property">Property</a></li>
-                                <li><a href="/theme">Theme</a></li>
-                                <li><a href="/register">Contact</a></li>
+                                <li><a href="/">홈</a></li>
+                                <li><a href="/about-us">팀-공집합</a></li>
+                                <li><a href="/property">부동산</a></li>
+                                <li><a href="/theme">테마</a></li>
+                                <li><a href="/register">회원가입</a></li>
                                 <% if(!check_ses) {%>
-                                <li><a href="" style=color:#000000 data-toggle="modal" data-target="#loginModal" id="login">Login</a></li>
+                                <li><a href="" style=color:#505050 data-toggle="modal" data-target="#loginModal" id="login">로그인</a></li>
                                 <%} else{ %>
-                                <li><a href="api/logout" style="color:black">Logout</a></li>
+                                <li><a href="api/logout" style="color:#505050">로그아웃</a></li>
                                 <%}%>
                             </ul>
                         </div>
@@ -88,66 +87,71 @@
     <!-- ##### Breadcumb Area End ##### -->
 
     <div class="container">
-            <!-- Button to Open the Modal -->
-            <form action="/property" method="post">
-
-                
-            <!-- The Modal -->
-            <div class="modal" id="myModal">
-              <div class="modal-dialog">
+        <!-- Button to Open the Modal -->
+        <button type="button" class="btn btn-primary" id="star" data-toggle="modal" data-target="#myModal"
+            style="visibility: hidden">
+        </button>
+        <!-- The Modal -->
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
                 <div class="modal-content">
-                
-                  <!-- Modal Header -->
-                  <div class="modal-header">
-                    <h4 class="modal-title">이 매물은 어떠셨나요?</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  </div>
-                  <!-- Modal body -->
-                  <div class="modal-body">
-                        <span class="star">
-                                <span class="input">
-                                  <input type="radio" name="star" id="p1" value="1"><label for="p1">1</label>
-                                  <input type="radio" name="star" id="p2" value="2"><label for="p2">2</label>
-                                  <input type="radio" name="star" id="p3" value="3"><label for="p3">3</label>
-                                  <input type="radio" name="star" id="p4" value="4"><label for="p4">4</label>
-                                  <input type="radio" name="star" id="p5" value="5"><label for="p5">5</label>
-                                  <input type="radio" name="star" id="p6" value="6"><label for="p6">6</label>
-                                  <input type="radio" name="star" id="p7" value="7"><label for="p7">7</label>
-                                  <input type="radio" name="star" id="p8" value="8"><label for="p8">8</label>
-                                  <input type="radio" name="star" id="p9" value="9"><label for="p9">9</label>
-                                  <input type="radio" name="star" id="p10" value="10"><label for="p10">10</label>
-                                </span>
-                                <output for="star"><b>0</b>점</output>
-                        </span>
-                  </div>
-                  <!-- Modal footer -->
-                
-                
-                <div class="modal-footer">
-                        <div style="float:left;">
-                                <h6>이 의견은 추천정보에 반영됩니다.</h6>
-                        </div>
+        
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">이 매물은 어떠셨나요?</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <form id="star-score-form" name="star-score-form" action="/score/<%=estate.estate_id%>" method="POST">
+                    <div class="modal-body">
                         
-                        <p></p><button type="submit" class="btn btn-danger" data-dismiss="modal">확인</button>
+                            <span class="star-input">
+                                <span class="input">
+                                    <input type="radio" name="star" id="p1" value="1"><label for="p1">1</label>
+                                    <input type="radio" name="star" id="p2" value="2"><label for="p2">2</label>
+                                    <input type="radio" name="star" id="p3" value="3"><label for="p3">3</label>
+                                    <input type="radio" name="star" id="p4" value="4"><label for="p4">4</label>
+                                    <input type="radio" name="star" id="p5" value="5"><label for="p5">5</label>
+                                    <input type="radio" name="star" id="p6" value="6"><label for="p6">6</label>
+                                    <input type="radio" name="star" id="p7" value="7"><label for="p7">7</label>
+                                    <input type="radio" name="star" id="p8" value="8"><label for="p8">8</label>
+                                    <input type="radio" name="star" id="p9" value="9"><label for="p9">9</label>
+                                    <input type="radio" name="star" id="p10" value="10"><label for="p10">10</label>
+                                </span>
+                                <output for="star-input"><b>0</b>점</output>
+                            </span>
+                        
+                    </div>
+                    <!-- Modal footer -->
+        
+        
+                    <div class="modal-footer">
+                        <div style="float:left;">
+                            <h6>이 의견은 추천정보에 반영됩니다.</h6>
+                        </div>
+                        <p></p><button id="star-score" type="button" class="btn btn-danger" data-dismiss="modal">제출</button>
+                    </div>
+                </form>
                 </div>
-                <button type="button" class="btn btn-primary" id = "star" data-toggle="modal" data-target="#myModal" style="visibility: hidden"></button>
-
-            </form>     
-                </div>
-              </div>
             </div>
-            
-          </div>
+        </div>
+        
+        </div>
     <!-- ##### Blog Area Start ##### -->
     <section class="blog-area section-padding-100">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-8">
-
+                
                     <div class="single-blog-area">
                         <!-- Post Thumbnail -->
-                        <div class="blog-post-thumbnail">
-                            <img src="assets/img/blog-img/blog3.jpg" alt="">
+                        <div class="featured-properties-slides owl-carousel">
+                            <!-- Single Slide -->
+                            <%for(var i = 0; i < estate.saveFileName.length; i++){%>
+                            <div class="single-featured-properties-slide" style="height:400px;">
+                                <a href="./uploads/<%=estate.saveFileName[i]%>"><img src="./uploads/<%=estate.saveFileName[i]%>" alt=""></a>
+                            </div>
+                            <% } %>
                         </div>
                         <!-- Post Content -->
                         <div class="post-content">
@@ -156,222 +160,58 @@
                                 <a href="#">March 09, 2018</a>
                             </div>
                             <!-- Headline -->
-                            <a href="#" class="headline">How to get the best deal for your house</a>
+                            <a href="#" class="headline"><%=estate.title%></a>
                             <!-- Post Meta -->
                             <div class="post-meta">
-                                <p>By <a href="#">Admin</a> | in <a href="#">Uncategorized</a> | <a href="#">2 Comments</a></p>
+                                <p>글쓴이 <%=estate.writer%></p>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione quia dolore debitis tenetur laborum neque deleniti quis atque autem, qui blanditiis, ad aspernatur? Consequatur nemo, eveniet blanditiis asperiores ex magni sit libero sint fugiat quibusdam ab eius aperiam, iure facilis neque dolore earum architecto tempore et, quae? Omnis ex suscipit debitis, obcaecati delectus est ab voluptate distinctio voluptas. Deserunt saepe sunt ullam, animi sed vel error consectetur incidunt. Ipsa facere eveniet natus quos ratione, minus quod cum ex, laboriosam eius impedit cupiditate? Dolore, voluptates reiciendis quis incidunt ducimus cumque placeat, similique nostrum quod enim quidem culpa. Facere veniam cum accusantium cumque, explicabo nesciunt repellat unde, quibusdam adipisci error quasi natus, pariatur perspiciatis odit labore eos incidunt? Quidem doloremque atque nisi ea optio odio aspernatur est eius!</p>
-                            <img class="mb-50" src="assets/bg-img/hero3.jpg" alt="">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia minus in recusandae cumque, laboriosam mollitia inventore nisi autem maiores nostrum ipsa labore beatae amet, dolore ex error fugit sunt aspernatur quidem. Sed laboriosam nihil consectetur facilis aliquid labore necessitatibus nemo dolore? Perspiciatis corrupti consectetur, doloribus aliquid voluptatibus ab atque inventore, est voluptates. Eum veniam hic velit, quia voluptates? Numquam aliquam accusantium hic iste, sequi nisi maiores minus iure eos est unde eum dolore amet suscipit?</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus accusamus accusantium nisi quas tempore quod placeat soluta, quam, ex, pariatur doloremque, quasi ut vitae aspernatur quisquam dolores consequatur deleniti sed perferendis consequuntur. Aut quod, dolorum molestiae veritatis molestias, nemo sit, voluptatibus, quaerat cupiditate magni dignissimos minus repellendus labore.</p>
-                        </div>
-                    </div>
-
-                    <div class="comments-area">
-                        <h5>4 Comments</h5>
-                        <ol>
-                            <!-- Single Comment Area -->
-                            <li class="single_comment_area">
-                                <div class="comment-wrapper d-flex">
-                                    <!-- Comment Meta -->
-                                    <div class="comment-author">
-                                        <img src="assets/blog-img/c-1.jpg" alt="">
-                                    </div>
-                                    <!-- Comment Content -->
-                                    <div class="comment-content">
-                                        <div class="comment-meta">
-                                            <a href="#" class="comment-author-name">Maria Williams</a> |
-                                            <a href="#" class="comment-date">Jan 29, 2018</a> |
-                                            <a href="#" class="comment-reply">Reply</a>
-                                        </div>
-                                        <p>Consectetur adipiscing elit. Praesent vel tortor facilisis, volutpat nulla placerat, tincidunt mi. Nullam vel orci dui. Su spendisse sit amet laoreet neque. Fusce sagittis suscipit sem a consequat.</p>
-                                    </div>
-                                </div>
-                                <ol class="children">
-                                    <li class="single_comment_area">
-                                        <div class="comment-wrapper d-flex">
-                                            <!-- Comment Meta -->
-                                            <div class="comment-author">
-                                                <img src="assets/blog-img/c-2.jpg" alt="">
-                                            </div>
-                                            <!-- Comment Content -->
-                                            <div class="comment-content">
-                                                <div class="comment-meta">
-                                                    <a href="#" class="comment-author-name">Maria Williams</a> |
-                                                    <a href="#" class="comment-date">Jan 29, 2018</a> |
-                                                    <a href="#" class="comment-reply">Reply</a>
-                                                </div>
-                                                <p>Consectetur adipiscing elit. Praesent vel tortor facilisis, volutpat nulla placerat, tincidunt mi. Nullam vel orci dui. Su spendisse sit amet laoreet neque. Fusce sagittis suscipit sem a consequat.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ol>
-                            </li>
-                            <li class="single_comment_area">
-                                <div class="comment-wrapper d-flex">
-                                    <!-- Comment Meta -->
-                                    <div class="comment-author">
-                                        <img src="assets/blog-img/c-3.jpg" alt="">
-                                    </div>
-                                    <!-- Comment Content -->
-                                    <div class="comment-content">
-                                        <div class="comment-meta">
-                                            <a href="#" class="comment-author-name">Maria Williams</a> |
-                                            <a href="#" class="comment-date">Jan 29, 2018</a> |
-                                            <a href="#" class="comment-reply">Reply</a>
-                                        </div>
-                                        <p>Consectetur adipiscing elit. Praesent vel tortor facilisis, volutpat nulla placerat, tincidunt mi. Nullam vel orci dui. Su spendisse sit amet laoreet neque. Fusce sagittis suscipit sem a consequat.</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ol>
-                    </div>
-
-                    <!-- Leave A Comment -->
-                    <div class="leave-comment-area mt-70 clearfix">
-                        <div class="comment-form">
-                            <h5>Leave a reply</h5>
-
-                            <!-- Comment Form -->
-                            <form action="#" method="post">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="contact-name" placeholder="Name">
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control" id="contact-email" placeholder="Email">
-                                </div>
-                                <div class="form-group">
-                                    <textarea class="form-control" name="message" id="message" cols="30" rows="10" placeholder="Message"></textarea>
-                                </div>
-                                <button type="submit" class="btn south-btn">Submit Reply</button>
-                            </form>
+                            <p><%=estate.roadAddress%><br><%=estate.detailAddress%></p>
+                            <p>지도</p>
+                            <p>정보</p>
                         </div>
                     </div>
                 </div>
+                
 
                 <div class="col-12 col-lg-4">
                     <div class="blog-sidebar-area">
 
-                        <!-- Search Widget -->
-                        <div class="search-widget-area mb-70">
-                            <form action="#" method="get">
-                                <input type="search" name="search" id="search" placeholder="Search">
-                                <button type="submit"><i class="fa fa-search"></i></button>
-                            </form>
-                        </div>
-
                         <!-- Catagories Widget -->
                         <div class="south-catagories-card mb-70">
-                            <h5>Archive</h5>
+                            <h5>Information</h5>
                             <ul class="catagories-menu">
-                                <li><a href="#">Radiology</a></li>
-                                <li><a href="#">Cardiology</a></li>
-                                <li><a href="#">Gastroenterology</a></li>
-                                <li><a href="#">Neurology</a></li>
-                                <li><a href="#">General surgery</a></li>
+                                <li><a>주거 형태 : <%=estate.houseType%></a></li>
+                                <li><a>계약 : <%=estate.contractTag%></a></li>
+                                <li>
+                                    <a><img src="assets/img/icons/space.png" alt=""> : <%=estate.roomSize%></a>
+                                </li>
+                                <li><a>방수 : <%=estate.rooms%></a></li>
+                                <li>
+                                    <a>연식 : <%=estate.years%></a>
+                                </li>
+                                <li>
+                                    <a><img src="assets/img/icons/bathtub.png" alt=""> : <%=estate.toilet%></a>
+                                </li>
                             </ul>
                         </div>
-
-                        <!-- Catagories Widget -->
                         <div class="south-catagories-card mb-70">
-                            <h5>Categories</h5>
-                            <ul class="catagories-menu">
-                                <li><a href="#">Radiology</a></li>
-                                <li><a href="#">Cardiology</a></li>
-                                <li><a href="#">Gastroenterology</a></li>
-                                <li><a href="#">Neurology</a></li>
-                                <li><a href="#">General surgery</a></li>
-                            </ul>
-                        </div>
-
-                        <!-- Catagories Widget -->
-                        <div class="featured-properties-slides owl-carousel">
-
-                            <!-- Single Slide -->
-                            <div class="single-featured-property">
-                                <!-- Property Thumbnail -->
-                                <div class="property-thumb">
-                                    <img src="assets/bg-img/feature1.jpg" alt="">
-
-                                    <div class="tag">
-                                        <span>For Sale</span>
-                                    </div>
-                                    <div class="list-price">
-                                        <p>$945 679</p>
-                                    </div>
-                                </div>
-                                <!-- Property Content -->
-                                <div class="property-content">
-                                    <h5>Villa in Los Angeles</h5>
-                                    <p class="location"><img src="assets/icons/location.png" alt="">Upper Road 3411, no.34 CA</p>
-                                    <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
-                                    <div class="property-meta-data d-flex align-items-end justify-content-between">
-                                        <div class="new-tag">
-                                            <img src="assets/icons/new.png" alt="">
-                                        </div>
-                                        <div class="bathroom">
-                                            <img src="assets/icons/bathtub.png" alt="">
-                                            <span>2</span>
-                                        </div>
-                                        <div class="garage">
-                                            <img src="assets/icons/garage.png" alt="">
-                                            <span>2</span>
-                                        </div>
-                                        <div class="space">
-                                            <img src="assets/icons/space.png" alt="">
-                                            <span>120 sq ft</span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <h5>가치지수</h5>
+                            <div>
+                                <div id="bar-1"></div>
+                                <div id="bar-2"></div>
+                                <div id="bar-3"></div>
+                                <div id="bar-4"></div>
+                                <div id="bar-5"></div>
+                                <div id="bar-6"></div>
                             </div>
-
-                            <!-- Single Slide -->
-                            <div class="single-featured-property">
-                                <!-- Property Thumbnail -->
-                                <div class="property-thumb">
-                                    <img src="assets/bg-img/feature2.jpg" alt="">
-
-                                    <div class="tag">
-                                        <span>For Sale</span>
-                                    </div>
-                                    <div class="list-price">
-                                        <p>$945 679</p>
-                                    </div>
-                                </div>
-                                <!-- Property Content -->
-                                <div class="property-content">
-                                    <h5>Town House in Los Angeles</h5>
-                                    <p class="location"><img src="assets/icons/location.png" alt="">Upper Road 3411, no.34 CA</p>
-                                    <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
-                                    <div class="property-meta-data d-flex align-items-end justify-content-between">
-                                        <div class="new-tag">
-                                            <img src="assets/icons/new.png" alt="">
-                                        </div>
-                                        <div class="bathroom">
-                                            <img src="assets/icons/bathtub.png" alt="">
-                                            <span>2</span>
-                                        </div>
-                                        <div class="garage">
-                                            <img src="assets/icons/garage.png" alt="">
-                                            <span>2</span>
-                                        </div>
-                                        <div class="space">
-                                            <img src="assets/icons/space.png" alt="">
-                                            <span>120 sq ft</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- ##### Blog Area End ##### -->
-
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(assets/img/bg-img/cta.jpg);">
         <!-- Main Footer Area -->
@@ -386,62 +226,7 @@
                             <div class="widget-title">
                                 <h6>About Us</h6>
                             </div>
-
-                            <img src="assets/bg-img/footer.jpg" alt="">
-                            <div class="footer-logo my-4">
-                                <img src="assets/core-img/logo.png" alt="">
-                            </div>
-                            <p>Integer nec bibendum lacus. Suspen disse dictum enim sit amet libero males uada feugiat. Praesent malesuada.</p>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="footer-widget-area mb-100">
-                            <!-- Widget Title -->
-                            <div class="widget-title">
-                                <h6>Hours</h6>
-                            </div>
-                            <!-- Office Hours -->
-                            <div class="weekly-office-hours">
-                                <ul>
-                                    <li class="d-flex align-items-center justify-content-between"><span>Monday - Friday</span> <span>09 AM - 19 PM</span></li>
-                                    <li class="d-flex align-items-center justify-content-between"><span>Saturday</span> <span>09 AM - 14 PM</span></li>
-                                    <li class="d-flex align-items-center justify-content-between"><span>Sunday</span> <span>Closed</span></li>
-                                </ul>
-                            </div>
-                            <!-- Address -->
-                            <div class="address">
-                                <h6><img src="assets/icons/phone-call.png" alt=""> +45 677 8993000 223</h6>
-                                <h6><img src="assets/icons/envelope.png" alt=""> office@template.com</h6>
-                                <h6><img src="assets/icons/location.png" alt=""> Main Str. no 45-46, b3, 56832, Los Angeles, CA</h6>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="footer-widget-area mb-100">
-                            <!-- Widget Title -->
-                            <div class="widget-title">
-                                <h6>Useful Links</h6>
-                            </div>
-                            <!-- Nav -->
-                            <ul class="useful-links-nav d-flex align-items-center">
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Services</a></li>
-                                <li><a href="#">Properties</a></li>
-                                <li><a href="#">Listings</a></li>
-                                <li><a href="#">Testimonials</a></li>
-                                <li><a href="#">Properties</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Testimonials</a></li>
-                                <li><a href="#">Contact</a></li>
-                                <li><a href="#">Elements</a></li>
-                                <li><a href="#">FAQ</a></li>
-                            </ul>
+                            <p>공집합 팀의 졸업작품, <br>공민철, 박경민, 박소연 개발작품이다.</p>
                         </div>
                     </div>
 
@@ -456,15 +241,15 @@
                             <div class="featured-properties-slides owl-carousel">
                                 <!-- Single Slide -->
                                 <div class="single-featured-properties-slide">
-                                    <a href="#"><img src="assets/bg-img/fea-product.jpg" alt=""></a>
+                                    <a href="#"><img src="assets/img/bg-img/fea-product.jpg" alt=""></a>
                                 </div>
                                 <!-- Single Slide -->
                                 <div class="single-featured-properties-slide">
-                                    <a href="#"><img src="assets/bg-img/fea-product.jpg" alt=""></a>
+                                    <a href="#"><img src="assets/img/bg-img/fea-product.jpg" alt=""></a>
                                 </div>
                                 <!-- Single Slide -->
                                 <div class="single-featured-properties-slide">
-                                    <a href="#"><img src="assets/bg-img/fea-product.jpg" alt=""></a>
+                                    <a href="#"><img src="assets/img/bg-img/fea-product.jpg" alt=""></a>
                                 </div>
                             </div>
                         </div>
@@ -477,11 +262,10 @@
         <!-- Copywrite Text -->
         <div class="copywrite-text d-flex align-items-center justify-content-center">
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
         </div>
     </footer>
-    <!-- ##### Footer Area End ##### -->
 
      <!-- jQuery (Necessary for All JavaScript Plugins) -->
      <script src="assets/js/jquery/jquery-2.2.4.min.js"></script>
@@ -496,6 +280,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
      <!-- Active js -->
      <script src="assets/js/active.js"></script>
      <script src="assets/js/modal.js"></script>
+     <!-- jbar js -->
+     <script src="assets/js/jqbar.js"></script>
      
      <script src="assets/js/star.js" type="text/javascript"></script>
      <script type="text/javascript">
@@ -507,11 +293,39 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
      </script>
      <script>
         setTimeout(function(){ 
+<<<<<<< HEAD
             if(<%=check_ses%> != 0)
                 document.getElementById('star').click();
             
+=======
+            document.getElementById('star').click();
+>>>>>>> f7f76f203fc43c35ab6448420975df6be9fc7fd8
         },3000);
      </script>
 </body>
+<script>
+    $(document).ready(function () {
+        $('#bar-1').jqbar({ label: '치안', value: <%=estate.safe_value%>, barColor: '#D64747', orientation: 'v' });
+        $('#bar-2').jqbar({ label: '편의', value: <%=estate.convenience_value%>, barColor: '#FF681F', orientation: 'v' });
+        $('#bar-3').jqbar({ label: '교통', value: <%=estate.traffic_value%>, barColor: '#ea805c', orientation: 'v' });
+        $('#bar-4').jqbar({ label: '교육', value: <%=estate.education_value%>, barColor: '#88bbc8', orientation: 'v' });
+        $('#bar-5').jqbar({ label: '건강', value: <%=estate.healthy_value%>, barColor: '#939393', orientation: 'v' });
+        $('#star-score').click(function(){
+        var form = $('#star-score-form')
 
+        $.ajax({
+            type:'post',
+            url:'/score/<%=estate.estate_id%>',
+            data: form.serialize(),
+            success:function(data){
+                console.log("data : ",data, "form : ", form);
+                alert('감사합니다')
+            }
+        });
+        $('#myModal').modal('hide')
+        return false;
+    })
+    });
+    
+</script>
 </html>

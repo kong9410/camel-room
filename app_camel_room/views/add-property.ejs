@@ -55,12 +55,16 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="/">Home</a></li>
-                                <li><a href="/about-us">About Us</a></li>
-                                <li><a href="/property">Property</a></li>
-                                <li><a href="/theme">Theme</a></li>
-                                <li><a href="/register">Contact</a></li>
-                                <li><a href="" style=color:#000000>Login</a></li>
+                                <li><a href="/">홈</a></li>
+                                <li><a href="/about-us">팀-공집합</a></li>
+                                <li><a href="/property">부동산</a></li>
+                                <li><a href="/theme">테마</a></li>
+                                <li><a href="/register">회원가입</a></li>
+                                <% if(!check_ses) {%>
+                                <li><a href="" style=color:#505050 data-toggle="modal" data-target="#loginModal" id="login">로그인</a></li>
+                                <%} else{ %>
+                                <li><a href="api/logout" style="color:#505050">로그아웃</a></li>
+                                <%}%>
                             </ul>
                         </div>
                         <!-- Nav End -->
@@ -112,15 +116,7 @@
                                 <div class="col-md-11">
                                     <div class="form-group">
                                         <label>사진</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                            </div>
-                                            <div class="custom-file">
-                                                <input type="file" name="estateFile" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                            </div>
-                                        </div>
+                                        <input type="file" name="estateFile" class="btn" id="inputGroupFile01" accept="image/*" multiple required>
                                     </div>
                                 </div>
                             </div>
@@ -262,7 +258,7 @@
                                 </div>
                             
                             </div>
-                            <button type="submit" class="btn south-btn">등록 완료</button>
+                            <button id="sumbit_estate" type="submit" class="btn south-btn">등록 완료</button>
                         </form>
                     </div>
                 </div>
@@ -403,7 +399,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         level: 4 // 지도의 확대 레벨
     };    
     var map = new daum.maps.Map(mapContainer, mapOption);
-
     function fn_setAddr(){
         //팝업 창 크기
         var width = 500;

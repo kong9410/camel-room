@@ -1,7 +1,7 @@
 .jqbar
 {
     position: relative;
-    top: 100px;
+    top: 0px;
 }
 .jqbar.vertical
 {
@@ -51,3 +51,6 @@
     margin-bottom: 5px;
 }
 
+.jqbar div{
+    margin: 20px;
+}
