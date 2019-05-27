@@ -2,6 +2,7 @@
 var express     = require('express');
 var multer		= require('multer');
 var app         = express();
+
 var bodyParser  = require('body-parser');
 var mongoose    = require('mongoose');
 var session     = require('express-session');
@@ -61,4 +62,24 @@ app.use('/api/estate', estateRouter);
 // [RUN SERVER]
 var server = app.listen(port, function(){
     console.log("Express server has started on port " + port)
+});
+
+// [클러스터링 데이터 가져오기]
+app.all('/get_data', function(req, res){
+	var cursor = db.collection("estates").find({}).toArray(function (err, result) {	
+		
+		var map_data = new Object();
+		var array_data = new Array();
+		for (var i=0; i< result.length; i++ ){
+			var loc_dic = new Object();
+			loc_dic["lat"] = result[i].latitude;
+			loc_dic["lng"] = result[i].longitude;
+			loc_dic["estate_id"] = result[i].estate_id;
+			
+			array_data.push(loc_dic);
+		}
+		map_data["positions"] = array_data;
+		// [Recommend]
+		res.json(map_data);
+	});
 });

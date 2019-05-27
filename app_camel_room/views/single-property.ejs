@@ -16,6 +16,7 @@
 
     <!-- Style CSS -->
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/css/star.css">
     <link rel="stylesheet" href="assets/css/jqbar.css">
     <link rel="stylesheet" href="assets/css/star.css">
 
@@ -149,6 +150,28 @@
                         </ul>
                     </div>
                 </div>
+                
+
+                <div class="col-12 col-lg-4">
+                    <div class="blog-sidebar-area">
+
+                        <!-- Catagories Widget -->
+                        <div class="south-catagories-card mb-70">
+                            <h5>Information</h5>
+                            <ul class="catagories-menu">
+                                <li><a>주거 형태 : <%=estate.houseType%></a></li>
+                                <li><a>계약 : <%=estate.contractTag%></a></li>
+                                <li>
+                                    <a><img src="assets/img/icons/space.png" alt=""> : <%=estate.roomSize%></a>
+                                </li>
+                                <li><a>방수 : <%=estate.rooms%></a></li>
+                                <li>
+                                    <a>연식 : <%=estate.years%></a>
+                                </li>
+                                <li>
+                                    <a><img src="assets/img/icons/bathtub.png" alt=""> : <%=estate.toilet%></a>
+                                </li>
+                            </ul>
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="contact-realtor-wrapper">
                         <div class="realtor-info">
@@ -178,6 +201,20 @@
             <!--MAP-->
             <div id="map" style="width:100%; height:500px"></div>
         </div>
+
+
+    <!--가치지수 출력-->
+    <div style="width:50%">
+            <canvas id="valuecanvas"></canvas>
+    </div>
+
+    <!--평점 출력-->
+    <div style="width:40%">
+        <canvas id="scorecanvas"></canvas>
+</div>
+
+
+
     </section>
     <!-- ##### Listings Content Area End ##### -->
 
@@ -315,75 +352,85 @@
             
         },3000);
      </script>
-</body>
-<script>
-    $(document).ready(function () {
-        $('#bar-1').jqbar({ label: '치안', value: <%=estate.safe_value%>, barColor: '#D64747', orientation: 'v' });
-        $('#bar-2').jqbar({ label: '편의', value: <%=estate.convenience_value%>, barColor: '#FF681F', orientation: 'v' });
-        $('#bar-3').jqbar({ label: '교통', value: <%=estate.traffic_value%>, barColor: '#ea805c', orientation: 'v' });
-        $('#bar-4').jqbar({ label: '교육', value: <%=estate.education_value%>, barColor: '#88bbc8', orientation: 'v' });
-        $('#bar-5').jqbar({ label: '건강', value: <%=estate.healthy_value%>, barColor: '#939393', orientation: 'v' });
-        $('#star-score').click(function(){
-        var form = $('#star-score-form')
 
-        $.ajax({
-            type:'post',
-            url:'/score/<%=estate.estate_id%>',
-            data: form.serialize(),
-            success:function(data){
-                console.log("data : ",data, "form : ", form);
-                alert('감사합니다')
+    <script src="assets/js/Chartbundle.js"></script>
+    <script>
+        var config = {
+            type: 'radar',
+            data: {
+                labels: ["치안지수", "인기지수", "교통지수", "교육지수", "건강지수", "편의지수"],
+                datasets: [{
+                    label: "지수",
+                    backgroundColor: "rgba(255,94,0,0.4)",
+                    pointBackgroundColor: "rgba(110,200,30,4)",
+                    borderWidth: 5,
+                    borderCapStyle : 'butt',
+                    data: [<%=estate.safe_value%>, <%=estate.popular_value%>, <%=estate.traffic_value%>, <%=estate.education_value%>, <%=estate.healthy_value%>, <%=estate.convenience_value%>]
+                }]
+            },
+            options: {
+                legend: {
+                    position: 'top'
+                },
+                title: {
+                    display: true,
+                    text: '매물 가치지수'
+                },
+                scale: {
+                    reverse: false,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }
             }
-        });
-        $('#myModal').modal('hide')
-        return false;
-    })
-    });
-    // 지도를 생성합니다    
-    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-    var options = { //지도를 생성할 때 필요한 기본 옵션
-        center: new daum.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-        level: 3 //지도의 레벨(확대, 축소 정도)
-    };
+        };
 
-    var map = new daum.maps.Map(container, options); //지도 생성 및 객체 리턴
-</script>
-<style>
-    .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
-    .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-    .map_wrap {position:relative;width:100%;height:500px;}
-    #menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
-    .bg_white {background:#fff;}
-    #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
-    #menu_wrap .option{text-align: center;}
-    #menu_wrap .option p {margin:10px 0;}  
-    #menu_wrap .option button {margin-left:5px;}
-    #placesList li {list-style: none;}
-    #placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
-    #placesList .item span {display: block;margin-top:4px;}
-    #placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-    #placesList .item .info{padding:10px 0 10px 55px;}
-    #placesList .info .gray {color:#8a8a8a;}
-    #placesList .info .jibun {padding-left:26px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
-    #placesList .info .tel {color:#009900;}
-    #placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
-    #placesList .item .marker_1 {background-position: 0 -10px;}
-    #placesList .item .marker_2 {background-position: 0 -56px;}
-    #placesList .item .marker_3 {background-position: 0 -102px}
-    #placesList .item .marker_4 {background-position: 0 -148px;}
-    #placesList .item .marker_5 {background-position: 0 -194px;}
-    #placesList .item .marker_6 {background-position: 0 -240px;}
-    #placesList .item .marker_7 {background-position: 0 -286px;}
-    #placesList .item .marker_8 {background-position: 0 -332px;}
-    #placesList .item .marker_9 {background-position: 0 -378px;}
-    #placesList .item .marker_10 {background-position: 0 -423px;}
-    #placesList .item .marker_11 {background-position: 0 -470px;}
-    #placesList .item .marker_12 {background-position: 0 -516px;}
-    #placesList .item .marker_13 {background-position: 0 -562px;}
-    #placesList .item .marker_14 {background-position: 0 -608px;}
-    #placesList .item .marker_15 {background-position: 0 -654px;}
-    #pagination {margin:10px auto;text-align: center;}
-    #pagination a {display:inline-block;margin-right:10px;}
-    #pagination .on {font-weight: bold; cursor: default;color:#777;}
-</style>
+        var barChartData = {
+            labels: ["평균 평점", "사용자 예상 평점"],
+            datasets: [{
+                label: '평점',
+                backgroundColor: "rgba(1,0,255,0.5)",
+                data: [<%=avgScore%>,<%=expectScore%>,0]
+            }]
+        };
+
+        window.onload = function() {
+            window.myRadar = new Chart(document.getElementById("valuecanvas"), config);
+            var ctx = document.getElementById("scorecanvas").getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    // Elements options apply to all of the options unless overridden in a dataset
+                    // In this case, we are setting the border of each bar to be 2px wide and green
+                    elements: {
+                        rectangle: {
+                            borderWidth: 1,
+                            borderColor: 'rgb(200, 150, 70)',
+                            borderSkipped: 'bottom'
+                        }
+                    },
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                    },
+					scales: {
+						xAxes: [{
+							barPercentage: 0.4,
+							barThickness: 1,
+							maxBarThickness: 10,
+							minBarLength: 1,
+							gridLines: {
+								offsetGridLines: true
+							}
+						}]
+					}
+                }
+            });
+        };
+    </script>
+</body>
 </html>
