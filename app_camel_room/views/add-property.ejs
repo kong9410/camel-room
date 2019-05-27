@@ -103,7 +103,26 @@
                 <!-- Contact Form Area -->
                 <div class="col-12 col-lg-12">
                     <div class="contact-form">
-                        <form action="api/estate" enctype="multipart/form-data" name="signup_form" method="post">
+                        
+                        <form enctype="multipart/form-data" name="input-file-name" method="post">
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <div class="form-group">
+                                        <label>사진</label>
+                                        <input type="file" name="estateFile" class="btn" id="input-file1" accept="image/*" multiple novalidate>
+                                        <button type="button" id="input-file-button" class="btn">사진분석</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form action="api/estate" enctype="multipart/form-data" name="signup_form" method="post" id="estate-form">
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <div class="form-group" id="copy-image">
+                                        
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
@@ -112,15 +131,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-11">
-                                    <div class="form-group">
-                                        <label>사진</label>
-                                        <input type="file" name="estateFile" class="btn" id="inputGroupFile01" accept="image/*" multiple required>
-                                    </div>
-                                </div>
-                            </div>
-                            
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -268,7 +278,7 @@
 
     <div id="map" style="width:280px;height:280px; visibility: hidden"></div>
     <!-- ##### Footer Area Start ##### -->
-    <footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(img/bg-img/cta.jpg);">
+    <footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(assets/img/bg-img/cta.jpg);">
         <!-- Main Footer Area -->
         <div class="main-footer-area">
             <div class="container">
@@ -513,6 +523,24 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 });
             });
     }
+    $('#input-file1').change(function(){
+        $('#input-file').remove();
+        $("#input-file1").clone().appendTo("#estate-form #copy-image").attr('id', 'input-file').css('display', none)
+    })
+    
+    $('#input-file-button').click(function(){
+        var form = $('#input-file-form')
+        $.ajax({
+            type:'post',
+            url:'http://106.249.132.208:5000/fileUpload',
+            data: form.serialize(),
+            success:function(data){
+                console.log("data : ",data, "form : ", form);
+                alert('감사합니다')
+            }
+        });
+        return false;
+    });
     </script>
 </body>
 

@@ -114,7 +114,7 @@
 
                                 <div class="col-12 col-md-4 col-lg-3">
                                     <div class="form-group">
-                                        <select class="form-control" id="cities" name="contract">
+                                        <select class="form-control" id="cities" name="contractTag">
                                             <option>계약 유형</option>
                                             <option>전세</option>
                                             <option>월세</option>
@@ -138,9 +138,9 @@
                                     <div class="form-group">
                                         <select class="form-control" id="floors" name="floors">
                                             <option>모든 층</option>
-                                            <option>1층</option>
-                                            <option>2층</option>
-                                            <option>3층</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
                                             <option>4층</option>
                                             <option>5층</option>
                                             <option>6층</option>
@@ -174,7 +174,7 @@
                                     <div class="form-group">
                                         <select class="form-control" id="bathrooms" name="bathrooms">
                                             <option>방</option>
-                                            <option>1</option>
+                                            <option>원룸</option>
                                             <option>2</option>
                                             <option>3</option>
                                             <option>4</option>
@@ -284,7 +284,7 @@
                                     </div>
                                     <!-- Submit -->
                                     <div class="form-group mb-0">
-                                        <button type="submit" class="btn south-btn">검색</button>
+                                        <button id="searchBtn" type="submit" class="btn south-btn">검색</button>
                                     </div>
                                 </div>
                             </div>
@@ -512,6 +512,8 @@
 </body>
 
 <script>
+
+
     //매물 등록 버튼
     function add_property() {
         location.href = "/add-property";

@@ -17,6 +17,7 @@
     <!-- Style CSS -->
     <link rel="stylesheet" href="assets/style.css">
     <link rel="stylesheet" href="assets/css/jqbar.css">
+    <link rel="stylesheet" href="assets/css/star.css">
 
 </head>
 
@@ -62,7 +63,7 @@
                                 <li><a href="" style=color:#505050 data-toggle="modal" data-target="#loginModal"
                                         id="login">로그인</a></li>
                                 <%} else{ %>
-                                <li><a href="api/logout" style="color:#505050">로그아웃</a></li>
+                                <li><a href="/api/logout" style="color:#505050">로그아웃</a></li>
                                 <%}%>
                                     </ul>
                                 </div>
@@ -97,7 +98,7 @@
                     <div class="single-listings-sliders owl-carousel">
                         <!-- Single Slide -->
                         <%for(var i = 0; i < estate.saveFileName.length; i++){%>
-                        <img src="uploads/<%=estate.saveFileName[i]%>" alt="">
+                        <img src="uploads/<%=estate.saveFileName[i]%>" style="width:100%; height:100%"alt="">
                         <% } %>
                     </div>
                 </div>
@@ -151,14 +152,18 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="contact-realtor-wrapper">
                         <div class="realtor-info">
-                            <div>
+                            <center>
+                            <div style="border:1px black solid; background: white">
+                                
                                 <div id="bar-1"></div>
                                 <div id="bar-2"></div>
                                 <div id="bar-3"></div>
                                 <div id="bar-4"></div>
                                 <div id="bar-5"></div>
                                 <div id="bar-6"></div>
+                            
                             </div>
+                            </center>
                             <div class="realtor---info">
                                 <h2>가치지수</h2>
                                 <p>가치지수란?</p>
@@ -170,14 +175,8 @@
                     </div>
                 </div>
             </div>
-            <!-- Listing Maps -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="listings-maps mt-100">
-                        <div id="googleMap"></div>
-                    </div>
-                </div>
-            </div>
+            <!--MAP-->
+            <div id="map" style="width:100%; height:500px"></div>
         </div>
     </section>
     <!-- ##### Listings Content Area End ##### -->
@@ -236,6 +235,10 @@
     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
         </div>
     </footer>
+    <!-- Button to Open the Modal -->
+    <button type="button" class="btn btn-primary" id="star" data-toggle="modal" data-target="#myModal"
+    style="visibility: hidden">
+    </button>
     <!-- ##### Footer Area End ##### -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
@@ -268,8 +271,6 @@
     
                     </div>
                     <!-- Modal footer -->
-    
-    
                     <div class="modal-footer">
                         <div style="float:left;">
                             <h6>이 의견은 추천정보에 반영됩니다.</h6>
@@ -308,7 +309,8 @@
      </script>
      <script>
         setTimeout(function(){ 
-            if(<%=check_ses%> != 0)
+            var check_ses = "<%=check_ses%>";
+            if(check_ses != 0)
                 document.getElementById('star').click();
             
         },3000);
@@ -337,6 +339,51 @@
         return false;
     })
     });
-    
+    // 지도를 생성합니다    
+    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+    var options = { //지도를 생성할 때 필요한 기본 옵션
+        center: new daum.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+        level: 3 //지도의 레벨(확대, 축소 정도)
+    };
+
+    var map = new daum.maps.Map(container, options); //지도 생성 및 객체 리턴
 </script>
+<style>
+    .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+    .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+    .map_wrap {position:relative;width:100%;height:500px;}
+    #menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+    .bg_white {background:#fff;}
+    #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+    #menu_wrap .option{text-align: center;}
+    #menu_wrap .option p {margin:10px 0;}  
+    #menu_wrap .option button {margin-left:5px;}
+    #placesList li {list-style: none;}
+    #placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+    #placesList .item span {display: block;margin-top:4px;}
+    #placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+    #placesList .item .info{padding:10px 0 10px 55px;}
+    #placesList .info .gray {color:#8a8a8a;}
+    #placesList .info .jibun {padding-left:26px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+    #placesList .info .tel {color:#009900;}
+    #placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+    #placesList .item .marker_1 {background-position: 0 -10px;}
+    #placesList .item .marker_2 {background-position: 0 -56px;}
+    #placesList .item .marker_3 {background-position: 0 -102px}
+    #placesList .item .marker_4 {background-position: 0 -148px;}
+    #placesList .item .marker_5 {background-position: 0 -194px;}
+    #placesList .item .marker_6 {background-position: 0 -240px;}
+    #placesList .item .marker_7 {background-position: 0 -286px;}
+    #placesList .item .marker_8 {background-position: 0 -332px;}
+    #placesList .item .marker_9 {background-position: 0 -378px;}
+    #placesList .item .marker_10 {background-position: 0 -423px;}
+    #placesList .item .marker_11 {background-position: 0 -470px;}
+    #placesList .item .marker_12 {background-position: 0 -516px;}
+    #placesList .item .marker_13 {background-position: 0 -562px;}
+    #placesList .item .marker_14 {background-position: 0 -608px;}
+    #placesList .item .marker_15 {background-position: 0 -654px;}
+    #pagination {margin:10px auto;text-align: center;}
+    #pagination a {display:inline-block;margin-right:10px;}
+    #pagination .on {font-weight: bold; cursor: default;color:#777;}
+</style>
 </html>
