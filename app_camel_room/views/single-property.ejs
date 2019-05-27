@@ -16,6 +16,7 @@
 
     <!-- Style CSS -->
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/css/star.css">
     <link rel="stylesheet" href="assets/css/jqbar.css">
 </head>
 
@@ -194,22 +195,24 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="south-catagories-card mb-70">
-                            <h5>가치지수</h5>
-                            <div>
-                                <div id="bar-1"></div>
-                                <div id="bar-2"></div>
-                                <div id="bar-3"></div>
-                                <div id="bar-4"></div>
-                                <div id="bar-5"></div>
-                                <div id="bar-6"></div>
-                            </div>
-                            
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+    <!--가치지수 출력-->
+    <div style="width:50%">
+            <canvas id="valuecanvas"></canvas>
+    </div>
+
+    <!--평점 출력-->
+    <div style="width:40%">
+        <canvas id="scorecanvas"></canvas>
+</div>
+
+
+
     </section>
     <!-- ##### Blog Area End ##### -->
     <!-- ##### Footer Area Start ##### -->
@@ -293,35 +296,91 @@
      </script>
      <script>
         setTimeout(function(){ 
-            if(<%=check_ses%> != 0)
+            var check_ses = "<%=check_ses%>";
+            if(check_ses != 0)
                 document.getElementById('star').click();
             
         },3000);
      </script>
-</body>
-<script>
-    $(document).ready(function () {
-        $('#bar-1').jqbar({ label: '치안', value: <%=estate.safe_value%>, barColor: '#D64747', orientation: 'v' });
-        $('#bar-2').jqbar({ label: '편의', value: <%=estate.convenience_value%>, barColor: '#FF681F', orientation: 'v' });
-        $('#bar-3').jqbar({ label: '교통', value: <%=estate.traffic_value%>, barColor: '#ea805c', orientation: 'v' });
-        $('#bar-4').jqbar({ label: '교육', value: <%=estate.education_value%>, barColor: '#88bbc8', orientation: 'v' });
-        $('#bar-5').jqbar({ label: '건강', value: <%=estate.healthy_value%>, barColor: '#939393', orientation: 'v' });
-        $('#star-score').click(function(){
-        var form = $('#star-score-form')
 
-        $.ajax({
-            type:'post',
-            url:'/score/<%=estate.estate_id%>',
-            data: form.serialize(),
-            success:function(data){
-                console.log("data : ",data, "form : ", form);
-                alert('감사합니다')
+    <script src="assets/js/Chartbundle.js"></script>
+    <script>
+        var config = {
+            type: 'radar',
+            data: {
+                labels: ["치안지수", "인기지수", "교통지수", "교육지수", "건강지수", "편의지수"],
+                datasets: [{
+                    label: "지수",
+                    backgroundColor: "rgba(255,94,0,0.4)",
+                    pointBackgroundColor: "rgba(110,200,30,4)",
+                    borderWidth: 5,
+                    borderCapStyle : 'butt',
+                    data: [<%=estate.safe_value%>, <%=estate.popular_value%>, <%=estate.traffic_value%>, <%=estate.education_value%>, <%=estate.healthy_value%>, <%=estate.convenience_value%>]
+                }]
+            },
+            options: {
+                legend: {
+                    position: 'top'
+                },
+                title: {
+                    display: true,
+                    text: '매물 가치지수'
+                },
+                scale: {
+                    reverse: false,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }
             }
-        });
-        $('#myModal').modal('hide')
-        return false;
-    })
-    });
-    
-</script>
+        };
+
+        var barChartData = {
+            labels: ["평균 평점", "사용자 예상 평점"],
+            datasets: [{
+                label: '평점',
+                backgroundColor: "rgba(1,0,255,0.5)",
+                data: [<%=avgScore%>,<%=expectScore%>,0]
+            }]
+        };
+
+        window.onload = function() {
+            window.myRadar = new Chart(document.getElementById("valuecanvas"), config);
+            var ctx = document.getElementById("scorecanvas").getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    // Elements options apply to all of the options unless overridden in a dataset
+                    // In this case, we are setting the border of each bar to be 2px wide and green
+                    elements: {
+                        rectangle: {
+                            borderWidth: 1,
+                            borderColor: 'rgb(200, 150, 70)',
+                            borderSkipped: 'bottom'
+                        }
+                    },
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                    },
+					scales: {
+						xAxes: [{
+							barPercentage: 0.4,
+							barThickness: 1,
+							maxBarThickness: 10,
+							minBarLength: 1,
+							gridLines: {
+								offsetGridLines: true
+							}
+						}]
+					}
+                }
+            });
+        };
+    </script>
+</body>
 </html>
