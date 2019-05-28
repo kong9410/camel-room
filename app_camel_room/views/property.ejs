@@ -7,7 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- Title  -->
     <title>낙타의 공방 - 매물</title>
 
@@ -299,16 +303,12 @@
 
     <!-- 지도 -->
     <div class="map-list-container">
-        <div class="nav-map" id="map"></div>
+        <div class="nav-map" id="map" ></div>
         <div class="section-list" id="maplist">
-            <div class="single-container">
-                <div class="single-property-header">
-                    <h3>선택된 부동산</h3>
-                </div>
+            <div class="single-container" >
+                <img src="uploads/<%=estate_list[0].saveFileName%>"  class="rounded" alt="Cinque Terre" width="100%" height="400px">
+                <button type="button" class="btn btn-primary btn-block">매물 보기</button>
                 <div class="single-property-content">
-                    <div class="single-property-thumb">
-                        <img src="uploads/<%=estate_list[0].saveFileName[0]%>">
-                    </div>
                     <div class="single-property-text">
                         <p id='title'><h5><%=estate_list[0].title%></h5></p>
                         <h5><span id='price'><%=estate_list[0].price%>만원</span></h5>
@@ -358,43 +358,7 @@
 
             <div class="row">
 
-                <!-- Single Featured Property -->
-                <% for ( var i=0; i < estate_list.length; i++ ) { %>
-                <div class="col-12 col-md-6 col-xl-4">
-                    <div class="single-featured-property mb-50" id="single-property<%=estate_list[i].estate_id%>" style="display:none;" onclick="propertyInfo('<%=estate_list[i].estate_id%>')">
-                        <!-- Property Thumbnail -->
-                        <div class="property-thumb">
-                            <img src="uploads/<%=estate_list[i].saveFileName[0]%>" alt="">
-                            <div class="tag">
-                                <span>For Sale</span>
-                            </div>
-                            <div class="list-price">
-                                <p><%=estate_list[i].price%> 만원</p>
-                            </div>
-                        </div>
-                        <!-- Property Content -->
-                        <div class="property-content">
-                            <h5><%=estate_list[i].title%></h5>
-                            <p class="location"><img src="assets/img/icons/location.png" alt=""><%=estate_list[i].roadAddress%></p>
-                            <p>판매자 : <%=estate_list[i].writer%></p>
-                            <div class="property-meta-data d-flex align-items-end justify-content-between">
-                                <div class="bathroom">
-                                    <img src="assets/img/icons/bathtub.png" alt="">
-                                    <span><%=estate_list[i].toilet%></span>
-                                </div>
-                                <div class="garage">
-                                    <img src="assets/img/icons/garage.png" alt="">
-                                    <span><%=estate_list[i].houseType%></span>
-                                </div>
-                                <div class="space">
-                                    <img src="assets/img/icons/space.png" alt="">
-                                    <span><%=estate_list[i].roomSize%>평</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <% } %>
+               
             </div>
             <div class="row">
                 <div class="col-12">
@@ -542,7 +506,7 @@
     }
     
     var map = new daum.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
-        center : new daum.maps.LatLng(37.485003, 126.824772), // 지도의 중심좌표 
+        center : new daum.maps.LatLng(36.385003, 127.824772), // 지도의 중심좌표 
         level : 12 // 지도의 확대 레벨 
     });
     // 마커 클러스터러를 생성합니다 

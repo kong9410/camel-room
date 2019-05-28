@@ -1892,15 +1892,15 @@ img {
 .map-list-container .nav-map{
   position:absolute;
   height:700px;
-  width:950px;
+  width:900px;
   margin-left:100px;
   border:1px solid #aaa;
 }
 .map-list-container .section-list{
-  margin-left:1050px;
-  width:350px;
+  margin-left:1000px;
+  width:450px;
   height:700px;
-  padding:10px;
+  
   background-color:rgb(252, 252, 252);
   border:1px solid #aaa;
 }
@@ -1908,7 +1908,6 @@ img {
   position:relative;
   width:100%;
   height:100%;
-  padding:10px;
 }
 .map-list-container .section-list .single-container .single-property-header{
   position:relative;
