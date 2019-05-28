@@ -178,11 +178,11 @@ router.get('/property', function (req, res) {
 				var rec_list = new Array();
 				var Inlist = new Array();
 				
+				
 				rec_list = Recommendation(user_dic,req.session.email);
 				for(var k=0; k<rec_list.length;k++){
 					Inlist.push(rec_list[k][1]);
 				}
-
 				
 				var myquery = {'estate_id':{$in:Inlist}};
 				var cursor = db.collection("estates").find(myquery).toArray(function(err,result){
@@ -287,8 +287,11 @@ router.get('/single-property/:id', function(req, res){
 							expect_score = rec_list[k][0];
 						}
 					}
-
-					if(expect_score==-1){ // 이미 평가 한 매물 일 경우 예상 스코어는 평가스코어로 준다.
+					if(rec_list.length==0){
+						console.log("예상점수 불가능");
+						res.render('single-property.ejs', {estate : estate_info, check_ses: req.session.email, avgScore:avgScore_data, expectScore: 0 });
+					}
+					else if(expect_score==-1){ // 이미 평가 한 매물 일 경우 예상 스코어는 평가스코어로 준다.
 						var cursor = db.collection("users").aggregate([
 								{$unwind:"$star"},
 								{$match : {"star.estate_id" : estate_id}},
