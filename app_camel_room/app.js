@@ -75,7 +75,18 @@ app.all('/get_data', function(req, res){
 			loc_dic["lat"] = result[i].latitude;
 			loc_dic["lng"] = result[i].longitude;
 			loc_dic["estate_id"] = result[i].estate_id;
-			
+			loc_dic["title"] = result[i].title;
+			loc_dic["price"] = result[i].price;
+			loc_dic["deposit"] = result[i].deposit;
+			loc_dic["contractTag"] = result[i].contractTag;
+			loc_dic["roadAddress"] = result[i].roadAddress;
+			loc_dic["saveFileName"] = result[i].saveFileName[0];
+			loc_dic["safe_value"] = result[i].safe_value;
+			loc_dic["popular_value"] = result[i].popular_value;
+			loc_dic["traffic_value"] = result[i].traffic_value;
+			loc_dic["education_value"] = result[i].education_value;
+			loc_dic["healthy_value"] = result[i].healthy_value;
+			loc_dic["convenience_value"] = result[i].convenience_value;
 			array_data.push(loc_dic);
 		}
 		map_data["positions"] = array_data;
