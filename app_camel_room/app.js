@@ -87,6 +87,13 @@ app.all('/get_data', function(req, res){
 			loc_dic["education_value"] = result[i].education_value;
 			loc_dic["healthy_value"] = result[i].healthy_value;
 			loc_dic["convenience_value"] = result[i].convenience_value;
+			loc_dic["houseType"] = result[i].houseType;
+			loc_dic["contractTag"] = result[i].contractTag;
+			loc_dic["roomSize"] = result[i].roomSize;
+			loc_dic["rooms"] = result[i].rooms;
+			loc_dic["toilet"] = result[i].toilet;
+			loc_dic["years"] = result[i].years;
+			loc_dic["content"] = result[i].content;
 			array_data.push(loc_dic);
 		}
 		map_data["positions"] = array_data;
