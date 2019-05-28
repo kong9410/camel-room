@@ -350,8 +350,24 @@
                 document.getElementById('star').click();
             
         },3000);
-     </script>
 
+        //점수 제출
+        $('#star-score').click(function(){
+        var form = $('#star-score-form');
+        $.ajax({
+            type:'post',
+            url:'/score/<%=estate.estate_id%>',
+            data: form.serialize(),
+            success:function(data){
+                console.log("data : ",data, "form : ", form);
+                alert('감사합니다.')
+            }
+        });
+        $('#myModal').modal('hide');
+        return false;
+    });
+     </script>
+    
     <script src="assets/js/Chartbundle.js"></script>
     <script>
         var config = {
