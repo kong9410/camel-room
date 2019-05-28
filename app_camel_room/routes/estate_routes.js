@@ -4,6 +4,8 @@ var Estate = require('../models/estate');
 var multer = require('multer');
 var fs = require('fs');
 var PATH = require('path');
+var py = require('python-shell');
+var cors = require('cors')
 var mongoose = require('mongoose');
 var db = mongoose.connection;
 mongoose.connect('mongodb://localhost/estate_db', { useNewUrlParser: true });
@@ -25,6 +27,8 @@ router.post('/', function (req, res) {
         if (err) {
             return res.end("Error uploading files");
         }
+
+
         var estate = new Estate();
         estate.title = req.body.title;
         estate.saveFileName = req.files.map(function(file){
@@ -98,7 +102,7 @@ router.post('/', function (req, res) {
         var academy = parseInt(req.body.academy);
         var kindergarten = parseInt(req.body.kindergarten);
         var amount = school+academy+kindergarten;
-        console.log(amount);
+        console.log("education:",amount);
         if(amount >35)
             estate.education_value = 5;
         else if(amount > 25)
@@ -124,7 +128,7 @@ router.post('/', function (req, res) {
             estate.healthy_value = 2;
         else
             estate.healthy_value = 1;
-        console.log(amount);
+        console.log("healthy:", amount);
     
         //편의가치지수
         var convenience = parseInt(req.body.convenience);
@@ -142,7 +146,7 @@ router.post('/', function (req, res) {
             estate.convenience_value = 2;
         else
             estate.convenience_value = 1;
-        console.log(amount);
+        console.log("convenience:", amount);
     
          //교통가치지수
         var subway = parseInt(req.body.subway);
@@ -182,8 +186,6 @@ router.post('/', function (req, res) {
                 console.log("1 document updated");
             });
         })
-
-
 
         console.log(estate);
         estate.save(function (err) {

@@ -2,7 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose    = require('mongoose');
-
+var http = require('http');
 // [Recommend function]
 
 function setDefault(obj, prop, deflt) { 
@@ -213,6 +213,13 @@ router.post('/score/:id', function(req, res){
 	});
 })
 
+router.post('/take/:id', function(req, res){
+	var estate_id = req.params.id;
+	console.log("take value is ",req.body.star);
+	var cursor = db.collection("estates").findOne({estate_id:estate_id});
+	console.log(cursor);
+});
+
 // [SINGLE PROPERTY]
 router.use('/single-property/:id', express.static('public'))
 router.get('/single-property/:id', function(req, res){
@@ -297,9 +304,9 @@ router.get('/single-property/:id', function(req, res){
 								{$match : {"star.estate_id" : estate_id}},
 								{$project : {"star.score" :1, "_id":0}}
 							]).toArray(function(err,result){
-								console.log("예상점수이미 있을 때 과거 평가데이터 가져옴");
+								console.log("result : ", result);
 								var expect_score = result[0].star.score;
-								res.render('single-property.ejs', {estate : estate_info, check_ses: req.session.email, avgScore:avgScore_data,  expectScore: expect_score });
+								res.render('single-property.ejso', {estate : estate_info, check_ses: req.session.email, avgScore:avgScore_data,  expectScore: expect_score });
 							});
 					}
 					else{
@@ -317,6 +324,13 @@ router.get('/single-property/:id', function(req, res){
 });
 
 // [THEME]
+router.get('/theme', function (req, res) {
+	if(req.session.email){
+		res.render('theme.ejs',{check_ses: req.session.email} );
+	}
+	else
+		res.render('theme.ejs', {check_ses: 0});
+});
 
 // [ABOUT US]
 router.get('/about-us', function (req, res) {
@@ -342,5 +356,94 @@ router.get('/register', function (req, res) {
 });
 
 
+// [SEARCH POST]
+router.post('/search', function (req, res) {
+	var search = {};
+	search.address = req.body.address;
+	search.contractTag = req.body.contractTag;
+	search.houseType = req.body.houseType;
+	search.floors = Number(req.body.floors);
+	search.years = req.body.years;
+	search.bedrooms = req.body.bedrooms;
+	search.bathrooms = req.body.bathrooms;
+	search.min_size = req.body.min_size;
+	search.max_size = req.body.max_size;
+	var cursor = db.collection("estates").find({
+		'roadAddress': {$regex:search.address},
+		'contractTag': search.contractTag
+	}).toArray(function (err, result) {
+		//에러처리
+		if (err) throw err;
+		console.log(result);
+		//현재 페이지
+		var cur_page;
+		if (req.query.curpage == null) {
+			cur_page = 1;
+		}
+		else {
+			cur_page = req.query.curpage;
+		}
+
+
+		var list = new Array();
+		var page_length;
+		if (result.length % 15 == 0)
+			page_length = parseInt(result.length / 15);
+		else
+			page_length = parseInt(result.length / 15) + 1;
+
+
+		var curindex = (cur_page - 1) * 15;
+		var lastcnt;
+		if (result.length % 15 == 0)
+			lastcnt = 15;
+		else
+			lastcnt = result.length % 15;
+		if (cur_page < page_length) {
+			for (var i = curindex; i < curindex + 15; i++) {
+				list.push(result[i]);
+			}
+		}
+		else if (cur_page == page_length) {
+			for (var i = curindex; i < curindex + lastcnt; i++) {
+				list.push(result[i]);
+			}
+		}
+		if (req.session.email) {
+			res.redirect('/property');
+			res.render('property', { check_ses: req.session.email, estate_list: list, page_cnt: page_length });
+		}
+		else {
+			res.redirect('/property');
+			res.render('property', { check_ses: 0, estate_list: list, page_cnt: page_length });
+		}
+	});
+});
+
+
+// [IMAGE ANALYSIS POST]
+router.post('/add-property/analysis', function(req, response){
+	//var url = "http://ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com:5000/fileUpload";
+	var data = req.files;
+	console.log("file data : ", data);
+	var options = {
+		host: "ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com",
+		port: "5000",
+		path: "/fileUpload",
+		method: "POST"
+	}
+
+	var httpreq = http.request(options, function(response){
+		response.setEncoding('utf-8');
+		//response.on('data', function(chunk){
+		//	console.log("body: " + chunk);
+		//});
+		response.on('end', function(){
+			res.send("ok");
+		})
+	});
+	//httpreq.write(data);
+	httpreq.end();
+});
 
 module.exports = router;
