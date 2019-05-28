@@ -213,6 +213,13 @@ router.post('/score/:id', function(req, res){
 	});
 })
 
+router.post('/take/:id', function(req, res){
+	var estate_id = req.params.id;
+	console.log("take value is ",req.body.star);
+	var cursor = db.collection("estates").findOne({estate_id:estate_id});
+	console.log(cursor);
+});
+
 // [SINGLE PROPERTY]
 router.use('/single-property/:id', express.static('public'))
 router.get('/single-property/:id', function(req, res){
@@ -336,23 +343,6 @@ router.get('/about-us', function (req, res) {
 
 // [PROPERTY]=>[ADD PROPERTY]
 router.get('/add-property', function (req, res) {
-	// var options={
-	// 	host:'ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com',
-	// 	port:5000,
-	// 	path:'/fileUpload',
-	// 	method:'POST',
-	// 	headers:{
-	// 		'Content-Type':'application/x-www-form-urlencoded',
-	// 		'Content-Length':Buffer.byteLength(estate)
-	// 	}
-	// };
-	// var req = http.request(options, function(res){
-	// 	res.setEncoding('utf8');
-	// 	res.on('data', function(chunk){
-	// 		console.log('body: '+chunk);
-	// 	});
-	// });
-	// req.end();
 	if(req.session.email){
 		res.render('add-property.ejs',{check_ses: req.session.email} );
 	}
