@@ -149,11 +149,11 @@ router.get('/property', function (req, res) {
 				for(var k=0; k<rec_list.length%13;k++){
 					Inlist.push(rec_list[k][1]);
 				}
-				
+				console.log("Inlist : ", Inlist);
 				var myquery = {'estate_id':{$in:Inlist}};
 				var cursor = db.collection("estates").find(myquery).toArray(function(err,result){
 					if(err){console.log(err); throw err;}
-					
+					console.log("result: ", result);
 					if (req.session.email) {
 						res.render('property.ejs', { check_ses: req.session.email, estate_list: list,page_cnt: page_length, recommend_list:result });
 					}
