@@ -2,7 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose    = require('mongoose');
-
+var http = require('http');
 // [Recommend function]
 
 function setDefault(obj, prop, deflt) { 
@@ -287,16 +287,19 @@ router.get('/single-property/:id', function(req, res){
 							expect_score = rec_list[k][0];
 						}
 					}
-
-					if(expect_score==-1){ // 이미 평가 한 매물 일 경우 예상 스코어는 평가스코어로 준다.
+					if(rec_list.length==0){
+						console.log("예상점수 불가능");
+						res.render('single-property.ejs', {estate : estate_info, check_ses: req.session.email, avgScore:avgScore_data, expectScore: 0 });
+					 }
+					else if(expect_score==-1){ // 이미 평가 한 매물 일 경우 예상 스코어는 평가스코어로 준다.
 						var cursor = db.collection("users").aggregate([
 								{$unwind:"$star"},
 								{$match : {"star.estate_id" : estate_id}},
 								{$project : {"star.score" :1, "_id":0}}
 							]).toArray(function(err,result){
-								console.log("예상점수이미 있을 때 과거 평가데이터 가져옴");
+								console.log("result : ", result);
 								var expect_score = result[0].star.score;
-								res.render('single-property.ejs', {estate : estate_info, check_ses: req.session.email, avgScore:avgScore_data,  expectScore: expect_score });
+								res.render('single-property.ejso', {estate : estate_info, check_ses: req.session.email, avgScore:avgScore_data,  expectScore: expect_score });
 							});
 					}
 					else{
@@ -314,6 +317,13 @@ router.get('/single-property/:id', function(req, res){
 });
 
 // [THEME]
+router.get('/theme', function (req, res) {
+	if(req.session.email){
+		res.render('theme.ejs',{check_ses: req.session.email} );
+	}
+	else
+		res.render('theme.ejs', {check_ses: 0});
+});
 
 // [ABOUT US]
 router.get('/about-us', function (req, res) {
@@ -418,6 +428,32 @@ router.post('/search', function (req, res) {
 			res.render('property', { check_ses: 0, estate_list: list, page_cnt: page_length });
 		}
 	});
+});
+
+
+// [IMAGE ANALYSIS POST]
+router.post('/add-property/analysis', function(req, response){
+	//var url = "http://ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com:5000/fileUpload";
+	var data = req.files;
+	console.log("file data : ", data);
+	var options = {
+		host: "ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com",
+		port: "5000",
+		path: "/fileUpload",
+		method: "POST"
+	}
+
+	var httpreq = http.request(options, function(response){
+		response.setEncoding('utf-8');
+		//response.on('data', function(chunk){
+		//	console.log("body: " + chunk);
+		//});
+		response.on('end', function(){
+			res.send("ok");
+		})
+	});
+	//httpreq.write(data);
+	httpreq.end();
 });
 
 module.exports = router;

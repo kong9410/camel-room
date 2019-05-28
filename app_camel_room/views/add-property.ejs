@@ -525,18 +525,18 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     }
     $('#input-file1').change(function(){
         $('#input-file').remove();
-        $("#input-file1").clone().appendTo("#estate-form #copy-image").attr('id', 'input-file').css('display', none)
+        $("#input-file1").clone().appendTo("#estate-form #copy-image").attr('id', 'input-file').css('display', 'none')
     })
     
     $('#input-file-button').click(function(){
         var form = $('#input-file-form')
         $.ajax({
             type:'post',
-            url:'http://106.249.132.208:5000/fileUpload',
+            url:'/add-property/analysis',
             data: form.serialize(),
             success:function(data){
                 console.log("data : ",data, "form : ", form);
-                alert('감사합니다')
+                alert('플라스크 테스트')
             }
         });
         return false;
