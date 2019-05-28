@@ -118,40 +118,6 @@ router.get('/property', function (req, res) {
 		if (err) throw err;
 		var list = new Array();
 		var page_length=0;
-		
-		
-		//현재 페이지
-		/*
-		var cur_page;
-		if (req.query.curpage == null) {
-			cur_page = 1;
-		}
-		else {
-			cur_page = req.query.curpage;
-		}
-		if (result.length % 15 == 0)
-			page_length = parseInt(result.length / 15);
-		else
-			page_length = parseInt(result.length / 15) + 1;
-
-		
-		var curindex = (cur_page - 1) * 15;
-		var lastcnt;
-		if (result.length % 15 == 0)
-			lastcnt = 15;
-		else
-			lastcnt = result.length % 15;
-		if (cur_page < page_length) {
-			for (var i = curindex; i < curindex + 15; i++) {
-				list.push(result[i]);
-			}
-		}
-		else if (cur_page == page_length) {
-			for (var i = curindex; i < curindex + lastcnt; i++) {
-				list.push(result[i]);
-			}
-		}
-		*/
 
 		list = result;
 		
@@ -180,7 +146,7 @@ router.get('/property', function (req, res) {
 				
 				
 				rec_list = Recommendation(user_dic,req.session.email);
-				for(var k=0; k<rec_list.length;k++){
+				for(var k=0; k<rec_list.length%13;k++){
 					Inlist.push(rec_list[k][1]);
 				}
 				
