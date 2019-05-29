@@ -103,23 +103,14 @@
                 <!-- Contact Form Area -->
                 <div class="col-12 col-lg-12">
                     <div class="contact-form">
-                        
-                        <form enctype="multipart/form-data" name="input-file-name" method="post">
+                       
+                        <form action="api/estate" enctype="multipart/form-data" name="signup_form" method="post" id="estate-form">
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
                                         <label>사진</label>
                                         <input type="file" name="estateFile" class="btn" id="input-file1" accept="image/*" multiple novalidate>
-                                        <button type="button" id="input-file-button" class="btn">사진분석</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <form action="api/estate" enctype="multipart/form-data" name="signup_form" method="post" id="estate-form">
-                            <div class="row">
-                                <div class="col-md-11">
-                                    <div class="form-group" id="copy-image">
-                                        
+                                        <a href="http://ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com:5000/upload" onclick="window.open(this.href, '_blank', 'width=400px, height=300px, toolbars=no, scrollbars=no'); return false;"> 사진분석 </a>
                                     </div>
                                 </div>
                             </div>
@@ -547,24 +538,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 });
             });
     }
-    $('#input-file1').change(function(){
-        $('#input-file').remove();
-        $("#input-file1").clone().appendTo("#estate-form #copy-image").attr('id', 'input-file').css('display', 'none')
-    })
-    
-    $('#input-file-button').click(function(){
-        var form = $('#input-file-form')
-        $.ajax({
-            type:'post',
-            url:'/add-property/analysis',
-            data: form.serialize(),
-            success:function(data){
-                console.log("data : ",data, "form : ", form);
-                alert('플라스크 테스트')
-            }
-        });
-        return false;
-    });
     </script>
 </body>
 

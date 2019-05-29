@@ -307,7 +307,7 @@
         <div class="nav-map" id="map" ></div>
         <div class="section-list" id="maplist">
             <div class="single-container" >
-                <img id="estate_image" src="uploads/<%=estate_list[0].saveFileName%>"  class="rounded" alt="Cinque Terre">
+                <img id="estate_image" src="uploads/<%=estate_list[0].saveFileName[0]%>"  class="rounded" alt="Cinque Terre">
                 <button id='click_id' type="button" class="btn btn-primary btn-block">매물 보기</button>
                 <div class="single-property-content">
 
@@ -343,22 +343,31 @@
     
     
     <!-- 지도 끝 -->
-
-    <!-- 매물 목록 -->
-    <% if(check_ses) { %>
-    <!-- ##### Listing Content Wrapper Area Start ##### -->
     <section class="listings-content-wrapper section-padding-100">
         <div class="container">
+            <% if(check_ses) { %>
             <div class="row">
-            <%console.log(recommend_list)%>
-            <%for(var i = 0; i < recommend_list.length; i++){%>
-            <!-- Single Featured Property -->
-            <div class="col-12 col-md-6 col-xl-4" onclick="location.href='/single-property/<%=recommend_list[i].estate_id%>'">
+                <div class="col-12">
+                    <div class="section-heading wow fadeInUp">
+                        <h2>추천 매물</h2>
+                        <p>이런 집은 어떠신가요?</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 매물 목록 -->
+            
+            <!-- ##### Listing Content Wrapper Area Start ##### -->
+    
+            <div class="row">
+                <%for(var i = 0; i < recommend_list.length; i++){%>
+                <!-- Single Featured Property -->
+                <div class="col-12 col-md-6 col-xl-4"
+                    onclick="location.href='/single-property/<%=recommend_list[i].estate_id%>'">
                     <div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="600ms">
                         <!-- Property Thumbnail -->
                         <div class="property-thumb">
-                            <img src="uploads/<%=recommend_list[i].saveFileName[0]%>" alt="">
-
+                            <img src="uploads/<%=recommend_list[i].saveFileName[0]%>" alt="" style="width:100%; height:240px;">
+    
                             <div class="tag">
                                 <span>For Sale</span>
                             </div>
@@ -369,36 +378,51 @@
                         <!-- Property Content -->
                         <div class="property-content">
                             <h5><%=recommend_list[i].title%></h5>
-                            <p class="location"><img src="assets/img/icons/location.png" alt=""><%=recommend_list[i].roadAddress%></p>
-                            <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
-                            <div class="property-meta-data d-flex align-items-end justify-content-between">
-                                <div class="bathroom">
-                                    <img src="assets/img/icons/bathtub.png" alt="">
-                                    <span><%=recommend_list[i].toilet%></span>
-                                </div>
-                                <div class="garage">
-                                    <img src="assets/img/icons/garage.png" alt="">
-                                    <span><%=recommend_list[i].contractTag%></span>
-                                </div>
-                                <div class="space">
-                                    <img src="assets/img/icons/space.png" alt="">
-                                    <span><%=recommend_list[i].roomSize%> sq ft</span>
-                                </div>
-                            </div>
+                            
+                            <p class="location"><img src="assets/img/icons/location.png"
+                                    alt=""><%=recommend_list[i].roadAddress%></p>
+                                    <div class="property-meta-data d-flex align-items-end justify-content-between">
+                                            <div class="bathroom">
+                                                <img src="assets/img/icons/bathtub.png" alt="">
+                                                <span><%=recommend_list[i].toilet%></span>
+                                            </div>
+                                            <div class="garage">
+                                                <img src="assets/img/icons/garage.png" alt="">
+                                                <span><%=recommend_list[i].contractTag%></span>
+                                            </div>
+                                            <div class="space">
+                                                <img src="assets/img/icons/space.png" alt="">
+                                                <span><%=recommend_list[i].roomSize%> sq ft</span>
+                                            </div>
+                                        </div>
+                            <p><br><%=recommend_list[i].content%></p>
+                            
                         </div>
                     </div>
+                </div>
+                <% } %>
+            </div>
+            <% }else {%>
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading wow fadeInUp">
+                        <h2>지금 로그인하세요!</h2>
+                        <p>당신에게 추천해주고 싶은 집이 있습니다</p>
+                    </div>
+                </div>
             </div>
             <% } %>
         </div>
-        </div>
     </section>
-    <% } %>
+    
     <!-- ##### Listing Content Wrapper Area End ##### -->
 
     <!-- 매물 등록 버튼 -->
+    <%if(check_ses){%>
     <div>
         <button type="button" class="btn south-btn custom-btn" onclick="add_property()">매물 등록</button>
     </div>
+    <% } %>
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(assets/img/bg-img/cta.jpg);">
         <!-- Main Footer Area -->

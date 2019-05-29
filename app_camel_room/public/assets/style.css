@@ -908,7 +908,9 @@ img {
       transition-duration: 500ms; }
   .single-featured-property .property-content {
     padding: 30px;
-    border: 1px solid #e1dddd; }
+    border: 1px solid #e1dddd;
+    height:300px;
+    text-overflow: ellipsis; }
     .single-featured-property .property-content h5 {
       font-size: 18px; }
     .single-featured-property .property-content p {

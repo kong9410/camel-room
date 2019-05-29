@@ -22,6 +22,15 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage }).array('estateFile', 10);
 
 router.post('/', function (req, res) {
+
+    var options = {
+        mode:'text',
+        pythonPath: '',
+        pythonOptions: ['-u'],
+        scriptPath: '',
+        args: [req.files]
+    }
+
     console.error("Post to Estate");
     upload(req, res, function (err) {
         if (err) {
@@ -31,6 +40,10 @@ router.post('/', function (req, res) {
 
         var estate = new Estate();
         estate.title = req.body.title;
+        py.PythonShell.run('test.py', options, function(err, results){
+            if(err) throw err;
+            console.log('results : ', results);
+        })
         estate.saveFileName = req.files.map(function(file){
             return file.filename;
         });
@@ -49,6 +62,7 @@ router.post('/', function (req, res) {
         estate.content = req.body.content;
         estate.latitude = req.body.latitude;
         estate.longitude = req.body.longitude;
+        estate.views = 0;
         estate.estate_id = new Date().valueOf() + estate.writer[0] + estate.writer[1] + estate.writer[2];
         estate.safe_value = 1;
         estate.popular_value = 1;
