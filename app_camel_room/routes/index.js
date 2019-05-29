@@ -27,7 +27,12 @@ function pearson(data,name1, name2){ //피어슨 상관계수 구하는 함수.
 			cnt+=1;
 		}
 	}
-	result = ( xy- ((x*y)/cnt) )/ Math.sqrt( (pow_x - (Math.pow(x,2) / cnt)) * (pow_y - (Math.pow(y,2)/cnt)));
+	if(cnt==0)
+		return 0.1;
+	var sqrtvalue = Math.sqrt( (pow_x - (Math.pow(x,2) / cnt)) * (pow_y - (Math.pow(y,2)/cnt)));
+	if(sqrtvalue==0)
+		sqrtvalue =1;
+	result = ( xy- ((x*y)/cnt) )/ sqrtvalue;
 	return result;
 }
 
@@ -90,12 +95,6 @@ function Recommendation (data, person){
 	return list;
 }
 
-
-
-
-
-
-
 // [MONGO CONNECT]
 var db = mongoose.connection;
 mongoose.connect('mongodb://localhost/estate_db',{useNewUrlParser : true});
@@ -141,6 +140,7 @@ router.get('/property', function (req, res) {
 					}
 				}
 				
+
 				var rec_list = new Array();
 				var Inlist = new Array();
 				
@@ -160,14 +160,14 @@ router.get('/property', function (req, res) {
 				var myquery = {'estate_id':{$in:Inlist}};
 				var cursor = db.collection("estates").find(myquery).toArray(function(err,result){
 					if(err){console.log(err); throw err;}
-					console.log("result: ", result);
+					
 					if (req.session.email) {
-						res.render('property.ejs', { check_ses: req.session.email, estate_list: list,page_cnt: page_length, recommend_list:result });
+						res.render('property.ejs', { check_ses: req.session.email, estate_list: list,page_cnt: page_length, recommend_list:result, search:0});
 					}
 				});
 			}
 			else{
-				res.render('property.ejs', {check_ses: 0, estate_list: list, page_cnt : page_length});		
+				res.render('property.ejs', {check_ses: 0, estate_list: list, page_cnt : page_length, search:0});		
 			}
 		});	
 
@@ -259,7 +259,7 @@ router.get('/single-property/:id', function(req, res){
 			avgScore :{$avg:"$star.score"}
 		}}]).toArray(function (err, result){
 			if (err) throw err;
-			console.log(result);
+			
 			if(result.length!=0)
 				var avgScore_data =  result[0].avgScore;
 			else
@@ -277,36 +277,43 @@ router.get('/single-property/:id', function(req, res){
 							var score_dic = new Object();
 							
 							for(var k=0; k<result[i].star.length;k++){
+								
 								score_dic[result[i].star[k].estate_id]= result[i].star[k].score;
 								user_dic[user_email] = score_dic;
 							}
 						}
 					}
+
 					var rec_list = new Array();
 					var expect_score = -1;
 					rec_list = Recommendation(user_dic,req.session.email);
+					
 					for(var k=0; k<rec_list.length;k++){
 						
 						if(rec_list[k][1]==req.params.id){
+							console.log(rec_list[k][0]);
 							expect_score = rec_list[k][0];
 						}
 					}
+					
 					if(rec_list.length==0){
 						console.log("예상점수 불가능");
 						res.render('single-property.ejs', {estate : estate_info, check_ses: req.session.email, avgScore:avgScore_data, expectScore: 0 });
 					}
 					else if(expect_score==-1){ // 이미 평가 한 매물 일 경우 예상 스코어는 평가스코어로 준다.
+						
 						var cursor = db.collection("users").aggregate([
 								{$unwind:"$star"},
 								{$match : {"star.estate_id" : estate_id}},
 								{$project : {"star.score" :1, "_id":0}}
 							]).toArray(function(err,result){
-								console.log("result : ", result);
 								var expect_score = result[0].star.score;
-								res.render('single-property.ejso', {estate : estate_info, check_ses: req.session.email, avgScore:avgScore_data,  expectScore: expect_score });
+								
+								res.render('single-property.ejs', {estate : estate_info, check_ses: req.session.email, avgScore:avgScore_data,  expectScore: expect_score });
 							});
 					}
 					else{
+						
 						console.log("예상점수");
 						res.render('single-property.ejs', {estate : estate_info, check_ses: req.session.email, avgScore:avgScore_data, expectScore: expect_score });
 					}
@@ -355,72 +362,107 @@ router.get('/register', function (req, res) {
 
 // [SEARCH POST]
 router.post('/search', function (req, res) {
-	var search = {};
-	search.address = req.body.address;
-	search.contractTag = req.body.contractTag;
-	search.houseType = req.body.houseType;
-	search.floors = Number(req.body.floors);
-	search.years = req.body.years;
-	search.bedrooms = req.body.bedrooms;
-	search.bathrooms = req.body.bathrooms;
-	search.min_size = req.body.min_size;
-	search.max_size = req.body.max_size;
-	var cursor = db.collection("estates").find({
-		'roadAddress': {$regex:search.address},
-		'contractTag': search.contractTag
-	}).toArray(function (err, result) {
+	var cursor = db.collection("estates").find({}).toArray(function (err, result) {
+
 		//에러처리
 		if (err) throw err;
-		console.log(result);
-		//현재 페이지
-		var cur_page;
-		if (req.query.curpage == null) {
-			cur_page = 1;
-		}
-		else {
-			cur_page = req.query.curpage;
-		}
-
-
 		var list = new Array();
-		var page_length;
-		if (result.length % 15 == 0)
-			page_length = parseInt(result.length / 15);
-		else
-			page_length = parseInt(result.length / 15) + 1;
+		var page_length = 0;
+
+		list = result;
+
+		var search = {};
 
 
-		var curindex = (cur_page - 1) * 15;
-		var lastcnt;
-		if (result.length % 15 == 0)
-			lastcnt = 15;
-		else
-			lastcnt = result.length % 15;
-		if (cur_page < page_length) {
-			for (var i = curindex; i < curindex + 15; i++) {
-				list.push(result[i]);
+		///////////// 검색 QUERY문/////////////////////
+		if (req.body.title != '') {
+
+			search.title = req.body.title;
+		}
+		if (req.body.address != null) {
+			search.roadAddress = { $regex: req.body.address };
+		}
+		if (req.body.contractTag != "계약 유형") {
+			search.contractTag = req.body.contractTag;
+		}
+		if (req.body.catagories != "주거 형태") {
+			search.houseType = req.body.catagories;
+		}
+		if (req.body.floors != "층수") {
+			if (req.body.floors == '7이상') {
+				var $gte = 7;
+				search.floors = { $gte};
+			}
+			else {
+				search.floors = Number(req.body.floors);
+			}
+			search.floors = Number(req.body.floors);
+		}
+		if (req.body.floors != "건물연식") {
+			if (req.body.floors == '5이하') {
+				var $lte = 5;
+				search.floors = { $lte };
+			}
+			else if (req.body.floors == '10이하'){
+				var $lte = 10;
+				search.floors = { $lte };
+			}
+			else{
+				var $lte = 15;
+				search.floors = { $lte };
 			}
 		}
-		else if (cur_page == page_length) {
-			for (var i = curindex; i < curindex + lastcnt; i++) {
-				list.push(result[i]);
+		if (req.body.bedrooms != "방") {
+			if (req.body.bedrooms == '5이상') {
+				var $gte = 5;
+				search.rooms = { $gte};
+			}
+			else {
+				search.rooms = Number(req.body.bedrooms);
 			}
 		}
-		if (req.session.email) {
-			res.redirect('/property');
-			res.render('property', { check_ses: req.session.email, estate_list: list, page_cnt: page_length });
+
+		if (req.body.bathrooms != "화장실") {
+			if (req.body.bathrooms == '5이상') {
+				var $gte = 5;
+				search.toilet = { $gte };
+			}
+			else {
+				search.toilet = Number(req.body.bathrooms);
+			}
 		}
-		else {
-			res.redirect('/property');
-			res.render('property', { check_ses: 0, estate_list: list, page_cnt: page_length });
+		if (req.body.min_size != 0 && req.body.max_size == 0 ) {
+			var $gte = Number(req.body.min_size);
+			search.roomSize = { $gte };
+
 		}
+		if (req.body.min_size == 0 && req.body.max_size != 0 ) {
+			var $lte = Number(req.body.max_size);
+			search.roomSize = { $lte };
+		}
+		if (req.body.min_size != 0 && req.body.max_size != 0 ) {
+			var $gte = Number(req.body.min_size);
+			var $lte = Number(req.body.max_size);
+			search.roomSize = { $lte, $gte };
+		}
+		////////////////////////////////
+		console.log(search);
+		var cursor = db.collection("estates").find(search).toArray(function(err,result){
+			if (err) throw err;
+			console.log(result);
+			if (req.session.email) {
+				res.render('property.ejs', { check_ses: req.session.email, estate_list: list,page_cnt: page_length, recommend_list:result, search:1});
+			}
+			else{
+				res.render('property.ejs', { check_ses: 0, estate_list: list,page_cnt: page_length, recommend_list:result, search:1});
+			}
+		});
 	});
 });
 
-router.get('/property/:search_num/:searchAddress', function(req, res){
-
-	var search_num = req.params.search_num;
-	var searchAddress = req.params.searchAddress;
+router.post('/get_data2', function(req, res){
+	var search_num = req.body.search_num;
+	var searchAddress = req.body.searchAddress;
 	console.log(search_num, searchAddress);
 	var cursor;
 	//치안
@@ -428,7 +470,7 @@ router.get('/property/:search_num/:searchAddress', function(req, res){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}}).sort({popular_value:-1}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
 			console.log(estate_list);
-			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list});
+			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
 	//교통
@@ -436,7 +478,7 @@ router.get('/property/:search_num/:searchAddress', function(req, res){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}}).sort({traffic_value:-1}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
 			console.log(estate_list);
-			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list});
+			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
 	//편의
@@ -444,7 +486,7 @@ router.get('/property/:search_num/:searchAddress', function(req, res){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}}).sort({convenience_value:-1}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
 			console.log(estate_list);
-			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list});
+			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
 	//건강
@@ -452,7 +494,7 @@ router.get('/property/:search_num/:searchAddress', function(req, res){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}}).sort({healthy_value:-1}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
 			console.log(estate_list);
-			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list});
+			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
 	//교육
@@ -460,7 +502,7 @@ router.get('/property/:search_num/:searchAddress', function(req, res){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}}).sort({education_value:-1}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
 			console.log(estate_list);
-			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list});
+			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
 	//모던
@@ -498,36 +540,33 @@ router.get('/property/:search_num/:searchAddress', function(req, res){
 		});
 	}
 })
-router.post('/get_data2', function(req, res){
-	var search_num = req.body.search_num;
-	var searchAddress = req.body.searchAddress;
-	res.redirect('/property/'+search_num.toString()+'/'+searchAddress)
-});
 
-// [IMAGE ANALYSIS POST]
-router.post('/add-property/analysis', function(req, response){
-	//var url = "http://ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com:5000/fileUpload";
-	var data = req.files;
-	console.log("file data : ", data);
-	var options = {
-		host: "ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com",
-		port: "5000",
-		path: "/fileUpload",
-		method: "POST"
-	}
 
-	var httpreq = http.request(options, function(response){
-		response.setEncoding('utf-8');
-		//response.on('data', function(chunk){
-		//	console.log("body: " + chunk);
-		//});
-		response.on('end', function(){
-			res.send("ok");
-		})
+
+	// [IMAGE ANALYSIS POST]
+	router.post('/add-property/analysis', function (req, response) {
+		//var url = "http://ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com:5000/fileUpload";
+		var data = req.files;
+		console.log("file data : ", data);
+		var options = {
+			host: "ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com",
+			port: "5000",
+			path: "/fileUpload",
+			method: "POST"
+		}
+
+		var httpreq = http.request(options, function (response) {
+			response.setEncoding('utf-8');
+			//response.on('data', function(chunk){
+			//	console.log("body: " + chunk);
+			//});
+			response.on('end', function () {
+				res.send("ok");
+			})
+		});
+		//httpreq.write(data);
+		httpreq.end();
 	});
-	//httpreq.write(data);
-	httpreq.end();
-});
 
 
 

@@ -1959,3 +1959,11 @@ img {
   background-color:rgb(49, 32, 17);
   color:white;
 }
+
+.property-picture{
+  position: relative;
+  padding: 100px;
+  width: 500px;
+  height: 600px;
+  
+}
