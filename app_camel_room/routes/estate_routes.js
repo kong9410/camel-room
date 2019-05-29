@@ -46,6 +46,7 @@ router.post('/', function (req, res) {
         estate.floors = req.body.floors;
         estate.years = req.body.years;
         estate.writer = req.body.writer;
+        estate.content = req.body.content;
         estate.latitude = req.body.latitude;
         estate.longitude = req.body.longitude;
         estate.estate_id = new Date().valueOf() + estate.writer[0] + estate.writer[1] + estate.writer[2];
