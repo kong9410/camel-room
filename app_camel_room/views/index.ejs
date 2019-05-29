@@ -116,213 +116,133 @@
     <!-- ##### Hero Area End ##### -->
 
     <!-- ##### Advance Search Area Start ##### -->
-    <div class="south-search-area" >
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="advanced-search-form">
-                        <!-- Search Title -->
-                        <div class="search-title">
-                            <p>Search for your home</p>
-                        </div>
-                        <!-- Search Form -->
-                        <form action="/search" method="post" id="advanceSearch">
-                            <div class="row">
-
-                                <div class="col-12 col-md-4 col-lg-12">
-                                    <div class="form-group">
-                                        <input type="input" class="form-control" name="title" placeholder="제목">
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-4 col-lg-12">
-                                    <div class="form-group">
-                                        <input id="search" type="input" class="form-control" name="address" placeholder="주소" autocomplete=off required>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-4 col-lg-3">
-                                    <div class="form-group">
-                                        <select class="form-control" id="cities" name="contract">
-                                            <option>계약 유형</option>
-                                            <option>전세</option>
-                                            <option>월세</option>
-                                            <option>매매</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-4 col-lg-3">
-                                    <div class="form-group">
-                                        <select class="form-control" id="catagories" name="catagories">
-                                            <option>주거 형태</option>
-                                            <option>아파트</option>
-                                            <option>주택</option>
-                                            <option>오피스텔</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-4 col-lg-3">
-                                    <div class="form-group">
-                                        <select class="form-control" id="floors" name="floors">
-                                            <option>모든 층</option>
-                                            <option>1층</option>
-                                            <option>2층</option>
-                                            <option>3층</option>
-                                            <option>4층</option>
-                                            <option>5층</option>
-                                            <option>6층</option>
-                                            <option>7층 이상</option>
-                                            <option>반지하</option>
-                                            <option>옥탑방</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-4 col-lg-3">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" name="years" placeholder="건물 연식">
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-4 col-xl-2">
-                                    <div class="form-group">
-                                        <select class="form-control" id="bedrooms" name="bedrooms">
-                                            <option>Bedrooms</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5+</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-4 col-xl-2">
-                                    <div class="form-group">
-                                        <select class="form-control" id="bathrooms" name="bathrooms">
-                                            <option>Bathrooms</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5+</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-4 col-xl-2">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" name="min_size" placeholder="최소 평수">
-                                    </div>
-                                </div>
-                                -
-                                <div class="col-12 col-md-4 col-xl-2">
-                                        <div class="form-group">
-                                            <input type="number" class="form-control" name="max_size" placeholder="최대 평수">
-                                        </div>
-                                    </div>
-
-                                <div class="col-12 search-form-second-steps">
-                                    <div class="row">
-
-                                        <div class="col-12 col-md-4 col-lg-3">
-                                            <div class="form-group">
-                                                <select class="form-control" id="types">
-                                                    <option>All Types</option>
-                                                    <option>Apartment <span>(30)</span></option>
-                                                    <option>Land <span>(69)</span></option>
-                                                    <option>Villas <span>(103)</span></option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 col-md-4 col-lg-3">
-                                            <div class="form-group">
-                                                <select class="form-control" id="catagories2">
-                                                    <option>All Catagories</option>
-                                                    <option>Apartment</option>
-                                                    <option>Bar</option>
-                                                    <option>Farm</option>
-                                                    <option>House</option>
-                                                    <option>Store</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 col-md-4 col-lg-3">
-                                            <div class="form-group">
-                                                <select class="form-control" id="Actions">
-                                                    <option>All Actions</option>
-                                                    <option>Sales</option>
-                                                    <option>Booking</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 col-md-4 col-lg-3">
-                                            <div class="form-group">
-                                                <select class="form-control" id="city2">
-                                                    <option>All City</option>
-                                                    <option>City 1</option>
-                                                    <option>City 2</option>
-                                                    <option>City 3</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 col-md-4">
-                                            <div class="form-group">
-                                                <select class="form-control" id="Actions3">
-                                                    <option>All Actions</option>
-                                                    <option>Sales</option>
-                                                    <option>Booking</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 col-md-4">
-                                            <div class="form-group">
-                                                <select class="form-control" id="city3">
-                                                    <option>All City</option>
-                                                    <option>City 1</option>
-                                                    <option>City 2</option>
-                                                    <option>City 3</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 col-md-4">
-                                            <div class="form-group">
-                                                <select class="form-control" id="city5">
-                                                    <option>All City</option>
-                                                    <option>City 1</option>
-                                                    <option>City 2</option>
-                                                    <option>City 3</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 d-flex justify-content-between align-items-end">
-                                    <!-- More Filter -->
-                                    <div class="more-filter">
-                                        <a href="#" id="moreFilter">+ More filters</a>
-                                    </div>
-                                    <!-- Submit -->
-                                    <div class="form-group mb-0">
-                                        <button type="submit" class="btn south-btn">Search</button>
-                                    </div>
-                                </div>
+    <div class="south-search-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="advanced-search-form">
+                            <!-- Search Title -->
+                            <div class="search-title">
+                                <p>당신의 집을 찾으세요</p>
                             </div>
-                        </form>
+                            <!-- Search Form -->
+                            <form action="/search" method="post" id="advanceSearch">
+                                <div class="row">
+    
+                                    <div class="col-12 col-md-4 col-lg-12">
+                                        <div class="form-group">
+                                            <input type="input" class="form-control" name="title" placeholder="제목">
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-12 col-md-4 col-lg-12">
+                                        <div class="form-group">
+                                            <input id="search" type="input" class="form-control" name="address" placeholder="주소 자동완성" autocomplete=off required>
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <select class="form-control" id="cities" name="contractTag">
+                                                <option>계약 유형</option>
+                                                <option>전세</option>
+                                                <option>월세</option>
+                                                <option>매매</option>
+                                            </select>
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <select class="form-control" id="catagories" name="catagories">
+                                                <option>주거 형태</option>
+                                                <option>아파트</option>
+                                                <option>주택</option>
+                                                <option>오피스텔</option>
+                                            </select>
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <select class="form-control" id="floors" name="floors">
+                                                <option>층수</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7이상</option>
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                                <select class="form-control" id="years" name="years">
+                                                        <option>건물연식</option>
+                                                        <option>5이하</option>
+                                                        <option>10이하</option>
+                                                        <option>15이하</option>
+                                                </select>
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-12 col-md-4 col-xl-2">
+                                        <div class="form-group">
+                                            <select class="form-control" id="bathrooms" name="bathrooms">
+                                                <option>화장실</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5이상</option>
+                                            </select>
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-12 col-md-4 col-xl-2">
+                                        <div class="form-group">
+                                            <select class="form-control" id="bedrooms" name="bedrooms">
+                                                <option>방</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5이상</option>
+                                            </select>
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-12 col-md-4 col-xl-2">
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" name="min_size" placeholder="최소 평수">
+                                        </div>
+                                    </div>
+                                    -
+                                    <div class="col-12 col-md-4 col-xl-2">
+                                            <div class="form-group">
+                                                <input type="number" class="form-control" name="max_size" placeholder="최대 평수">
+                                            </div>
+                                        </div>
+    
+                                    
+                                    <div class="col-12 d-flex justify-content-between align-items-end">
+                                
+                                        <!-- Submit -->
+                                        <div class="form-group mb-0">
+                                            <button id="searchBtn" type="submit" class="btn south-btn">검색</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     <!-- ##### Advance Search Area End ##### -->
 
     <!-- ##### Featured Properties Area Start ##### -->

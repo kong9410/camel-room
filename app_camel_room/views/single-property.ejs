@@ -92,31 +92,33 @@
 
     <!-- ##### Listings Content Area Start ##### -->
     <section class="listings-content-wrapper section-padding-100">
+        
+        
         <div class="container">
-            <div class="row">
-                <div class="col-12">
+            <div class="row" style="width:800px; height: 480px">
+                <div class="col-12" style="width:800px; height: 480px">
                     <!-- Single Listings Slides -->
                     <% if(estate.saveFileName.length <= 1) {%>
-                        <img src="uploads/<%=estate.saveFileName[0]%>" alt="" style="width:100%;">
+                        <img src="uploads/<%=estate.saveFileName[0]%>" alt="" style="width:800px; height: 480px">
                         <% } else {%>
                     <div class="single-listings-sliders owl-carousel">
                         <!-- Single Slide -->
                         <%for(var i = 0; i < estate.saveFileName.length; i++){%>
-                        <img src="uploads/<%=estate.saveFileName[i]%>" style="width:100%; height:100%"alt="">
+                        <img src="uploads/<%=estate.saveFileName[i]%>" style="width:800px; height: 480px" alt="">
                         <% } %>
                     </div>
                     <%}%>
                 </div>
             </div>
-
+            
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
                     <div class="listings-content">
                         <!-- Price -->
-                        <div class="list-price">
-                            <p><%=estate.price%> 만원</p>
-                        </div>
                         <h5><%=estate.title%></h5>
+                        <div class="list-price">
+                                <p><%=estate.price%> 만원</p>
+                        </div>
                         <p class="location"><img src="assets/img/icons/location.png" alt=""><%=estate.roadAddress%></p>
                         <p><%=estate.content%></p>
                         <!-- Meta -->
@@ -139,37 +141,30 @@
                         </div>
                         <!-- Core Features -->
                         <ul class="listings-core-features d-flex align-items-center">
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Gated Community</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Automatic Sprinklers</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Fireplace</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Window Shutters</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Ocean Views</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Heated Floors</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Heated Floors</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Private Patio</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Window Shutters</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Fireplace</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Beach Access</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Rooftop Terrace</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> <b>보증금 : <%=estate.deposit%>만원</b></li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> <b>계약 : <%=estate.contractTag%></b></li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> <b>건물종류 : <%=estate.houseType%></b></li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> <b>화장실 : <%=estate.toilet%>개</b></li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> <b>연식 : <%=estate.years%>년</b></li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> <b><%=estate.writer%></b></li>
                         </ul>
+
+                        <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action"><h4>매물 가치지수</h4></a>
+                        </div>
+                        <canvas id="valuecanvas"></canvas>
+                        <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action"><h4>사용자 평점</h4></a>
+                        </div>
+                        
+                        <canvas id="scorecanvas"></canvas>
                     </div>
                 </div>
                 
 
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="contact-realtor-wrapper">
-                        <div class="realtor-info">
-                            <center>
-                            <!--가치지수 출력-->
-                            <div style="width:100%;">
-                                    <canvas id="valuecanvas"></canvas>
-                            </div>
-                                <!--평점 출력-->
-                            <div>
-                                    <canvas id="scorecanvas"></canvas>
-                            </div>
-                            </center>
-                        </div>
+                       
                     </div>
                 </div>
         </div>
