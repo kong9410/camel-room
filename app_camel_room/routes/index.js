@@ -207,6 +207,7 @@ router.get('/single-property/:id', function(req, res){
 			toilet: result.toilet,
 			floors: result.floors,
 			years: result.years,
+			content: result.content,
 			writer: result.writer,
 			latitude : result.latitude,
 			longitude : result.longitude,
