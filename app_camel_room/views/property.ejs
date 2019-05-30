@@ -232,6 +232,7 @@
                 <div class="single-property-content">
 
                     <div class="single-property-text">
+                        <% if(estate_list) {%>
                             <h2 id="title"><%=estate_list[0].title%></h2>
                             <p class="text-secondary" id="roadAddress"><%=estate_list[0].roadAddress%></p>
                             
@@ -252,6 +253,7 @@
                                 <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                               </div>
                             </div>
+                        <% } %>
                     </div>
                     
                 </div>
@@ -336,7 +338,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-heading wow fadeInUp">
-                        <h2>지금 로그인하세요!</h2>
+                        <h2>지금 로그인하세요</h2>
                         <p>당신에게 추천해주고 싶은 집이 있습니다</p>
                     </div>
                 </div>

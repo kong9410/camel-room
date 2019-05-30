@@ -102,11 +102,16 @@ mongoose.connect('mongodb://localhost/estate_db',{useNewUrlParser : true});
 
 // [HOME]
 router.get('/', function (req, res) {
-	if(req.session.email){
-		res.render('index.ejs',{check_ses: req.session.email} );
-	}
-	else
-		res.render('index.ejs', {check_ses: 0});
+	db.collection('estates').find({}).sort({'views':-1}).limit(6).toArray(function(err, result){
+
+		var estate = result;
+		if(req.session.email){
+			res.render('index.ejs',{check_ses: req.session.email, estate_list:estate} );
+		}
+		else
+			res.render('index.ejs', {check_ses: 0, estate_list:estate});
+	})
+	
 });
 
 // [PROPERTY]
@@ -195,134 +200,139 @@ router.post('/take/:id', function(req, res){
 
 // [SINGLE PROPERTY]
 router.use('/single-property/:id', express.static('public'))
-router.get('/single-property/:id', function(req, res){
+router.get('/single-property/:id', function (req, res) {
 	var estate_id = req.params.id;
+	var popular_value;
 	console.log(estate_id)
-	//조회수 업데이트
-	db.collection('estates').update({estate_id:estate_id}, {$inc:{views:1}});
-	db.collection('estates').findOne({estate_id:estate_id}).then(function(result){
-		var popular_value;
-		if(result.views > 10000){
+
+	db.collection('estates').findOne({ estate_id: estate_id }).then(function (result) {
+		console.log("views : ", result.views);
+		views = result.views;
+		if (views > 30000) {
+			popular_value = 6;
+		}
+		else if (views > 10000 && views <= 30000) {
 			popular_value = 5;
 		}
-		else if(result.views > 5000 && result.views <= 10000){
+		else if (views > 5000 && views <= 10000) {
 			popular_value = 4;
 		}
-		else if(result.views > 3000 && result.views <= 5000){
+		else if (views > 3000 && views <= 5000) {
 			popular_value = 3;
 		}
-		else if(result.views > 1000 && result.views <= 3000){
+		else if (views > 1000 && views <= 3000) {
 			popular_value = 2;
 		}
-		else if(result.views <= 1000){
+		else if (views <= 1000) {
 			popular_value = 1;
 		}
-		db.collection('estates').update({estate_id:estate_id}, {$set:{popular_value:popular_value}});
-	});
+		db.collection('estates').updateOne({ estate_id: estate_id }, { $set: { popular_value: popular_value }, $inc: { views: 1 } }).then(function (result) {
+			var cursor = db.collection("estates").findOne({ estate_id: estate_id }).then(function (result) {
+				estate_info = {
+					title: result.title,
+					orgFileName: result.orgFileName,
+					saveFileName: result.saveFileName,
+					houseType: result.houseType,
+					contractTag: result.contractTag,
+					price: result.price,
+					deposit: result.deposit,
+					roadAddress: result.roadAddress,
+					detailAddress: result.detailAddress,
+					roomSize: result.roomSize,
+					rooms: result.rooms,
+					toilet: result.toilet,
+					floors: result.floors,
+					years: result.years,
+					content: result.content,
+					writer: result.writer,
+					latitude: result.latitude,
+					longitude: result.longitude,
+					estate_id: result.estate_id,
+					safe_value: result.safe_value,
+					popular_value: result.popular_value,
+					traffic_value: result.traffic_value,
+					education_value: result.education_value,
+					healthy_value: result.healthy_value,
+					convenience_value: result.convenience_value
+				};
+				console.log("cursors : ", estate_info.popular_value);
+				// [ 매물에 대한 평균스코어를 구하는 쿼리문]
+				var cursor = db.collection("users").aggregate([
+					{ $unwind: "$star" },
+					{ $match: { "star.estate_id": estate_id } },
+					{
+						$group: {
+							_id: "",
+							avgScore: { $avg: "$star.score" }
+						}
+					}]).toArray(function (err, result) {
+						if (err) throw err;
 
+						if (result.length != 0)
+							var avgScore_data = result[0].avgScore;
+						else
+							var avgScore_data = 0;
+						// [예상스코어 계산]
+						var cursor = db.collection("users").find({}, { projection: { "_id": 0, "star": 1, "email": 1 } }).toArray(function (err, result) {
+							if (err) throw err;
 
-	var cursor = db.collection("estates").findOne({estate_id:estate_id}).then(function(result){ 
-		estate_info = {
-			title:result.title,
-			orgFileName : result.orgFileName,
-			saveFileName : result.saveFileName,
-			houseType: result.houseType,
-			contractTag: result.contractTag,
-			price: result.price,
-			deposit: result.deposit,
-			roadAddress: result.roadAddress,
-			detailAddress: result.detailAddress,
-			roomSize: result.roomSize,
-			rooms: result.rooms,
-			toilet: result.toilet,
-			floors: result.floors,
-			years: result.years,
-			content: result.content,
-			writer: result.writer,
-			latitude : result.latitude,
-			longitude : result.longitude,
-			estate_id : result.estate_id,
-			safe_value : result.safe_value,
-			popular_value : result.popular_value,
-			traffic_value : result.traffic_value,
-			education_value : result.education_value,
-			healthy_value : result.healthy_value,
-			convenience_value : result.convenience_value
-		};
+							if ((req.session.email != null)) {
+								var user_dic = new Object();
 
-		// [ 매물에 대한 평균스코어를 구하는 쿼리문]
-		var cursor = db.collection("users").aggregate([  
-			{$unwind:"$star"},
-			{$match : {"star.estate_id" : estate_id}},
-			{$group :{
-			_id : "",
-			avgScore :{$avg:"$star.score"}
-		}}]).toArray(function (err, result){
-			if (err) throw err;
-			
-			if(result.length!=0)
-				var avgScore_data =  result[0].avgScore;
-			else
-				var avgScore_data = 0;
-			// [예상스코어 계산]
-			var cursor = db.collection("users").find({},{projection:{"_id":0,"star":1,"email":1}}).toArray(function (err, result) {
-				if (err) throw err;
+								for (var i = 0; i < result.length; i++) {
+									if (result[i].star != null) {
+										var user_email = result[i].email;
+										var score_dic = new Object();
 
-				if((req.session.email != null)){
-					var user_dic = new Object();
-					
-					for (var i=0; i< result.length; i++ ){
-						if(result[i].star != null){
-							var user_email = result[i].email;
-							var score_dic = new Object();
-							
-							for(var k=0; k<result[i].star.length;k++){
-								
-								score_dic[result[i].star[k].estate_id]= result[i].star[k].score;
-								user_dic[user_email] = score_dic;
+										for (var k = 0; k < result[i].star.length; k++) {
+
+											score_dic[result[i].star[k].estate_id] = result[i].star[k].score;
+											user_dic[user_email] = score_dic;
+										}
+									}
+								}
+
+								var rec_list = new Array();
+								var expect_score = -1;
+								rec_list = Recommendation(user_dic, req.session.email);
+
+								for (var k = 0; k < rec_list.length; k++) {
+
+									if (rec_list[k][1] == req.params.id) {
+										console.log(rec_list[k][0]);
+										expect_score = rec_list[k][0];
+									}
+								}
+
+								if (rec_list.length == 0) {
+									console.log("예상점수 불가능");
+									res.render('single-property.ejs', { estate: estate_info, check_ses: req.session.email, avgScore: avgScore_data, expectScore: 0 });
+								}
+								else if (expect_score == -1) { // 이미 평가 한 매물 일 경우 예상 스코어는 평가스코어로 준다.
+
+									var cursor = db.collection("users").aggregate([
+										{ $unwind: "$star" },
+										{ $match: { "star.estate_id": estate_id } },
+										{ $project: { "star.score": 1, "_id": 0 } }
+									]).toArray(function (err, result) {
+										var expect_score = result[0].star.score;
+
+										res.render('single-property.ejs', { estate: estate_info, check_ses: req.session.email, avgScore: avgScore_data, expectScore: expect_score });
+									});
+								}
+								else {
+
+									console.log("예상점수");
+									res.render('single-property.ejs', { estate: estate_info, check_ses: req.session.email, avgScore: avgScore_data, expectScore: expect_score });
+								}
 							}
-						}
-					}
-
-					var rec_list = new Array();
-					var expect_score = -1;
-					rec_list = Recommendation(user_dic,req.session.email);
-					
-					for(var k=0; k<rec_list.length;k++){
-						
-						if(rec_list[k][1]==req.params.id){
-							console.log(rec_list[k][0]);
-							expect_score = rec_list[k][0];
-						}
-					}
-					
-					if(rec_list.length==0){
-						console.log("예상점수 불가능");
-						res.render('single-property.ejs', {estate : estate_info, check_ses: req.session.email, avgScore:avgScore_data, expectScore: 0 });
-					}
-					else if(expect_score==-1){ // 이미 평가 한 매물 일 경우 예상 스코어는 평가스코어로 준다.
-						
-						var cursor = db.collection("users").aggregate([
-								{$unwind:"$star"},
-								{$match : {"star.estate_id" : estate_id}},
-								{$project : {"star.score" :1, "_id":0}}
-							]).toArray(function(err,result){
-								var expect_score = result[0].star.score;
-								
-								res.render('single-property.ejs', {estate : estate_info, check_ses: req.session.email, avgScore:avgScore_data,  expectScore: expect_score });
-							});
-					}
-					else{
-						
-						console.log("예상점수");
-						res.render('single-property.ejs', {estate : estate_info, check_ses: req.session.email, avgScore:avgScore_data, expectScore: expect_score });
-					}
-				}
-				else{
-					console.log("로그인안됐을때 예상점수는 0 점으로 리턴 ");
-					res.render('single-property.ejs', {estate : estate_info, check_ses: req.session.email, avgScore:avgScore_data, expectScore:0 });		
-				}
-			});	
+							else {
+								console.log("로그인안됐을때 예상점수는 0 점으로 리턴 ");
+								res.render('single-property.ejs', { estate: estate_info, check_ses: req.session.email, avgScore: avgScore_data, expectScore: 0 });
+							}
+						});
+					});
+			});
 		});
 	});
 });
