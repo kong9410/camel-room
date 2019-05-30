@@ -268,38 +268,23 @@
     
     <!-- 매물 목록 -->
     <section class="listings-content-wrapper section-padding-100">
+    <div class="container">
+        <h2>추천매물목록</h2>
+    </div>
     
-        <!-- ##### Listing Content Wrapper Area Start ##### -->
+    <!-- ##### Listing Content Wrapper Area Start ##### -->
+    
         <div class="container">
-            <%if(search || check_ses){%>
             <div class="row">
-                <div class="col-12">
-                    <div class="section-heading wow fadeInUp">
-                        <%if(!search){%>
-                        <h2>추천 매물</h2>
-                        <p>이런 집은 어떠신가요?</p>
-                        <%}else{%>
-                        <h2>검색 매물</h2>
-                        <p>이런 집은 어떠신가요?</p>
-                        <%}%>
-                    </div>
-                </div>
-            </div>
-            <!-- 매물 목록 -->
-    
-            <!-- ##### Listing Content Wrapper Area Start ##### -->
-            <div class="row">
-  
-                <%for(var i = 0; i < recommend_list.length; i++){%>
-                <!-- Single Featured Property -->
-                <div class="col-12 col-md-6 col-xl-4"
-                    onclick="location.href='/single-property/<%=recommend_list[i].estate_id%>'">
+        <%if(search || check_ses){%>
+            <%for(var i = 0; i < recommend_list.length; i++){%>
+            <!-- Single Featured Property -->
+            <div class="col-12 col-md-6 col-xl-4" onclick="location.href='/single-property/<%=recommend_list[i].estate_id%>'">
                     <div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="600ms">
                         <!-- Property Thumbnail -->
                         <div class="property-thumb">
-                            <img src="uploads/<%=recommend_list[i].saveFileName[0]%>" alt=""
-                                style="width:100%; height:240px;">
-    
+                            <img src="uploads/<%=recommend_list[i].saveFileName[0]%>" alt="">
+
                             <div class="tag">
                                 <span>For Sale</span>
                             </div>
@@ -310,9 +295,8 @@
                         <!-- Property Content -->
                         <div class="property-content">
                             <h5><%=recommend_list[i].title%></h5>
-    
-                            <p class="location"><img src="assets/img/icons/location.png"
-                                    alt=""><%=recommend_list[i].roadAddress%></p>
+                            <p class="location"><img src="assets/img/icons/location.png" alt=""><%=recommend_list[i].roadAddress%></p>
+                            <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
                             <div class="property-meta-data d-flex align-items-end justify-content-between">
                                 <div class="bathroom">
                                     <img src="assets/img/icons/bathtub.png" alt="">
@@ -320,15 +304,13 @@
                                 </div>
                                 <div class="garage">
                                     <img src="assets/img/icons/garage.png" alt="">
-                                    <span><%=recommend_list[i].contractTag%></span>
+                                    <span><%=recommend_list[i ].contractTag%></span>
                                 </div>
                                 <div class="space">
                                     <img src="assets/img/icons/space.png" alt="">
                                     <span><%=recommend_list[i].roomSize%> sq ft</span>
                                 </div>
                             </div>
-                            <p><br><%=recommend_list[i].content%></p>
-    
                         </div>
                     </div>
                 </div>
@@ -345,14 +327,12 @@
             </div>
             <% } %>
         </div>
+        
+        </div>
+        <%}%>
     <!-- ##### Listing Content Wrapper Area End ##### -->
     </section>
-    <!-- 매물 등록 버튼 -->
-    <%if(check_ses){%>
-    <div>
-        <button type="button" class="btn south-btn custom-btn" onclick="add_property()">매물 등록</button>
-    </div>
-    <% } %>
+   
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(assets/img/bg-img/cta.jpg);">
         <!-- Main Footer Area -->

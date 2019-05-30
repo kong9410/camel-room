@@ -348,12 +348,27 @@ router.get('/theme', function (req, res) {
 
 // [ABOUT US]
 router.get('/about-us', function (req, res) {
-	if(req.session.email){
-		res.render('about-us.ejs',{check_ses: req.session.email} );
-	}
-	else
-		res.render('about-us.ejs', {check_ses: 0});
+	var cursor = db.collection("estates").find({}).toArray(function (err, result) {
+		//에러처리
+		if (err) throw err;
+		var estatecnt = result.length;
+
+		var cursor = db.collection("users").find({}).toArray(function (err, result) {
+			if (err) throw err;
+			var usercnt = result.length;
+
+			if(req.session.email){
+				res.render('about-us.ejs',{check_ses: req.session.email, estate_cnt : estatecnt, user_cnt : usercnt} );
+			}
+			else
+				res.render('about-us.ejs', {check_ses: 0, estate_cnt : estatecnt, user_cnt : usercnt});
+		});
+	});
 });
+
+
+
+
 
 // [PROPERTY]=>[ADD PROPERTY]
 router.get('/add-property', function (req, res) {
