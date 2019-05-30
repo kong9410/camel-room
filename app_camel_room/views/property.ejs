@@ -268,52 +268,67 @@
     
     <!-- 매물 목록 -->
     <section class="listings-content-wrapper section-padding-100">
-    <div class="container">
-        <h2>추천매물목록</h2>
-    </div>
     
     <!-- ##### Listing Content Wrapper Area Start ##### -->
     
         <div class="container">
+            <%if(search || check_ses){%>
+                <div class="row">
+                        <div class="col-12">
+                            <div class="section-heading wow fadeInUp">
+                                <%if(!search){%>
+                                <h2>추천 매물</h2>
+                                <p>이런 집은 어떠신가요?</p>
+                                <%}else{%>
+                                <h2>검색 매물</h2>
+                                <p>이런 집은 어떠신가요?</p>
+                                <%}%>
+                            </div>
+                        </div>
+                </div>
             <div class="row">
-        <%if(search || check_ses){%>
-            <%for(var i = 0; i < recommend_list.length; i++){%>
-            <!-- Single Featured Property -->
-            <div class="col-12 col-md-6 col-xl-4" onclick="location.href='/single-property/<%=recommend_list[i].estate_id%>'">
+                <%for(var i = 0; i < recommend_list.length; i++){%>
+                <!-- Single Featured Property -->
+                <div class="col-12 col-md-6 col-xl-4"
+                    onclick="singleClick('<%=estate_list[i].estate_id%>')">
                     <div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="600ms">
                         <!-- Property Thumbnail -->
                         <div class="property-thumb">
-                            <img src="uploads/<%=recommend_list[i].saveFileName[0]%>" alt="">
-
+                            <img src="uploads/<%=estate_list[i].saveFileName[0]%>" alt="" style="width:100%; height:240px;">
+    
                             <div class="tag">
                                 <span>For Sale</span>
                             </div>
                             <div class="list-price">
-                                <p><%=recommend_list[i].price%> 만원</p>
+                                <p><%=estate_list[i].price%> 만원</p>
                             </div>
                         </div>
                         <!-- Property Content -->
                         <div class="property-content">
-                            <h5><%=recommend_list[i].title%></h5>
-                            <p class="location"><img src="assets/img/icons/location.png" alt=""><%=recommend_list[i].roadAddress%></p>
-                            <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
+                            <h5><%=estate_list[i].title%></h5>
+    
+                            <p class="location"><img src="assets/img/icons/location.png"
+                                    alt=""><%=estate_list[i].roadAddress%></p>
                             <div class="property-meta-data d-flex align-items-end justify-content-between">
                                 <div class="bathroom">
                                     <img src="assets/img/icons/bathtub.png" alt="">
-                                    <span><%=recommend_list[i].toilet%></span>
+                                    <span><%=estate_list[i].toilet%></span>
                                 </div>
                                 <div class="garage">
                                     <img src="assets/img/icons/garage.png" alt="">
-                                    <span><%=recommend_list[i ].contractTag%></span>
+                                    <span><%=estate_list[i].contractTag%></span>
                                 </div>
                                 <div class="space">
                                     <img src="assets/img/icons/space.png" alt="">
-                                    <span><%=recommend_list[i].roomSize%> sq ft</span>
+                                    <span><%=estate_list[i].roomSize%> sq ft</span>
                                 </div>
                             </div>
+                            <p><br><%=estate_list[i].content%></p>
+    
                         </div>
                     </div>
                 </div>
+                
                 <% } %>
             </div>
             <% }else if(check_ses==0 && search == 0) {%>
@@ -327,9 +342,6 @@
             </div>
             <% } %>
         </div>
-        
-        </div>
-        <%}%>
     <!-- ##### Listing Content Wrapper Area End ##### -->
     </section>
    
