@@ -25,7 +25,8 @@ var estateSchema = new Schema({
     education_value : Number,
     traffic_value : Number,
     healthy_value : Number,
-    convenience_value : Number
+    convenience_value : Number,
+    theme : String
 }, { versionKey: false });
 
 module.exports = mongoose.model('estate', estateSchema);

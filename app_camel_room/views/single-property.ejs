@@ -37,7 +37,7 @@
                 <nav class="classy-navbar justify-content-between" id="southNav">
     
                     <!-- Logo -->
-                    <a class="nav-brand" href="/">VACANT ROOM OF CAMEL</a>
+                    <a class="nav-brand" href="/">낙타의 공방</a>
     
                     <!-- Navbar Toggler -->
                     <div class="classy-navbar-toggler">
@@ -121,6 +121,7 @@
                         </div>
                         <p class="location"><img src="assets/img/icons/location.png" alt=""><%=estate.roadAddress%></p>
                         <p><%=estate.content%></p>
+                        <p>작성자 : <%=estate.writer%></p>
                         <!-- Meta -->
                         <div class="property-meta-data d-flex align-items-end">
                             <div class="new-tag">
@@ -146,7 +147,7 @@
                             <li><i class="fa fa-check" aria-hidden="true"></i> <b>건물종류 : <%=estate.houseType%></b></li>
                             <li><i class="fa fa-check" aria-hidden="true"></i> <b>화장실 : <%=estate.toilet%>개</b></li>
                             <li><i class="fa fa-check" aria-hidden="true"></i> <b>연식 : <%=estate.years%>년</b></li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> <b><%=estate.writer%></b></li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> <b>인테리어 : <%=estate.theme%></b></li>
                         </ul>
 
                         <div class="list-group">

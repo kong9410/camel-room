@@ -531,36 +531,36 @@ router.post('/get_data2', function(req, res){
 		});
 	}
 	//모던
-	else if(search_num == 6){
+	else if(search_num == 7){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}, 'theme':{$in:['modern']}}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
-			console.log(estate_list);
-			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list});
+			console.log("modern : ",estate_list);
+			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
 	//클래식
-	else if(search_num == 6){
+	else if(search_num == 8){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}, 'theme':{$in:['classic']}}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
 			console.log(estate_list);
-			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list});
+			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
 	//네츄럴
-	else if(search_num == 6){
+	else if(search_num == 9){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}, 'theme':{$in:['natural']}}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
 			console.log(estate_list);
-			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list});
+			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
 	//유럽
-	else if(search_num == 6){
+	else if(search_num == 10){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}, 'theme':{$in:['europe']}}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
 			console.log(estate_list);
 			
-			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list});
+			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 			
 		});
 	}

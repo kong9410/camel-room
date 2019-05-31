@@ -39,7 +39,7 @@
                 <nav class="classy-navbar justify-content-between" id="southNav">
 
                     <!-- Logo -->
-                    <a class="nav-brand" href="/">VACANT ROOM OF CAMEL</a>
+                    <a class="nav-brand" href="/">낙타의 공방</a>
 
                     <!-- Navbar Toggler -->
                     <div class="classy-navbar-toggler">
@@ -227,15 +227,12 @@
         <div class="nav-map" id="map" ></div>
         <div class="section-list" id="maplist">
             <div class="single-container" >
-                <img id="estate_image" src="uploads/<%=estate_list[0].saveFileName[0]%>"  class="rounded" alt="Cinque Terre">
+                <img id="estate_image" src="assets/img/bg-img/camel.jpg" class="rounded" alt="Cinque Terre">
                 <button id='click_id' type="button" class="btn btn-primary btn-block" style="background-color:#EDA900; border-color:#EDA900;"><b>매물 보기</b></button>
                 <div class="single-property-content">
-
-                    <div class="single-property-text">
-                        <% if(estate_list) {%>
-                            <h2 id="title"><%=estate_list[0].title%></h2>
-                            <p class="text-secondary" id="roadAddress"><%=estate_list[0].roadAddress%></p>
-                            
+                    <div class="single-property-text">        
+                            <h2 id="title">매물을 선택하세요</h2>
+                            <p class="text-secondary" id="roadAddress"></p>
                             <!-- Nav pills -->
                             <ul class="nav nav-pills" role="tablist">
                               <li class="nav-item">
@@ -246,18 +243,17 @@
                             <!-- Tab panes -->
                             <div class="tab-content">
                               <div id="home" class="container tab-pane active"><br>
-                                <p class="text-secondary" id="content"><%=estate_list[0].content%></p>
+                                <p class="text-secondary" id="content"></p>
                               </div>
                               <div id="menu1" class="container tab-pane fade"><br>
                                 <h3>Menu 1</h3>
-                                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                <p></p>
                               </div>
                             </div>
-                        <% } %>
+                        
                     </div>
                     
                 </div>
-                
             </div>
 
         </div>
@@ -290,40 +286,40 @@
                 <%for(var i = 0; i < recommend_list.length; i++){%>
                 <!-- Single Featured Property -->
                 <div class="col-12 col-md-6 col-xl-4"
-                    onclick="singleClick('<%=estate_list[i].estate_id%>')">
+                    onclick="singleClick('<%=recommend_list[i].estate_id%>')">
                     <div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="600ms">
                         <!-- Property Thumbnail -->
                         <div class="property-thumb">
-                            <img src="uploads/<%=estate_list[i].saveFileName[0]%>" alt="" style="width:100%; height:240px;">
+                            <img src="uploads/<%=recommend_list[i].saveFileName[0]%>" alt="" style="width:100%; height:240px;">
     
                             <div class="tag">
                                 <span>For Sale</span>
                             </div>
                             <div class="list-price">
-                                <p><%=estate_list[i].price%> 만원</p>
+                                <p><%=recommend_list[i].price%> 만원</p>
                             </div>
                         </div>
                         <!-- Property Content -->
                         <div class="property-content">
-                            <h5><%=estate_list[i].title%></h5>
+                            <h5><%=recommend_list[i].title%></h5>
     
                             <p class="location"><img src="assets/img/icons/location.png"
-                                    alt=""><%=estate_list[i].roadAddress%></p>
+                                    alt=""><%=recommend_list[i].roadAddress%></p>
                             <div class="property-meta-data d-flex align-items-end justify-content-between">
                                 <div class="bathroom">
                                     <img src="assets/img/icons/bathtub.png" alt="">
-                                    <span><%=estate_list[i].toilet%></span>
+                                    <span><%=recommend_list[i].toilet%></span>
                                 </div>
                                 <div class="garage">
                                     <img src="assets/img/icons/garage.png" alt="">
-                                    <span><%=estate_list[i].contractTag%></span>
+                                    <span><%=recommend_list[i].contractTag%></span>
                                 </div>
                                 <div class="space">
                                     <img src="assets/img/icons/space.png" alt="">
-                                    <span><%=estate_list[i].roomSize%> sq ft</span>
+                                    <span><%=recommend_list[i].roomSize%> sq ft</span>
                                 </div>
                             </div>
-                            <p><br><%=estate_list[i].content%></p>
+                            <p><br><%=recommend_list[i].content%></p>
     
                         </div>
                     </div>
@@ -344,7 +340,12 @@
         </div>
     <!-- ##### Listing Content Wrapper Area End ##### -->
     </section>
-   
+    <!-- 매물 등록 버튼 -->
+    <%if(check_ses){%>
+    <div>
+        <button type="button" class="btn south-btn custom-btn" onclick="add_property()">매물 등록</button>
+    </div>
+    <% } %>
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(assets/img/bg-img/cta.jpg);">
         <!-- Main Footer Area -->
@@ -453,72 +454,6 @@
 
 <script>
 
-    var config = {
-                type: 'radar',
-                data: {
-                    labels: ["치안지수", "인기지수", "교통지수", "교육지수", "건강지수", "편의지수"],
-                    datasets: [{
-                        label: "",
-                        backgroundColor: "rgba(255,94,0,0.4)",
-                        pointBackgroundColor: "rgba(110,200,30,4)",
-                        borderWidth: 5,
-                        borderCapStyle : 'butt',
-                        data: [<%=estate_list[0].safe_value%>, <%=estate_list[0].popular_value%>, <%=estate_list[0].traffic_value%>, <%=estate_list[0].education_value%>, <%=estate_list[0].healthy_value%>, <%=estate_list[0].convenience_value%>]
-                    }]
-                },
-                options: {
-                    legend: {
-                        position: 'top'
-                    },
-                    title: {
-                        display: false,
-                        text: '매물 가치지수'
-                    },
-                    scale: {
-                        reverse: false,
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-    };
-    window.onload = function() {
-            window.myRadar = new Chart(document.getElementById("valuecanvas"), config);
-            var ctx = document.getElementById("scorecanvas").getContext("2d");
-            window.myBar = new Chart(ctx, {
-                type: 'bar',
-                data: barChartData,
-                options: {
-                    // Elements options apply to all of the options unless overridden in a dataset
-                    // In this case, we are setting the border of each bar to be 2px wide and green
-                    elements: {
-                        rectangle: {
-                            borderWidth: 1,
-                            borderColor: 'rgb(200, 150, 70)',
-                            borderSkipped: 'bottom'
-                        }
-                    },
-                    responsive: true,
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                    },
-					scales: {
-						xAxes: [{
-							barPercentage: 0.4,
-							barThickness: 1,
-							maxBarThickness: 10,
-							minBarLength: 1,
-							gridLines: {
-								offsetGridLines: true
-							}
-						}]
-					}
-                }
-            });
-    };
     //매물 등록 버튼
     function add_property() {
         location.href = "/add-property";
