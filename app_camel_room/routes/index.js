@@ -253,7 +253,8 @@ router.get('/single-property/:id', function (req, res) {
 					traffic_value: result.traffic_value,
 					education_value: result.education_value,
 					healthy_value: result.healthy_value,
-					convenience_value: result.convenience_value
+					convenience_value: result.convenience_value,
+					theme:result.theme
 				};
 				console.log("cursors : ", estate_info.popular_value);
 				// [ 매물에 대한 평균스코어를 구하는 쿼리문]

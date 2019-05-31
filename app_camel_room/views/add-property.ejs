@@ -103,7 +103,10 @@
                 <!-- Contact Form Area -->
                 <div class="col-12 col-lg-12">
                     <div class="contact-form">
-                        <button type="button" id="analysis" onclick="window.open('http://ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com:5000/upload', 'analysis','width=400, height=300')">사진 분석</button>
+                        <div class="form-group">
+                            <label>사진 분석</label>
+                            <button type="button" id="analysis" onclick="window.open('http://ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com:5000/upload', 'analysis','width=400, height=300')">사진 분석</button>
+                        </div>
                         <form action="api/estate" enctype="multipart/form-data" name="signup_form" method="post" id="estate-form">
                             <div class="row">
                                 <div class="col-md-11">
