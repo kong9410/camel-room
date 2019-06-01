@@ -155,12 +155,12 @@ router.get('/property', function (req, res) {
 					for(var k=0; k<12;k++){
 					   Inlist.push(rec_list[k][1]);
 					}
-				 }
+				}
 				 else{
 					for(var k=0; k<rec_list.length;k++){
 					   Inlist.push(rec_list[k][1]);
 					}
-				 }
+				}
 				
 				var myquery = {'estate_id':{$in:Inlist}};
 				var cursor = db.collection("estates").find(myquery).toArray(function(err,result){
