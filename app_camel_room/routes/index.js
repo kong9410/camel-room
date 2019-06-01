@@ -161,7 +161,7 @@ router.get('/property', function (req, res) {
 					   Inlist.push(rec_list[k][1]);
 					}
 				 }
-				console.log("Inlist : ", Inlist);
+				
 				var myquery = {'estate_id':{$in:Inlist}};
 				var cursor = db.collection("estates").find(myquery).toArray(function(err,result){
 					if(err){console.log(err); throw err;}

@@ -81,7 +81,7 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="breadcumb-content">
-                        <h3 class="breadcumb-title">Contact</h3>
+                        <h3 class="breadcumb-title">매물 등록</h3>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="contact-heading">
-                        <h6>Contact info</h6>
+                        <h4>매물 정보 입력</h4>
                     </div>
                 </div>
             </div>
@@ -104,23 +104,23 @@
                 <div class="col-12 col-lg-12">
                     <div class="contact-form">
                         <div class="form-group">
-                            <label>사진 분석</label>
-                            <button type="button" id="analysis" onclick="window.open('http://ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com:5000/upload', 'analysis','width=400, height=300')">사진 분석</button>
+                            <p><button type="button" class="btn btn-success" id="analysis" onclick="window.open('http://ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com:5000/upload', 'analysis','width=400, height=300')">사진 분석</button></p>
+                            <label><b>인테리어 분석</b><p>사진을 등록해주세요. 이 사진은 해당 매물의 인테리어가 어떤 것 인지 분석하여 알려줍니다!!</p></label><p></p>
                         </div>
                         <form action="api/estate" enctype="multipart/form-data" name="signup_form" method="post" id="estate-form">
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
-                                        <label>사진</label>
-                                        <input type="file" name="estateFile" class="btn" id="input-file1" accept="image/*" multiple novalidate>
-                                        
+                                        <p><input type="file"  name="estateFile" class="btn btn-outline-success" id="input-file1" accept="image/*" multiple novalidate></p>
+                                        <label><b>매물 등록 사진</b><p>사진을 등록해주세요. 이 사진은 사용자에게 보여지는 매물 사진입니다.</p></label>
+                                    
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
-                                        <label>제목</label>
+                                        <label><b>제목</b></label>
                                         <input type="text" class="form-control" placeholder="TITLE" value="충북대 1시간 거리" name="title">
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>주거 구분</label><br>
+                                        <label><b>주거 구분</b></label><br>
                                         <div>
                                             <select class="form-control" name="houseType">
                                                 <option>주택</option>
@@ -140,7 +140,7 @@
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group">
-                                            <label>구분</label><br>
+                                            <label><b>구분</b></label><br>
                                             <select class="form-control" name="contractTag">
                                                 <option>전세</option>
                                                 <option>월세</option>
@@ -150,13 +150,13 @@
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label>가격 (만원)</label>
+                                        <label><b>가격 (만원)</b></label>
                                         <input type="number" class="form-control" placeholder="price" value="10000" name="price">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>보증금 (만원)</label>
+                                        <label><b>보증금 (만원)</b></label>
                                         <input type="number" class="form-control" placeholder="price" value="100" name="deposit">
                                     </div>
                                 </div>
@@ -164,7 +164,7 @@
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
-                                        <label>주소</label><br>
+                                        <label><b>주소</b></label><br>
                                             <input type="text" id="roadAddress" class="form-control" placeholder="Road Address" name="roadAddress"
                                                 readonly onclick="fn_setAddr()">
                                     </div>
@@ -173,7 +173,7 @@
                             <div class="row">
                                 <div class="col-md-10">
                                     <div class="form-group">
-                                        <label>상세주소</label><br>
+                                        <label><b>상세주소</b></label><br>
                                         <input type="text" name="detailAddress" class="form-control" placeholder="Detail Address" required>
                                     </div>
                                 </div>
@@ -181,63 +181,39 @@
                             <div class="row">
                                 <div class="col-md-1">
                                     <div class="form-group">
-                                        <label>평수</label>
+                                        <label><b>평수</b></label>
                                         <input type="number" class="form-control" placeholder="Size" name="roomSize" value=30>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-1">
                                     <div class="form-group">
-                                        <label>방 개수</label><br>
+                                        <label><b>방 개수</b></label><br>
                                         <div>
-                                            <select class="form-control" name="rooms">
-                                                <option>원룸</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                                <option>6</option>
-                                                <option>7</option>
-                                                <option>8</option>
-                                                <option>9</option>
-                                                <option>10</option>
-                                                <option>10이상</option>
-                                            </select>
+                                            <input type="number" class="form-control" placeholder="3" name="rooms" value=3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group">
-                                        <label>화장실</label><br>
+                                        <label><b>화장실</b></label><br>
                                         <div>
-                                            <select class="form-control" name="toilet">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>3이상</option>
-                                            </select>
+                                            <input type="number" class="form-control"  placeholder="2" name="toilet" value=2>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group">
-                                        <label>층수</label><br>
+                                        <label><b>층수</b></label><br>
                                         <div>
-                                            <select class="form-control" name="floors">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4 이상</option>
-                                                <option>반지하</option>
-                                                <option>옥탑방</option>
-                                            </select>
+                                            <input type="number" class="form-control"  placeholder="10" name="floors" value=10>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group">
-                                        <label>건물연식</label><br>
+                                        <label><b>건물연식</b></label><br>
                                         <div>
-                                            <input class="form-control" type="text" placeholder="1994" name="years" value=2000>
+                                            <input type="number" class="form-control"  placeholder="5" name="years" value=5>
                                         </div>
                                     </div>
                                 </div>
@@ -263,7 +239,7 @@
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
-                                        <label>내용</label><br>
+                                        <label><b>내용</b></label><br>
                                         <textarea class="form-control" name="content" id="content" cols="30" rows="10" placeholder="소개글">
 신축1년차 새집증후군 없는 새집 귀한전세입니다.
 회사 이전으로 인한 급매물로 주변시세보다 저렴한 전세예요.
