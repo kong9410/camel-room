@@ -104,15 +104,15 @@
                 <div class="col-12 col-lg-12">
                     <div class="contact-form">
                         <div class="form-group">
-                            <label>사진 분석</label>
-                            <button type="button" id="analysis" onclick="window.open('http://ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com:5000/upload', 'analysis','width=400, height=300')">사진 분석</button>
+                            <button class="btn btn-primary" type="button" id="analysis" onclick="analysis()">사진 분석</button>
+                            <input type="hidden" id="theme_check" value=''>
                         </div>
-                        <form action="api/estate" enctype="multipart/form-data" name="signup_form" method="post" id="estate-form">
+                        <form action="api/estate" enctype="multipart/form-data" name="estate-form" method="post" id="estate-form" onsubmit="return checking()">
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
                                         <label>사진</label>
-                                        <input type="file" name="estateFile" class="btn" id="input-file1" accept="image/*" multiple novalidate>
+                                        <input class="btn" type="file" name="estateFile" class="btn" id="input-file1" accept="image/*" multiple novalidate>
                                         
                                     </div>
                                 </div>
@@ -287,7 +287,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button id="sumbit_estate" type="submit" class="btn south-btn">등록 완료</button>
+                            <button id="submit_estate" type="submit" class="btn south-btn">등록 완료</button>
                         </form>
                     </div>
                 </div>
@@ -422,6 +422,21 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c749c8a6c8049131a0f238101adf5004&libraries=services"></script>
     <script>
+
+    //테마 체크
+    function analysis(){
+        window.open('http://ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com:5000/upload', 'analysis','width=400, height=300');
+        document.getElementById('theme_check').value = "ok";
+    }
+    function checking(){
+        if($("#theme_check").val() != "ok"){
+            $("#theme_check").focus();
+            alert("테마 분석을 하세요");
+            return false;
+        }
+        return true;
+    }
+
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 
     mapOption = {
