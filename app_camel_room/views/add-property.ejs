@@ -104,14 +104,14 @@
                 <div class="col-12 col-lg-12">
                     <div class="contact-form">
                         <div class="form-group">
-                            <p><button type="button" class="btn btn-success" id="analysis" onclick="window.open('http://ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com:5000/upload', 'analysis','width=400, height=300')">사진 분석</button></p>
+                            <p><button type="button" class="btn btn-success" id="analysis" onclick="analysis()">사진 분석</button></p>
                             <label><b>인테리어 분석</b><p>사진을 등록해주세요. 이 사진은 해당 매물의 인테리어가 어떤 것 인지 분석하여 알려줍니다!!</p></label><p></p>
                         </div>
-                        <form action="api/estate" enctype="multipart/form-data" name="signup_form" method="post" id="estate-form">
+                        <form action="api/estate" enctype="multipart/form-data" name="estate-form" method="post" id="estate-form" onsubmit="return checking()">
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
-                                        <p><input type="file"  name="estateFile" class="btn btn-outline-success" id="input-file1" accept="image/*" multiple novalidate></p>
+                                        <p><input type="file"  name="estateFile" class="btn btn-outline-success" id="input-file1" accept="image/*" multiple novalidate required></p>
                                         <label><b>매물 등록 사진</b><p>사진을 등록해주세요. 이 사진은 사용자에게 보여지는 매물 사진입니다.</p></label>
                                     
                                     </div>
@@ -263,7 +263,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button id="sumbit_estate" type="submit" class="btn south-btn">등록 완료</button>
+                            <button id="submit_estate" type="submit" class="btn south-btn">등록 완료</button>
                         </form>
                     </div>
                 </div>
@@ -286,62 +286,7 @@
                             <div class="widget-title">
                                 <h6>About Us</h6>
                             </div>
-
-                            <img src="assets/img/bg-img/footer.jpg" alt="">
-                            <div class="footer-logo my-4">
-                                <img src="assets/img/core-img/logo.png" alt="">
-                            </div>
-                            <p>Integer nec bibendum lacus. Suspen disse dictum enim sit amet libero males uada feugiat. Praesent malesuada.</p>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="footer-widget-area mb-100">
-                            <!-- Widget Title -->
-                            <div class="widget-title">
-                                <h6>Hours</h6>
-                            </div>
-                            <!-- Office Hours -->
-                            <div class="weekly-office-hours">
-                                <ul>
-                                    <li class="d-flex align-items-center justify-content-between"><span>Monday - Friday</span> <span>09 AM - 19 PM</span></li>
-                                    <li class="d-flex align-items-center justify-content-between"><span>Saturday</span> <span>09 AM - 14 PM</span></li>
-                                    <li class="d-flex align-items-center justify-content-between"><span>Sunday</span> <span>Closed</span></li>
-                                </ul>
-                            </div>
-                            <!-- Address -->
-                            <div class="address">
-                                <h6><img src="assets/img/icons/phone-call.png" alt=""> +45 677 8993000 223</h6>
-                                <h6><img src="assets/img/icons/envelope.png" alt=""> office@template.com</h6>
-                                <h6><img src="assets/img/icons/location.png" alt=""> Main Str. no 45-46, b3, 56832, Los Angeles, CA</h6>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="footer-widget-area mb-100">
-                            <!-- Widget Title -->
-                            <div class="widget-title">
-                                <h6>Useful Links</h6>
-                            </div>
-                            <!-- Nav -->
-                            <ul class="useful-links-nav d-flex align-items-center">
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Services</a></li>
-                                <li><a href="#">Properties</a></li>
-                                <li><a href="#">Listings</a></li>
-                                <li><a href="#">Testimonials</a></li>
-                                <li><a href="#">Properties</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Testimonials</a></li>
-                                <li><a href="#">Contact</a></li>
-                                <li><a href="#">Elements</a></li>
-                                <li><a href="#">FAQ</a></li>
-                            </ul>
+                            <p>공집합 팀의 졸업작품, <br>공민철, 박경민, 박소연 개발작품이다.</p>
                         </div>
                     </div>
 
@@ -377,8 +322,8 @@
         <!-- Copywrite Text -->
         <div class="copywrite-text d-flex align-items-center justify-content-center">
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
         </div>
     </footer>
     <!-- ##### Footer Area End ##### -->
@@ -398,6 +343,21 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c749c8a6c8049131a0f238101adf5004&libraries=services"></script>
     <script>
+
+    //테마 체크
+    function analysis(){
+        window.open('http://ec2-15-164-57-59.ap-northeast-2.compute.amazonaws.com:5000/upload', 'analysis','width=400, height=300');
+        document.getElementById('theme_check').value = "ok";
+    }
+    function checking(){
+        if($("#theme_check").val() != "ok"){
+            $("#theme_check").focus();
+            alert("사진 분석을 하세요");
+            return false;
+        }
+        return true;
+    }
+
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 
     mapOption = {

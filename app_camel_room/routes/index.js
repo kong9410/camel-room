@@ -208,22 +208,19 @@ router.get('/single-property/:id', function (req, res) {
 	db.collection('estates').findOne({ estate_id: estate_id }).then(function (result) {
 		console.log("views : ", result.views);
 		views = result.views;
-		if (views > 30000) {
-			popular_value = 6;
-		}
-		else if (views > 10000 && views <= 30000) {
+		if (views > 500) {
 			popular_value = 5;
 		}
-		else if (views > 5000 && views <= 10000) {
+		else if (views > 200 && views <= 500) {
 			popular_value = 4;
 		}
-		else if (views > 3000 && views <= 5000) {
+		else if (views > 100 && views <= 200) {
 			popular_value = 3;
 		}
-		else if (views > 1000 && views <= 3000) {
+		else if (views > 10 && views <= 100) {
 			popular_value = 2;
 		}
-		else if (views <= 1000) {
+		else if (views <= 10) {
 			popular_value = 1;
 		}
 		db.collection('estates').updateOne({ estate_id: estate_id }, { $set: { popular_value: popular_value }, $inc: { views: 1 } }).then(function (result) {
