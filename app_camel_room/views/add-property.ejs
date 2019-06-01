@@ -81,7 +81,7 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="breadcumb-content">
-                        <h3 class="breadcumb-title">Contact</h3>
+                        <h3 class="breadcumb-title">매물 등록</h3>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="contact-heading">
-                        <h6>Contact info</h6>
+                        <h4>매물 정보 입력</h4>
                     </div>
                 </div>
             </div>
@@ -104,23 +104,23 @@
                 <div class="col-12 col-lg-12">
                     <div class="contact-form">
                         <div class="form-group">
-                            <button class="btn btn-primary" type="button" id="analysis" onclick="analysis()">사진 분석</button>
-                            <input type="hidden" id="theme_check" value=''>
+                            <p><button type="button" class="btn btn-success" id="analysis" onclick="analysis()">사진 분석</button></p>
+                            <label><b>인테리어 분석</b><p>사진을 등록해주세요. 이 사진은 해당 매물의 인테리어가 어떤 것 인지 분석하여 알려줍니다!!</p></label><p></p>
                         </div>
                         <form action="api/estate" enctype="multipart/form-data" name="estate-form" method="post" id="estate-form" onsubmit="return checking()">
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
-                                        <label>사진</label>
-                                        <input class="btn" type="file" name="estateFile" class="btn" id="input-file1" accept="image/*" multiple novalidate>
-                                        
+                                        <p><input type="file"  name="estateFile" class="btn btn-outline-success" id="input-file1" accept="image/*" multiple novalidate required></p>
+                                        <label><b>매물 등록 사진</b><p>사진을 등록해주세요. 이 사진은 사용자에게 보여지는 매물 사진입니다.</p></label>
+                                    
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
-                                        <label>제목</label>
+                                        <label><b>제목</b></label>
                                         <input type="text" class="form-control" placeholder="TITLE" value="충북대 1시간 거리" name="title">
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>주거 구분</label><br>
+                                        <label><b>주거 구분</b></label><br>
                                         <div>
                                             <select class="form-control" name="houseType">
                                                 <option>주택</option>
@@ -140,7 +140,7 @@
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group">
-                                            <label>구분</label><br>
+                                            <label><b>구분</b></label><br>
                                             <select class="form-control" name="contractTag">
                                                 <option>전세</option>
                                                 <option>월세</option>
@@ -150,13 +150,13 @@
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label>가격 (만원)</label>
+                                        <label><b>가격 (만원)</b></label>
                                         <input type="number" class="form-control" placeholder="price" value="10000" name="price">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>보증금 (만원)</label>
+                                        <label><b>보증금 (만원)</b></label>
                                         <input type="number" class="form-control" placeholder="price" value="100" name="deposit">
                                     </div>
                                 </div>
@@ -164,7 +164,7 @@
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
-                                        <label>주소</label><br>
+                                        <label><b>주소</b></label><br>
                                             <input type="text" id="roadAddress" class="form-control" placeholder="Road Address" name="roadAddress"
                                                 readonly onclick="fn_setAddr()">
                                     </div>
@@ -173,7 +173,7 @@
                             <div class="row">
                                 <div class="col-md-10">
                                     <div class="form-group">
-                                        <label>상세주소</label><br>
+                                        <label><b>상세주소</b></label><br>
                                         <input type="text" name="detailAddress" class="form-control" placeholder="Detail Address" required>
                                     </div>
                                 </div>
@@ -181,63 +181,39 @@
                             <div class="row">
                                 <div class="col-md-1">
                                     <div class="form-group">
-                                        <label>평수</label>
+                                        <label><b>평수</b></label>
                                         <input type="number" class="form-control" placeholder="Size" name="roomSize" value=30>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-1">
                                     <div class="form-group">
-                                        <label>방 개수</label><br>
+                                        <label><b>방 개수</b></label><br>
                                         <div>
-                                            <select class="form-control" name="rooms">
-                                                <option>원룸</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                                <option>6</option>
-                                                <option>7</option>
-                                                <option>8</option>
-                                                <option>9</option>
-                                                <option>10</option>
-                                                <option>10이상</option>
-                                            </select>
+                                            <input type="number" class="form-control" placeholder="3" name="rooms" value=3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group">
-                                        <label>화장실</label><br>
+                                        <label><b>화장실</b></label><br>
                                         <div>
-                                            <select class="form-control" name="toilet">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>3이상</option>
-                                            </select>
+                                            <input type="number" class="form-control"  placeholder="2" name="toilet" value=2>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group">
-                                        <label>층수</label><br>
+                                        <label><b>층수</b></label><br>
                                         <div>
-                                            <select class="form-control" name="floors">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4 이상</option>
-                                                <option>반지하</option>
-                                                <option>옥탑방</option>
-                                            </select>
+                                            <input type="number" class="form-control"  placeholder="10" name="floors" value=10>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group">
-                                        <label>건물연식</label><br>
+                                        <label><b>건물연식</b></label><br>
                                         <div>
-                                            <input class="form-control" type="text" placeholder="1994" name="years" value=2000>
+                                            <input type="number" class="form-control"  placeholder="5" name="years" value=5>
                                         </div>
                                     </div>
                                 </div>
@@ -263,7 +239,7 @@
                             <div class="row">
                                 <div class="col-md-11">
                                     <div class="form-group">
-                                        <label>내용</label><br>
+                                        <label><b>내용</b></label><br>
                                         <textarea class="form-control" name="content" id="content" cols="30" rows="10" placeholder="소개글">
 신축1년차 새집증후군 없는 새집 귀한전세입니다.
 회사 이전으로 인한 급매물로 주변시세보다 저렴한 전세예요.
@@ -310,62 +286,7 @@
                             <div class="widget-title">
                                 <h6>About Us</h6>
                             </div>
-
-                            <img src="assets/img/bg-img/footer.jpg" alt="">
-                            <div class="footer-logo my-4">
-                                <img src="assets/img/core-img/logo.png" alt="">
-                            </div>
-                            <p>Integer nec bibendum lacus. Suspen disse dictum enim sit amet libero males uada feugiat. Praesent malesuada.</p>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="footer-widget-area mb-100">
-                            <!-- Widget Title -->
-                            <div class="widget-title">
-                                <h6>Hours</h6>
-                            </div>
-                            <!-- Office Hours -->
-                            <div class="weekly-office-hours">
-                                <ul>
-                                    <li class="d-flex align-items-center justify-content-between"><span>Monday - Friday</span> <span>09 AM - 19 PM</span></li>
-                                    <li class="d-flex align-items-center justify-content-between"><span>Saturday</span> <span>09 AM - 14 PM</span></li>
-                                    <li class="d-flex align-items-center justify-content-between"><span>Sunday</span> <span>Closed</span></li>
-                                </ul>
-                            </div>
-                            <!-- Address -->
-                            <div class="address">
-                                <h6><img src="assets/img/icons/phone-call.png" alt=""> +45 677 8993000 223</h6>
-                                <h6><img src="assets/img/icons/envelope.png" alt=""> office@template.com</h6>
-                                <h6><img src="assets/img/icons/location.png" alt=""> Main Str. no 45-46, b3, 56832, Los Angeles, CA</h6>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="footer-widget-area mb-100">
-                            <!-- Widget Title -->
-                            <div class="widget-title">
-                                <h6>Useful Links</h6>
-                            </div>
-                            <!-- Nav -->
-                            <ul class="useful-links-nav d-flex align-items-center">
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Services</a></li>
-                                <li><a href="#">Properties</a></li>
-                                <li><a href="#">Listings</a></li>
-                                <li><a href="#">Testimonials</a></li>
-                                <li><a href="#">Properties</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Testimonials</a></li>
-                                <li><a href="#">Contact</a></li>
-                                <li><a href="#">Elements</a></li>
-                                <li><a href="#">FAQ</a></li>
-                            </ul>
+                            <p>공집합 팀의 졸업작품, <br>공민철, 박경민, 박소연 개발작품이다.</p>
                         </div>
                     </div>
 
@@ -401,8 +322,8 @@
         <!-- Copywrite Text -->
         <div class="copywrite-text d-flex align-items-center justify-content-center">
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
         </div>
     </footer>
     <!-- ##### Footer Area End ##### -->
@@ -431,7 +352,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     function checking(){
         if($("#theme_check").val() != "ok"){
             $("#theme_check").focus();
-            alert("테마 분석을 하세요");
+            alert("사진 분석을 하세요");
             return false;
         }
         return true;
