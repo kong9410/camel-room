@@ -31,7 +31,7 @@ function pearson(data,name1, name2){ //피어슨 상관계수 구하는 함수.
 		return 0.1;
 	var sqrtvalue = Math.sqrt( (pow_x - (Math.pow(x,2) / cnt)) * (pow_y - (Math.pow(y,2)/cnt)));
 	if(sqrtvalue==0)
-		sqrtvalue =1;
+		sqrtvalue=1;
 	result = ( xy- ((x*y)/cnt) )/ sqrtvalue;
 	return result;
 }
@@ -54,23 +54,21 @@ function Rank_user(data, name, index){
 
 function Recommendation (data, person){
 	var data_length =0;
-	
 	for (var i in data){
 		data_length++;
 	}
 	var result = new Array();
 	result = Rank_user(data, person, data_length-1);
+	
 	var score  = 0;
 	var list = new Array();
 	var score_dic = new Object();
 	var similar_dic = new Object();
-	
 	for (var i = 0 ; i<result.length; i++){
 	
 		if(result[i][0] < 0){
 			continue;
 		}
-	
 		for (estate in data[result[i][1]]){
 			
 			if(!(estate in data[person])){
@@ -83,15 +81,14 @@ function Recommendation (data, person){
 			}
 			score=0;
 		}
-		
 	}
-	
 	for (key in score_dic){
 		score_dic[key]=score_dic[key]/similar_dic[key];
 		list.push([score_dic[key],key]);
 	}
 	list.sort();
 	list.reverse();
+	
 	return list;
 }
 
@@ -151,6 +148,7 @@ router.get('/property', function (req, res) {
 				
 				
 				rec_list = Recommendation(user_dic,req.session.email);
+				console.log('추천 리스트 : ', rec_list);
 				if(rec_list.length>12){
 					for(var k=0; k<12;k++){
 					   Inlist.push(rec_list[k][1]);
@@ -293,7 +291,7 @@ router.get('/single-property/:id', function (req, res) {
 								var rec_list = new Array();
 								var expect_score = -1;
 								rec_list = Recommendation(user_dic, req.session.email);
-
+							
 								for (var k = 0; k < rec_list.length; k++) {
 
 									if (rec_list[k][1] == req.params.id) {

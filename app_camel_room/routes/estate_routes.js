@@ -97,7 +97,8 @@ router.post('/', function (req, res) {
             var Min_lat2 = String(Min_lat);
             var Max_lon2 = String(Max_lon);
             var Min_lon2 = String(Min_lon);
-            var myquery = { "latitude": { $gt: Min_lat2, $lt: Max_lat2 }, 'longitude': { $gt: Min_lon2, $lt: Max_lon2 } };
+            var myquery = { "latitude": { $gt: Min_lat2, $lt: Max_lat2 }, 
+                            'longitude': { $gt: Min_lon2, $lt: Max_lon2 } };
             var safe_value = 0;
             var policecursor = db.collection("police").find(myquery).toArray(function (err, result) {
                 if (err) { console.log(err); throw err; }

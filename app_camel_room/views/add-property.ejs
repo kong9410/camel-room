@@ -106,6 +106,7 @@
                         <div class="form-group">
                             <p><button type="button" class="btn btn-success" id="analysis" onclick="analysis()">사진 분석</button></p>
                             <label><b>인테리어 분석</b><p>사진을 등록해주세요. 이 사진은 해당 매물의 인테리어가 어떤 것 인지 분석하여 알려줍니다!!</p></label><p></p>
+                            <input type="hidden" id="theme_check" value="">
                         </div>
                         <form action="api/estate" enctype="multipart/form-data" name="estate-form" method="post" id="estate-form" onsubmit="return checking()">
                             <div class="row">
@@ -396,17 +397,20 @@
                                 
                                 //alert(data.length);
                                 document.getElementById('school').value = data.length;
+                                console.log("학교:"+data.length)
                             }
                             // 어린이집,유치원 검색
                             ps.categorySearch('PS3', placesSearchCB2, {useMapBounds:true}); 
                             function placesSearchCB2 (data, status, pagination) {
                                 document.getElementById('kindergarten').value = data.length;
+                                console.log("유치원:"+data.length);
                                 //alert(data.length);        
                             }
                             // 학원검색
                             ps.categorySearch('AC5', placesSearchCB3, {useMapBounds:true}); 
                             function placesSearchCB3 (data, status, pagination) {
                                 document.getElementById('academy').value = data.length;
+                                console.log("학원:"+data.length)
                                 //alert(data.length);        
                             }
 
@@ -415,6 +419,7 @@
                             ps.categorySearch('SW8', placesSearchCB4, {useMapBounds:true}); 
                             function placesSearchCB4 (data, status, pagination) {
                                 document.getElementById('subway').value = data.length;
+                                console.log("지하철:"+data.length)
                                //alert(data.length);        
                             }
                             // 지하철 검색
@@ -424,12 +429,14 @@
                             ps.categorySearch('HP8', placesSearchCB6, {useMapBounds:true}); 
                             function placesSearchCB6 (data, status, pagination) {
                                 document.getElementById('hospital').value = data.length;
+                                console.log("병원:"+data.length)
                                 //alert(data.length);        
                             }
                             // 약국 검색
                             ps.categorySearch('PM9', placesSearchCB7, {useMapBounds:true}); 
                             function placesSearchCB7 (data, status, pagination) {
                                 document.getElementById('pharmacy').value = data.length;
+                                console.log("약국:"+data.length)
                                 //alert(data.length);        
                             }
 
@@ -438,6 +445,7 @@
                             ps.categorySearch('MT1', placesSearchCB8, {useMapBounds:true}); 
                             function placesSearchCB8 (data, status, pagination) {
                                 document.getElementById('mart').value = data.length;
+                                console.log("마트:"+data.length)
                                 //alert(data.length);        
                             }
                             // 편의점 검색
@@ -445,24 +453,29 @@
                             function placesSearchCB9 (data, status, pagination) {
                                 
                                 document.getElementById('convenience').value = data.length;
+                                console.log("편의시설:"+data.length)
                                // alert(data.length);        
                             }
                             // 문화시설 검색
                             ps.categorySearch('CT1', placesSearchCB10, {useMapBounds:true}); 
                             function placesSearchCB10 (data, status, pagination) {
                                 document.getElementById('culture').value = data.length;
+                                console.log("문화시설:"+data.length)
                                 //alert(data.length);        
                             }
                             // 카페 검색
                             ps.categorySearch('CE7', placesSearchCB11, {useMapBounds:true}); 
                             function placesSearchCB11 (data, status, pagination) {
                                 document.getElementById('cafe').value = data.length;
+                                console.log("카페:"+data.length)
                                 //alert(data.length);        
                             }
                             // 음식점 검색
                             ps.categorySearch('FD6', placesSearchCB12, {useMapBounds:true}); 
                             function placesSearchCB12 (data, status, pagination) {
                                 document.getElementById('food').value = data.length;
+                                console.log("음식:"+data.length)
+                                alert('aa');
                                 //alert(data.length);        
                             }
                         }
