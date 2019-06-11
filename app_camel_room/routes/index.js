@@ -125,7 +125,7 @@ router.get('/property', function (req, res) {
 		// [Recommend]
 		var cursor2 = db.collection("users").find({},{projection:{"_id":0,"star":1,"email":1}}).toArray(function (err, result) {
 			if (err) throw err;
-			
+			var flag=0;
 
 			if((req.session.email != null)){
 				var user_dic = new Object();
@@ -140,34 +140,46 @@ router.get('/property', function (req, res) {
 							user_dic[user_email] = score_dic;
 						}
 					}
-				}
-				
-
-				var rec_list = new Array();
-				var Inlist = new Array();
-				
-				
-				rec_list = Recommendation(user_dic,req.session.email);
-				console.log('추천 리스트 : ', rec_list);
-				if(rec_list.length>12){
-					for(var k=0; k<12;k++){
-					   Inlist.push(rec_list[k][1]);
-					}
-				}
-				 else{
-					for(var k=0; k<rec_list.length;k++){
-					   Inlist.push(rec_list[k][1]);
+					if(result[i].email == req.session.email && result[i].star ==null){
+						flag=1;
 					}
 				}
 				
-				var myquery = {'estate_id':{$in:Inlist}};
-				var cursor = db.collection("estates").find(myquery).toArray(function(err,result){
-					if(err){console.log(err); throw err;}
+				if(flag==0){
+					var rec_list = new Array();
+					var Inlist = new Array();
 					
-					if (req.session.email) {
-						res.render('property.ejs', { check_ses: req.session.email, estate_list: list,page_cnt: page_length, recommend_list:result, search:0});
+					
+					rec_list = Recommendation(user_dic,req.session.email);
+					console.log('추천 리스트 : ', rec_list);
+					if(rec_list.length>12){
+						for(var k=0; k<12;k++){
+						Inlist.push(rec_list[k][1]);
+						}
 					}
-				});
+					else{
+						for(var k=0; k<rec_list.length;k++){
+						Inlist.push(rec_list[k][1]);
+						}
+					}
+					
+					
+						var myquery = {'estate_id':{$in:Inlist}};
+						var cursor = db.collection("estates").find(myquery).toArray(function(err,result){
+							if(err){console.log(err); throw err;}
+							
+							if (req.session.email) {
+								res.render('property.ejs', { check_ses: req.session.email, estate_list: list,page_cnt: page_length, recommend_list:result, search:0});
+							}
+						});
+				}
+				else{
+					db.collection('estates').find({}).sort({'views':-1}).limit(6).toArray(function(err, result){
+						if(req.session.email)
+							res.render('property.ejs',{check_ses: req.session.email, estate_list:list,page_cnt: page_length , recommend_list:result, search:0} );
+					})
+				}
+				
 			}
 			else{
 				res.render('property.ejs', {check_ses: 0, estate_list: list, page_cnt : page_length, search:0});		
@@ -183,7 +195,7 @@ router.post('/score/:id', function(req, res){
 		$push:{
 			"star":{
 				estate_id:req.params.id,
-				score:req.body.star
+				score:parseInt(req.body.star)
 			}
 		}
 	});
@@ -271,7 +283,7 @@ router.get('/single-property/:id', function (req, res) {
 						// [예상스코어 계산]
 						var cursor = db.collection("users").find({}, { projection: { "_id": 0, "star": 1, "email": 1 } }).toArray(function (err, result) {
 							if (err) throw err;
-
+							var flag=0;
 							if ((req.session.email != null)) {
 								var user_dic = new Object();
 
@@ -286,40 +298,46 @@ router.get('/single-property/:id', function (req, res) {
 											user_dic[user_email] = score_dic;
 										}
 									}
-								}
-
-								var rec_list = new Array();
-								var expect_score = -1;
-								rec_list = Recommendation(user_dic, req.session.email);
-							
-								for (var k = 0; k < rec_list.length; k++) {
-
-									if (rec_list[k][1] == req.params.id) {
-										console.log(rec_list[k][0]);
-										expect_score = rec_list[k][0];
+									if(result[i].email == req.session.email && result[i].star ==null){
+										flag=1;
 									}
 								}
 
-								if (rec_list.length == 0) {
+								if(flag == 0){
+									var rec_list = new Array();
+									var expect_score = -1;
+									rec_list = Recommendation(user_dic, req.session.email);
+								
+									for (var k = 0; k < rec_list.length; k++) {
+
+										if (rec_list[k][1] == req.params.id) {
+											console.log(rec_list[k][0]);
+											expect_score = rec_list[k][0];
+										}
+									}
+
+									
+									if (expect_score == -1) { // 이미 평가 한 매물 일 경우 예상 스코어는 평가스코어로 준다.
+
+										var cursor = db.collection("users").aggregate([
+											{ $unwind: "$star" },
+											{ $match: { "star.estate_id": estate_id } },
+											{ $project: { "star.score": 1, "_id": 0 } }
+										]).toArray(function (err, result) {
+											var expect_score = result[0].star.score;
+
+											res.render('single-property.ejs', { estate: estate_info, check_ses: req.session.email, avgScore: avgScore_data, expectScore: expect_score });
+										});
+									}
+									else {
+
+										console.log("예상점수");
+										res.render('single-property.ejs', { estate: estate_info, check_ses: req.session.email, avgScore: avgScore_data, expectScore: expect_score });
+									}
+								}
+								else{
 									console.log("예상점수 불가능");
 									res.render('single-property.ejs', { estate: estate_info, check_ses: req.session.email, avgScore: avgScore_data, expectScore: 0 });
-								}
-								else if (expect_score == -1) { // 이미 평가 한 매물 일 경우 예상 스코어는 평가스코어로 준다.
-
-									var cursor = db.collection("users").aggregate([
-										{ $unwind: "$star" },
-										{ $match: { "star.estate_id": estate_id } },
-										{ $project: { "star.score": 1, "_id": 0 } }
-									]).toArray(function (err, result) {
-										var expect_score = result[0].star.score;
-
-										res.render('single-property.ejs', { estate: estate_info, check_ses: req.session.email, avgScore: avgScore_data, expectScore: expect_score });
-									});
-								}
-								else {
-
-									console.log("예상점수");
-									res.render('single-property.ejs', { estate: estate_info, check_ses: req.session.email, avgScore: avgScore_data, expectScore: expect_score });
 								}
 							}
 							else {
