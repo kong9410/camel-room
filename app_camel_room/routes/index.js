@@ -504,9 +504,10 @@ router.post('/get_data2', function(req, res){
 	var searchAddress = req.body.searchAddress;
 	console.log(search_num, searchAddress);
 	var cursor;
+
 	//치안
 	if(search_num == 2){
-		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}}).sort({popular_value:-1}).limit(12).toArray(function (err, result) {	
+		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}}).sort({safe_value:-1}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
 			console.log(estate_list);
 			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
