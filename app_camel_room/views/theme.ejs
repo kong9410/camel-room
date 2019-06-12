@@ -60,7 +60,7 @@
                                 <% if(!check_ses) {%>
                                     <li><a href="" style=color:#b3b3b3 data-toggle="modal" data-target="#loginModal" id="login">로그인</a></li>
                                     <%} else{ %>
-                                    <li><a href="api/logout" style="color:#b3b3b3">로그아웃</a></li>
+                                    <li><a href="/api/logout" style="color:#b3b3b3">로그아웃</a></li>
                                     <%}%>
                             </ul>
                         </div>
@@ -119,7 +119,7 @@
                                         
                                     <!-- Tab Text -->
                                     <div class="south-tab-text">
-                                            <img src="assets/img/blog-img/police.jpg" alt="" style="margin-bottom:20px;" onclick="whichselect();">
+                                            <img src="assets/img/blog-img/police.jpg" alt="" style="margin-bottom:20px;" >
                                         <h6>치안</h6>
                                         <p>경찰서, CCTV가 많은 곳을 알려드립니다</p>
                                         <div class="search-widget-area south-search-form">
@@ -137,7 +137,7 @@
                                 <div class="south-tab-content">
                                     <!-- Tab Text -->
                                     <div class="south-tab-text">
-                                            <img src="assets/img/blog-img/transfer.jpg" alt="" style="margin-bottom:20px;" onclick="whichselect();">
+                                            <img src="assets/img/blog-img/transfer.jpg" alt="" style="margin-bottom:20px;" >
                                         <h6>교통</h6>
                                         <p>버스정류소, 지하철역이 많은 곳을 알려드립니다.</p>
                                         <div class="search-widget-area south-search-form">
@@ -155,7 +155,7 @@
                                 <div class="south-tab-content">
                                     <!-- Tab Text -->
                                     <div class="south-tab-text">
-                                            <img src="assets/img/blog-img/convenience.jpg" alt="" style="margin-bottom:20px;" onclick="whichselect();">
+                                            <img src="assets/img/blog-img/convenience.jpg" alt="" style="margin-bottom:20px;" >
                                         <h6>편의</h6>
                                         <p>편의점, 마트 등의 편의 시설이 많은 곳을 알려드립니다.</p>
                                         <div class="search-widget-area south-search-form">
@@ -173,7 +173,7 @@
                                 <div class="south-tab-content">
                                     <!-- Tab Text -->
                                     <div class="south-tab-text">
-                                            <img src="assets/img/blog-img/health.jpg" alt="" style="margin-bottom:20px;" onclick="whichselect();"/>
+                                            <img src="assets/img/blog-img/health.jpg" alt="" style="margin-bottom:20px;"/>
                                         <h6>건강</h6>
                                         <p>병원, 약국 등 시설이 많은 곳을 알려드립니다.</p>
                                         <div class="search-widget-area south-search-form">
@@ -410,11 +410,7 @@
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c749c8a6c8049131a0f238101adf5004&libraries=services&libraries=services"></script>
     <!--구글 주소 api -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDo5kj9hCe7psH0BHSVK62kT3h9TcGS9qM&region=KR"></script>
-    <script>
-        function whichselect() {
-            alert('aaa');
-        }
-    </script>
+    
 </body>
 
 </html>

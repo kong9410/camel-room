@@ -1,15 +1,17 @@
-// [REQUIREMENTS]
+// [REQUIREMENTS 선언]
 var express = require('express');
 var router = express.Router();
 var mongoose    = require('mongoose');
 var http = require('http');
-// [Recommend function]
+// [Recommend Function]
 
+//prop을 가지고있다면 obj[prop]이 존재한다면 obj[prop]을 return  존재하지않으면 deflt를 리턴
 function setDefault(obj, prop, deflt) { 
 	return obj.hasOwnProperty(prop) ? obj[prop] : (obj[prop] = deflt); 
 }
 
-function pearson(data,name1, name2){ //피어슨 상관계수 구하는 함수.
+//피어슨 상관계수 구하는 함수.
+function pearson(data,name1, name2){ 
 	var x=0;
 	var y=0;
 	var pow_x = 0;
@@ -36,6 +38,8 @@ function pearson(data,name1, name2){ //피어슨 상관계수 구하는 함수.
 	return result;
 }
 
+
+//name유저와 나머지 모든 유저와의 pearson 상관계수를 구하는 함수.
 function Rank_user(data, name, index){
 	var list = new Array();
 	for (var i in data){
@@ -52,12 +56,14 @@ function Rank_user(data, name, index){
 	return result;
 }
 
+// 추천 함수 
 function Recommendation (data, person){
 	var data_length =0;
 	for (var i in data){
 		data_length++;
 	}
 	var result = new Array();
+	//result object에는 모든 유저와의 pearson 계수정보가 담겨져있다.
 	result = Rank_user(data, person, data_length-1);
 	
 	var score  = 0;
@@ -69,10 +75,10 @@ function Recommendation (data, person){
 		if(result[i][0] < 0){
 			continue;
 		}
+		//자신과 같은 매물을 평가했으며
 		for (estate in data[result[i][1]]){
-			
+			// 내가 평가한 매물 이외에
 			if(!(estate in data[person])){
-				
 				score += result[i][0]*data[result[i][1]][estate];
 				setDefault(score_dic,estate,0);
 				score_dic[estate]+=score;
@@ -82,6 +88,8 @@ function Recommendation (data, person){
 			score=0;
 		}
 	}
+
+
 	for (key in score_dic){
 		score_dic[key]=score_dic[key]/similar_dic[key];
 		list.push([score_dic[key],key]);
@@ -98,6 +106,7 @@ mongoose.connect('mongodb://localhost/estate_db',{useNewUrlParser : true});
 
 
 // [HOME]
+// 홈 페이지
 router.get('/', function (req, res) {
 	db.collection('estates').find({}).sort({'views':-1}).limit(6).toArray(function(err, result){
 
@@ -112,6 +121,7 @@ router.get('/', function (req, res) {
 });
 
 // [PROPERTY]
+// 지도와 매물목록들이 출력되는 페이지
 router.get('/property', function (req, res) {
 	var cursor = db.collection("estates").find({}).toArray(function (err, result) {
 		
@@ -123,13 +133,17 @@ router.get('/property', function (req, res) {
 		list = result;
 		
 		// [Recommend]
+		// user의 데이터를 find한다.
 		var cursor2 = db.collection("users").find({},{projection:{"_id":0,"star":1,"email":1}}).toArray(function (err, result) {
 			if (err) throw err;
 			var flag=0;
+		
 
+			//로그인이 됐을 경우
 			if((req.session.email != null)){
 				var user_dic = new Object();
 				
+				// 배열로 구성된 점수들을 json형식의 구성으로 바꿔주는 과정 
 				for (var i=0; i< result.length; i++ ){
 					if(result[i].star != null){
 						var user_email = result[i].email;
@@ -141,10 +155,11 @@ router.get('/property', function (req, res) {
 						}
 					}
 					if(result[i].email == req.session.email && result[i].star ==null){
-						flag=1;
+						flag=1; // 현재 로그인한 유저가 평가한 매물이 없을 경우
 					}
 				}
 				
+				 // 추천이 정상적으로 동작하는 경우
 				if(flag==0){
 					var rec_list = new Array();
 					var Inlist = new Array();
@@ -163,7 +178,7 @@ router.get('/property', function (req, res) {
 						}
 					}
 					
-					
+						// 추천list에 있는 id를 estate document에서 find한다.
 						var myquery = {'estate_id':{$in:Inlist}};
 						var cursor = db.collection("estates").find(myquery).toArray(function(err,result){
 							if(err){console.log(err); throw err;}
@@ -173,6 +188,7 @@ router.get('/property', function (req, res) {
 							}
 						});
 				}
+				// 추천이 정상적으로 작동할 수 없을 경우 인기매물을 보여준다.
 				else{
 					db.collection('estates').find({}).sort({'views':-1}).limit(6).toArray(function(err, result){
 						if(req.session.email)
@@ -181,6 +197,7 @@ router.get('/property', function (req, res) {
 				}
 				
 			}
+			//로그인이 안됐을경우
 			else{
 				res.render('property.ejs', {check_ses: 0, estate_list: list, page_cnt : page_length, search:0});		
 			}
@@ -189,8 +206,10 @@ router.get('/property', function (req, res) {
 	});
 });
 
+// 사용자가 평가한 매물의 정보를 저장할 때
 router.post('/score/:id', function(req, res){
 	console.log("post value is ",req.body.star);
+	// 유저의 score field에 점수를 $push 시켜준다.
 	var cursor = db.collection("users").updateOne({email:req.session.email}, {
 		$push:{
 			"star":{
@@ -209,12 +228,14 @@ router.post('/take/:id', function(req, res){
 });
 
 // [SINGLE PROPERTY]
+// 한가지 매물의 정보를 보는 페이지.
 router.use('/single-property/:id', express.static('public'))
 router.get('/single-property/:id', function (req, res) {
 	var estate_id = req.params.id;
 	var popular_value;
 	console.log(estate_id)
 
+	//조회수 기준으로 인기가치지수의 값을 업데이트 시키는 쿼리문 
 	db.collection('estates').findOne({ estate_id: estate_id }).then(function (result) {
 		console.log("views : ", result.views);
 		views = result.views;
@@ -233,6 +254,7 @@ router.get('/single-property/:id', function (req, res) {
 		else if (views <= 10) {
 			popular_value = 1;
 		}
+		// 현재 페이지에 매물의 정보를 출력해주기 위한 쿼리문
 		db.collection('estates').updateOne({ estate_id: estate_id }, { $set: { popular_value: popular_value }, $inc: { views: 1 } }).then(function (result) {
 			var cursor = db.collection("estates").findOne({ estate_id: estate_id }).then(function (result) {
 				estate_info = {
@@ -264,7 +286,7 @@ router.get('/single-property/:id', function (req, res) {
 					theme:result.theme
 				};
 				console.log("cursors : ", estate_info.popular_value);
-				// [ 매물에 대한 평균스코어를 구하는 쿼리문]
+				// [ 매물에 대한 평균 평가점수를 구하는 쿼리문]
 				var cursor = db.collection("users").aggregate([
 					{ $unwind: "$star" },
 					{ $match: { "star.estate_id": estate_id } },
@@ -293,7 +315,7 @@ router.get('/single-property/:id', function (req, res) {
 										var score_dic = new Object();
 
 										for (var k = 0; k < result[i].star.length; k++) {
-
+											
 											score_dic[result[i].star[k].estate_id] = result[i].star[k].score;
 											user_dic[user_email] = score_dic;
 										}
@@ -302,7 +324,7 @@ router.get('/single-property/:id', function (req, res) {
 										flag=1;
 									}
 								}
-
+								
 								if(flag == 0){
 									var rec_list = new Array();
 									var expect_score = -1;
@@ -329,17 +351,20 @@ router.get('/single-property/:id', function (req, res) {
 											res.render('single-property.ejs', { estate: estate_info, check_ses: req.session.email, avgScore: avgScore_data, expectScore: expect_score });
 										});
 									}
+									// 예상 점수를 출력해주는 경우
 									else {
 
 										console.log("예상점수");
 										res.render('single-property.ejs', { estate: estate_info, check_ses: req.session.email, avgScore: avgScore_data, expectScore: expect_score });
 									}
 								}
+								// 아직 사용자가 매물평가를 단 1번도 하지않아 예상점수를 구할 수 없는경우
 								else{
 									console.log("예상점수 불가능");
 									res.render('single-property.ejs', { estate: estate_info, check_ses: req.session.email, avgScore: avgScore_data, expectScore: 0 });
 								}
 							}
+							// 로그인 안됐을때는 예상점수는 0점으로 리턴하는 경우
 							else {
 								console.log("로그인안됐을때 예상점수는 0 점으로 리턴 ");
 								res.render('single-property.ejs', { estate: estate_info, check_ses: req.session.email, avgScore: avgScore_data, expectScore: 0 });
@@ -352,6 +377,7 @@ router.get('/single-property/:id', function (req, res) {
 });
 
 // [THEME]
+// 테마 검색을 할 수 있는 페이지
 router.get('/theme', function (req, res) {
 	if(req.session.email){
 		res.render('theme.ejs',{check_ses: req.session.email} );
@@ -361,12 +387,16 @@ router.get('/theme', function (req, res) {
 });
 
 // [ABOUT US]
+// 홈페이지 정보를 볼 수 있는 페이지
 router.get('/about-us', function (req, res) {
+
+	// 매물의 총 개수를 얻으려는 쿼리문
 	var cursor = db.collection("estates").find({}).toArray(function (err, result) {
 		//에러처리
 		if (err) throw err;
 		var estatecnt = result.length;
 
+		//유저의 총 수를 얻으려는 쿼리문
 		var cursor = db.collection("users").find({}).toArray(function (err, result) {
 			if (err) throw err;
 			var usercnt = result.length;
@@ -400,6 +430,7 @@ router.get('/register', function (req, res) {
 
 
 // [SEARCH POST]
+// 검색 기능을 수행하는 부분
 router.post('/search', function (req, res) {
 	var cursor = db.collection("estates").find({}).toArray(function (err, result) {
 
@@ -413,7 +444,8 @@ router.post('/search', function (req, res) {
 		var search = {};
 
 
-		///////////// 검색 QUERY문/////////////////////
+		///////////// 검색 QUERY문 시작 /////////////////////
+		// dictionary 구조를 사용하여 조건을 자유자재로 붙여 검색을 json형식으로 만듬.
 		if (req.body.title != '') {
 
 			search.title = req.body.title;
@@ -484,8 +516,11 @@ router.post('/search', function (req, res) {
 			var $lte = Number(req.body.max_size);
 			search.roomSize = { $lte, $gte };
 		}
-		////////////////////////////////
+		//////////////검색 QUERY문 끝//////////////////
+		
+		
 		console.log(search);
+		//만든 쿼리문(=search)를 find의 조건에 넣어 검색을 실행시키는 쿼리문
 		var cursor = db.collection("estates").find(search).toArray(function(err,result){
 			if (err) throw err;
 			console.log(result);
@@ -499,12 +534,13 @@ router.post('/search', function (req, res) {
 	});
 });
 
+// 테마 검색을 수행하는 부분
 router.post('/get_data2', function(req, res){
 	var search_num = req.body.search_num;
 	var searchAddress = req.body.searchAddress;
 	console.log(search_num, searchAddress);
 	var cursor;
-	//치안
+	//치안검색
 	if(search_num == 2){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}}).sort({popular_value:-1}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
@@ -512,7 +548,7 @@ router.post('/get_data2', function(req, res){
 			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
-	//교통
+	//교통검색
 	else if(search_num == 3){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}}).sort({traffic_value:-1}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
@@ -520,7 +556,7 @@ router.post('/get_data2', function(req, res){
 			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
-	//편의
+	//편의검색
 	else if(search_num == 4){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}}).sort({convenience_value:-1}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
@@ -528,7 +564,7 @@ router.post('/get_data2', function(req, res){
 			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
-	//건강
+	//건강검색
 	else if(search_num == 5){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}}).sort({healthy_value:-1}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
@@ -536,7 +572,7 @@ router.post('/get_data2', function(req, res){
 			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
-	//교육
+	//교육검색
 	else if(search_num == 6){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}}).sort({education_value:-1}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
@@ -544,7 +580,7 @@ router.post('/get_data2', function(req, res){
 			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
-	//모던
+	//모던검색
 	else if(search_num == 7){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}, 'theme':{$in:['modern']}}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
@@ -552,7 +588,7 @@ router.post('/get_data2', function(req, res){
 			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
-	//클래식
+	//클래식검색
 	else if(search_num == 8){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}, 'theme':{$in:['classic']}}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
@@ -560,7 +596,7 @@ router.post('/get_data2', function(req, res){
 			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
-	//네츄럴
+	//네츄럴검색
 	else if(search_num == 9){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}, 'theme':{$in:['natural']}}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;
@@ -568,7 +604,7 @@ router.post('/get_data2', function(req, res){
 			res.render('property.ejs', {check_ses: req.session.email, estate_list: estate_list ,recommend_list:estate_list, search:1});
 		});
 	}
-	//유럽
+	//유럽검색
 	else if(search_num == 10){
 		cursor = db.collection("estates").find({'roadAddress':{$regex:searchAddress}, 'theme':{$in:['europe']}}).limit(12).toArray(function (err, result) {	
 			var estate_list = result;

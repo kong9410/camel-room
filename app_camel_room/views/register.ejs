@@ -288,10 +288,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
     <script>
     function fn_setAddr(){
-        //팝업 창 크기
+        //팝업 창 크기설정
         var width = 500;
         var height = 600;
-
+        // Daum 주소검색 API 사용 
         daum.postcode.load(function(){
             new daum.Postcode({
                 oncomplete: function(data){

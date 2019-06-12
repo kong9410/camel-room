@@ -1,4 +1,4 @@
-
+// [REQUIREMENTS 선언]
 var router = require('express').Router();
 var Estate = require('../models/estate');
 var multer = require('multer');
@@ -6,6 +6,7 @@ var py = require('python-shell');
 var mongoose = require('mongoose');
 var mysql = require('mysql');
 var db = mongoose.connection;
+// [MONOGDB CONNECTION]
 mongoose.connect('mongodb://localhost/estate_db', { useNewUrlParser: true });
 
 // [MYSQL CONNECTION]
@@ -44,7 +45,7 @@ router.post('/', function (req, res) {
             return res.end("Error uploading files");
         }
 
-
+        // EstateData in Estate Model
         var estate = new Estate();
         estate.title = req.body.title;
         estate.saveFileName = req.files.map(function (file) {
@@ -71,6 +72,7 @@ router.post('/', function (req, res) {
         estate.popular_value = 1;
         estate.traffic_value = 1;
 
+        // AWS에 있는 MYSQL에서 인테리어 정보를 가져오는 쿼리문 
         connection.connect();
         connection.query('SELECT name FROM theme WHERE id = 1', function (err, rows, field) {
             if (!err) {
@@ -82,17 +84,19 @@ router.post('/', function (req, res) {
                 estate.theme = 'undefined'
 
             console.log("estate.theme is ", estate.theme);
-            //치안가치지수
+            // [치안가치지수 계산]
+            // 탐색의 범위 지정 (250M)
             var Max_lat = parseFloat(req.body.latitude) + 0.003;
             var Min_lat = parseFloat(req.body.latitude) - 0.003;
             var Max_lon = parseFloat(req.body.longitude) + 0.003;
             var Min_lon = parseFloat(req.body.longitude) - 0.003;
+            // CCTV 데이터 검색
             var myquery = { "latitude": { $gt: Min_lat, $lt: Max_lat }, 'longitude': { $gt: Min_lon, $lt: Max_lon } };
             var cursor = db.collection("cctv").find(myquery).toArray(function (err, result) {
                 if (err) { console.log(err); throw err; }
                 estate.safe_value = result.length;
             });
-
+            //탐색의 범위지정(250M)
             var Max_lat2 = String(Max_lat);
             var Min_lat2 = String(Min_lat);
             var Max_lon2 = String(Max_lon);
@@ -100,6 +104,7 @@ router.post('/', function (req, res) {
             var myquery = { "latitude": { $gt: Min_lat2, $lt: Max_lat2 }, 
                             'longitude': { $gt: Min_lon2, $lt: Max_lon2 } };
             var safe_value = 0;
+            //경찰서 데이터 검색
             var policecursor = db.collection("police").find(myquery).toArray(function (err, result) {
                 if (err) { console.log(err); throw err; }
                 var police_cnt = result.length;
@@ -126,8 +131,7 @@ router.post('/', function (req, res) {
                     console.log("1 document updated");
                 });
             });
-            //인기가치지수
-            //교육가치지수
+            //[교육가치지수 계산]
             var school = parseInt(req.body.school);
             var academy = parseInt(req.body.academy);
             var kindergarten = parseInt(req.body.kindergarten);
@@ -144,7 +148,7 @@ router.post('/', function (req, res) {
             else
                 estate.education_value = 1;
 
-            //건강가치지수
+            //[건강가치지수 계산]
             var hospital = parseInt(req.body.hospital);
             var pharmacy = parseInt(req.body.pharmacy);
             var amount = hospital + pharmacy;
@@ -160,7 +164,7 @@ router.post('/', function (req, res) {
                 estate.healthy_value = 1;
             console.log("healthy:", amount);
 
-            //편의가치지수
+            //[편의가치지수 계산]
             var convenience = parseInt(req.body.convenience);
             var culture = parseInt(req.body.culture);
             var cafe = parseInt(req.body.cafe);
@@ -178,7 +182,7 @@ router.post('/', function (req, res) {
                 estate.convenience_value = 1;
             console.log("convenience:", amount);
 
-            //교통가치지수
+            // [교통가치지수]
             var subway = parseInt(req.body.subway);
             var estateid = estate.estate_id;
 

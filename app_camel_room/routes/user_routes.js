@@ -1,3 +1,4 @@
+// [REQUIREMENTS 선언]
 var mongoose    = require('mongoose');
 var express     = require('express');
 var app         = express();
@@ -6,12 +7,10 @@ var session     = require('express-session');
 var db = mongoose.connection;
 var router		= express.Router();
 var User		= require('../models/user'); 
+
+// [MONOGDB CONNECTION]
 mongoose.connect('mongodb://localhost/estate_db',{useNewUrlParser : true});
-
-
-
-    // CREATE user
-	
+    // UserData in user Model
     router.post('/User', function(req, res){
         console.error("Post to User");
 		console.log(req.body);
@@ -23,7 +22,8 @@ mongoose.connect('mongodb://localhost/estate_db',{useNewUrlParser : true});
         user.dob = req.body.dob;
 		user.road_address = req.body.road_address;
 		user.detail_address = req.body.detail_address;
-        
+		
+		//DATA INSERT
         user.save(function(err){
             if(err){
                 console.error(err);
@@ -39,6 +39,8 @@ mongoose.connect('mongodb://localhost/estate_db',{useNewUrlParser : true});
 	router.post('/signin', function(req, res){
 		var get_email = req.body.email;
 		var get_password = req.body.password;
+
+		// 입력받은 로그인 정보를 DB에 검색 조건에 넣어서 확인하는 쿼리문
 		var cursor = db.collection("users").find({email : get_email, password: get_password}).toArray(function(err,result){
 			if(err)throw err;
 			

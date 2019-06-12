@@ -65,7 +65,7 @@
                                 <% if(!check_ses) {%>
                                     <li><a href="" style=color:#b3b3b3 data-toggle="modal" data-target="#loginModal" id="login">로그인</a></li>
                                     <%} else{ %>
-                                    <li><a href="api/logout" style="color:#b3b3b3">로그아웃</a></li>
+                                    <li><a href="/api/logout" style="color:#b3b3b3">로그아웃</a></li>
                                     <%}%>
                             </ul>
                         </div>
@@ -499,6 +499,7 @@
                 image :markerImage
             });
         });
+        // 지도 오른쪽 부분에 매물의 정보를 지정해주는 부분 
         var estate_id = $(data.positions).map(function(i, id) {
             var idx = i.toString();
             daum.maps.event.addListener(markers[i], 'click', function () {
