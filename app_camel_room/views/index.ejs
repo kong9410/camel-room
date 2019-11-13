@@ -424,19 +424,22 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="assets/js/active.js"></script>
     <script src="assets/js/modal.js"></script>
     <!--구글 주소 api -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDo5kj9hCe7psH0BHSVK62kT3h9TcGS9qM&region=KR"></script>
-</body>
-<script>
-    //주소 검색 자동완성
-    var search = $("#search").get(0);
-    var options = {
-        componentRestrictions: { country: 'kor' },
-        type: ['(cities)'],
-        language: "ko"
-    };
-    var autocomplete = new google.maps.places.Autocomplete(search, options);
-    function singleClick(id){
-        window.location.href='/single-property/'+id;
-    }
-</script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCYHl2OuRX9_txY1-x2xJo80FRZcemiFKw&callback=autocom&region=KR" type="text/javascript"></script>
+    </body>
+    <script>
+        //주소 검색 자동완성
+        function autocom() {
+            var search = $("#search").get(0);
+            var options = {
+                componentRestrictions: { country: 'kor' },
+                type: ['(cities)'],
+                language: "ko"
+            };
+            var autocomplete = new google.maps.places.Autocomplete(search, options);
+            function singleClick(id) {
+                window.location.href = '/single-property/' + id;
+            }
+        }
+
+    </script>
 </html>

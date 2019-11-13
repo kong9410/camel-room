@@ -448,7 +448,7 @@
     <!-- 다음 지도 api -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c749c8a6c8049131a0f238101adf5004&libraries=services,clusterer"></script>
     <!--구글 주소 api -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDo5kj9hCe7psH0BHSVK62kT3h9TcGS9qM&region=KR"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCYHl2OuRX9_txY1-x2xJo80FRZcemiFKw&callback=autocom&region=KR" type="text/javascript"></script>
     <script src="assets/js/Chartbundle.js"></script>
 
 <script>
@@ -458,13 +458,16 @@
         location.href = "/add-property";
     }
     //주소 검색 자동완성
-    var search = $("#search").get(0);
-    var options = {
-        componentRestrictions: { country: 'kor' },
-        type: ['(cities)'],
-        language: "ko"
-    };
-    var autocomplete = new google.maps.places.Autocomplete(search, options);
+    function autocom(){
+        var search = $("#search").get(0);
+        var options = {
+            componentRestrictions: { country: 'kor' },
+            type: ['(cities)'],
+            language: "ko"
+        };
+        var autocomplete = new google.maps.places.Autocomplete(search, options);
+    }
+    
     // 매물 목록 클릭 함수
     function propertyInfo(num) {
         location.href = "/single-property/"+num;
