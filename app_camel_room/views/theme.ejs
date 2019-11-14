@@ -221,7 +221,7 @@
                                     </a></h6>
                                 <div id="collapseOne" class="accordion-content collapse show">
                                     <img src="assets/img/blog-img/modern.jpg">
-                                    <p>모던 인테리어는 밝은 색을 가지는 집으로 Blah Blah 합니다.
+                                    <p>모던 인테리어는 무채색의 비중이 높고 철과 같은 차가운 재질의 가구가 많이 사용된 경우입니다.
                                         <br>모던 인테리어의 매물을 찾는다면 주소를 입력하고 검색해주세요</p>
                                     <div class="search-widget-area south-search-form">
                                         <form action="/get_data2" method="post">
@@ -244,7 +244,7 @@
                                 </h6>
                                 <div id="collapseTwo" class="accordion-content collapse">
                                         <img src="assets/img/blog-img/classic.jpg">
-                                        <p>클래식 인테리어는 밝은 색을 가지는 집으로 Blah Blah 합니다.
+                                        <p>클래식 인테리어는 골드 색 계열이 많이 사용되고 웨인스코팅이 되어있는 벽이 사용된 경우입니다.
                                                 <br>클래식 인테리어의 매물을 찾는다면 주소를 입력하고 검색해주세요</p>
                                     <div class="search-widget-area south-search-form">
                                         <form action="/get_data2" method="post">
@@ -267,7 +267,7 @@
                                 </h6>
                                 <div id="collapseThree" class="accordion-content collapse">
                                         <img src="assets/img/blog-img/natural.jpg">
-                                        <p>네츄럴 인테리어는 밝은 색을 가지는 집으로 Blah Blah 합니다.
+                                        <p>네츄럴 인테리어는 나무의 색, 즉 갈색과 초록색 비중이 높고 돌과 나무와 같은 자연의 소재가 많이 사용된 경우입니다.
                                                 <br>네츄럴 인테리어의 매물을 찾는다면 주소를 입력하고 검색해주세요</p>
                                         <div class="search-widget-area south-search-form">
                                             <form action="/get_data2" method="post">
@@ -290,7 +290,7 @@
                                     </h6>
                                     <div id="collapseFour" class="accordion-content collapse">
                                             <img src="assets/img/blog-img/europe.jpg" alt="">
-                                            <p>유럽 인테리어는 밝은 색을 가지는 집으로 Blah Blah 합니다.
+                                            <p>유럽 인테리어는 하얀색과 파스텔개열의 색 비중이 높고 러그와 같은 소품이 있는 경우입니다.
                                                     <br>유럽 인테리어의 매물을 찾는다면 주소를 입력하고 검색해주세요</p>
                                             <div class="search-widget-area south-search-form">
                                                 <form action="/get_data2" method="post">
@@ -410,8 +410,19 @@
     <!-- 다음 지도 api -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c749c8a6c8049131a0f238101adf5004&libraries=services&libraries=services"></script>
     <!--구글 주소 api -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDo5kj9hCe7psH0BHSVK62kT3h9TcGS9qM&region=KR"></script>
-    
+    <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCYHl2OuRX9_txY1-x2xJo80FRZcemiFKw&region=KR" type="text/javascript"></script>
+    <script>
+    //주소 검색 자동완성
+    function autocom(){
+        var search = $("#search").get(0);
+        var options = {
+            componentRestrictions: { country: 'kor' },
+            type: ['(cities)'],
+            language: "ko"
+        };
+        var autocomplete = new google.maps.places.Autocomplete(search, options);
+    }
+    </script>
 </body>
 
 </html>
