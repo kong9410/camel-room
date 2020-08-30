@@ -2,7 +2,7 @@
 
 ## Description
 
-![낙타의 공방_포스터(최종본)](C:\workspace\university\camel-room\readme_img\낙타의 공방_포스터(최종본).png)
+![낙타의 공방_포스터(최종본)](./readme_img/낙타의 공방_포스터(최종본).png)
 
 ## 테마 추천
 
